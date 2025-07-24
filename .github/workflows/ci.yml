@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: continuous-integration
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13"]
+        os: ["ubuntu-latest", "windows-latest", "macos-latest"]
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install the latest version of uv and set the python version
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.8.3"
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run ruff
+        run: |
+          uvx -v ruff check
+          uvx -v ruff format --diff
+
+      - name: Run mypy
+        run: |
+          uv -v run mypy
+
+      - name: Build docs (Posix)
+        if: runner.os != 'Windows'
+        run: |
+          uv -v run make -C docs --fail-on-warning
+
+      - name: Build docs (Windows)
+        if: runner.os == 'Windows'
+        env:
+          SPHINXOPTS: --fail-on-warning
+        run: |
+          uv -v run cmd /c "docs\\make.bat"
+
+      - name: Build & Install
+        run: |
+          uv -v build
+          uv -v pip install dist/scio-1.0.0a1-py3-none-any.whl
+
+      - name: Run pytest
+        id: run-pytest
+        continue-on-error: true
+        run: |
+          uv -v run pytest -vv --cov-report=xml
+
+      - name: Upload observed plots on failure
+        if: ${{ steps.run-pytest.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-observed-${{ runner.os }}-py${{ matrix.python-version }}
+          path: test/expected/*/*.observed.*
+          retention-days: 7
+
+      - name: Fail the job if pytest failed
+        if: ${{ steps.run-pytest.outcome == 'failure' }}
+        run: exit 1
+
+      - name: Upload coverage report to Codecov (Ubuntu, python3.13)
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13'
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
+
+      - name: Run pytest with lowest resolution
+        id: run-pytest-lowest
+        continue-on-error: true
+        run: |
+          uv -v run --refresh --resolution=lowest pytest -vv
+
+      - name: Upload observed plots on lowest failure
+        if: ${{ steps.run-pytest-lowest.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-lowest-observed-${{ runner.os }}-py${{ matrix.python-version }}
+          path: test/expected/*/*.observed.*
+          retention-days: 7
+
+      - name: Fail the job if pytest lowest failed
+        if: ${{ steps.run-pytest-lowest.outcome == 'failure' }}
+        run: exit 1
