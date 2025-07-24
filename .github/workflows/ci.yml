@@ -37,8 +37,10 @@ jobs:
 
       - name: Build docs (Posix)
         if: runner.os != 'Windows'
+        env:
+          SPHINXOPTS: --fail-on-warning
         run: |
-          uv -v run make -C docs --fail-on-warning
+          uv -v run make -C docs
 
       - name: Build docs (Windows)
         if: runner.os == 'Windows'
