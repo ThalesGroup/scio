@@ -1,0 +1,14 @@
+        ScoreTimer report for         
+     SleeperScore(act_norm=None,      
+  calib_sleep=0.1, infer_sleep=0.1)   
+┏━━━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━┓
+┃  Operation  ┃ # samples ┃ Duration ┃
+┡━━━━━━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━┩
+│  inference  │         5 │ 100. ms  │
+│ calibration │         4 │ 100. ms  │
+│  inference  │         3 │ 100. ms  │
+│  inference  │         2 │ 100. ms  │
+│ calibration │         1 │ 100. ms  │
+└─────────────┴───────────┴──────────┘
+  Entries are listed from newest to   
+                oldest                

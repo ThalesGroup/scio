@@ -1,0 +1,3 @@
+Layers: ((1, 3), (1, 1))
+Executed postproc func 0 on tensor output by {(1, 1)}
+Executed postproc func 1 on tensor output by {(1, 3)}
