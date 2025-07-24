@@ -36,7 +36,7 @@ This Code of Conduct applies within all project spaces and to public spaces wher
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project lead at **XXX**. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project lead at [elie.goudout@thalesgroup.com](mailto:elie.goudout@thalesgroup.com), or our Open Source team at [oss@thalesgroup.com](mailto:oss@thalesgroup.com). All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident.
 
 Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other project maintainers.
 

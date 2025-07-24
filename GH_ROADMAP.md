@@ -1,5 +1,5 @@
 - [ ] Check RTD (`scio.rtd`) setup works (+ valid links to RTD)
-- [ ] Check `sphinx.ext.linkcode` works as expected
+- [x] Check `sphinx.ext.linkcode` works as expected
 - [ ] Upload to PyPI (`scio.pypi`)
 - [ ] Transfer CI (including OS & doc build)
 - [ ] Link to `codecov`
@@ -12,5 +12,5 @@
 
 ----
 
-- [ ] Transfer PyPI name once [PEP541 request](github.com/pypi/support/issues/6146) goes through
+- [ ] Transfer PyPI name once [PEP541 request](https://github.com/pypi/support/issues/6146) goes through
 - [ ] Transfer RTD name once request goes through
