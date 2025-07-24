@@ -1,0 +1,45 @@
+/* Remove sphinxcontrib-bibtex backrefs
+ * https://github.com/mcmtroffaes/sphinxcontrib-bibtex/issues/364#issuecomment-2904415251
+ */
+.backrefs {
+  font-size: 0;
+}
+.backrefs:after {
+  font-size: initial;
+  content: "\00a0";
+}
+
+
+/* Suppress sphinx-gallery "Out:" before console display */
+.sphx-glr-script-out::before {
+  content: none
+}
+
+/* Hide download link note */
+div.sphx-glr-download-link-note {
+    display: none;
+}
+
+/* Re-style the download button, from matplotlib */
+div.sphx-glr-download a {
+    background-color: #E3F0F6;
+    background-image: none;
+    color: #11557c;
+    border: 0;
+}
+
+div.sphx-glr-download a:hover {
+    background-color: #BCD4DF;
+}
+
+/* Remove ugly hyperlink underline for badges
+ * https://stackoverflow.com/a/4785601/20943465
+ */
+a img
+{
+  border: 0 none;
+}
+.image-link
+{
+  text-decoration: none;
+}

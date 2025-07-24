@@ -1,8 +1,8 @@
-Describe here all the security policies in place on this repository to help your contributors to handle security issues efficiently.
+# Good practices to follow
 
-## Goods practices to follow
+Since our framework heavily relies on [PyTorch](https://pytorch.org/), we invite users to be aware about [using PyTorch securely](https://github.com/pytorch/pytorch/security#using-pytorch-securely).
 
-:warning:**You must never store credentials information into source code or config file in a GitHub repository**
+⚠️ **You must never store credentials information into source code or config file in a GitHub repository**
 - Block sensitive data being pushed to GitHub by git-secrets or its likes as a git pre-commit hook
 - Audit for slipped secrets with dedicated tools
 - Use environment variables for secrets in CI/CD (e.g. GitHub Secrets) and secret managers in production
@@ -11,35 +11,18 @@ Describe here all the security policies in place on this repository to help your
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are currently being supported with security updates.
+As of today, only the latest version is being supported with security updates.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+## Reporting and disclosing a Vulnerability
 
-## Reporting a Vulnerability
+If you believe you have found a security vulnerability in `scio`, we encourage you to report it in a dedicated [security issue](https://github.com/ThalesGroup/scio/issues/new?labels=security) or to contact [security@opensource.thalesgroup.com](mailto:security@opensource.thalesgroup.com) right away. It is **important** that every publicly shared concern remain high-level as to avoid spreading exploitation steps.
 
-Use this section to tell people how to report a vulnerability.
-Tell them where to go, how often they can expect to get an update on a reported vulnerability, what to expect if the vulnerability is accepted or declined, etc.
-
-You can ask for support by contacting security@opensource.thalesgroup.com
-
-## Disclosure policy
-
-Define the procedure for what a reporter who finds a security issue needs to do in order to fully disclose the problem safely, including who to contact and how.
+We will investigate all legitimate reports and do our best to quickly fix the problem.
 
 ## Security Update policy
 
-Define how you intend to update users about new security vulnerabilities as they are found.
-
-## Security related configuration
-
-Settings users should consider that would impact the security posture of deploying this project, such as HTTPS, authorization and many others.
+If a security vulnerability is found, users can expect a related tracking [announcement](https://github.com/ThalesGroup/scio/discussions/categories/announcements). Further releases will also mitigate the problem, possibly by removing related features until a proper fix is implemented.
 
 ## Known security gaps & future enhancements
 
-Security improvements you haven’t gotten to yet.
-Inform users those security controls aren’t in place, and perhaps suggest they contribute an implementation
+None

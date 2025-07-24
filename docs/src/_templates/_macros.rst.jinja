@@ -1,0 +1,68 @@
+{% macro own_summaries_and_autoobjs(
+     name,
+     opts,
+     warning,
+     methods,
+     all_methods,
+     attributes,
+     all_attributes,
+     inherited_members) %}
+   {#
+      Generate .rst for class methods and attributes doc, showing only inherited
+      members. Takes options (given through conf.py) into consideration.
+   #}
+
+   {% set doc_methods = all_methods
+      | reject('in', inherited_members)
+      | reject('in', opts.exclude)
+      | select('in', methods + opts.include | list)
+      | list %}
+
+   {% set doc_attributes = all_attributes
+      | reject('in', inherited_members)
+      | reject('in', opts.exclude)
+      | select('in', attributes + opts.include | list)
+      | list %}
+
+   {% set meth_summ = doc_methods if opts.meth != "no" else [] %}
+   {% set meth_auto = doc_methods if opts.meth == "yes" else [] %}
+   {% set attr_summ = doc_attributes if opts.attr != "no" else [] %}
+   {% set attr_auto = doc_attributes if opts.attr == "yes" else [] %}
+
+   {%- if warning and (meth_summ or attr_summ) %}
+   .. hint::
+      {{ warning }}
+   {% endif %}
+
+   {%- if meth_summ %}
+   .. rubric:: Useful methods defined here
+
+   .. autosummary::
+   {% if not meth_auto %}
+      :toctree:
+   {% endif %}
+   {% for item in meth_summ %}
+     ~{{ name }}.{{ item }}
+   {% endfor -%}
+   {% endif -%}
+
+   {%- if attr_summ %}
+   .. rubric:: Useful attributes defined here
+
+   .. autosummary::
+   {% if not attr_auto %}
+      :toctree:
+   {% endif %}
+   {% for item in attr_summ %}
+     ~{{ name }}.{{ item }}
+   {% endfor -%}
+   {% endif -%}
+
+   {% for item in meth_auto %}
+   .. automethod:: {{ item }}
+   {% endfor -%}
+
+   {% for item in attr_auto %}
+   .. autoattribute:: {{ item }}
+   {% endfor -%}
+{% endmacro %}

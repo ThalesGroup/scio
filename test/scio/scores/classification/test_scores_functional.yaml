@@ -1,0 +1,107 @@
+# Just to ensure that classification scores can run.
+
+# ==================== Utils ====================
+:  # Shared args anchors
+  - &act_norm [null, .8, 2.5, .inf, -2]
+  - &epsilon [0, 0.3]
+  - &norm [1.5, 3, .inf, -2]
+  - &min_k 10  # Less than n_calib from conftest.py
+  - &k [*min_k]  # Less than n_calib from conftest.py
+  - &bool [True, False]
+  - &temperature [0.1, 10]
+  - &aggregation ["max", "sum", "geometric", -1]
+# ===============================================
+
+BaselineClassif:
+  mode: ["raw", "diff", "ratio"]
+
+DeepMahalanobis: &DeepMahalanobis
+  epsilon: *epsilon
+  weights: [null, [1, 2, 3]]  # Match number of recorded layers (rnet fixture)
+  act_norm: *act_norm
+
+DkNN:
+  k: *k
+  per_class: *bool
+  per_layer: *bool
+  index_metric: ["l2", "ip"]
+  act_norm: *act_norm
+  aggregation: *aggregation
+
+Energy:
+  temperature: *temperature
+
+FeatureSqueezing:
+  squeezers:
+    - "median: 3 "
+    - ["bits:1", "median:2", "bits: 7", !custom callable_squeezer]
+  dist_norm: *norm
+  aggregation: *aggregation
+
+GradNorm:
+  temperature: *temperature
+  grad_norm: *norm
+  discard_functional_forward: *bool
+
+Gram:
+  max_gram_order: [1, 3, 8]
+  cut_off: [0.1, 0.4]
+  separate_diagonal: *bool
+  calib_labels: ["pred", "true"]
+  act_norm: *act_norm
+
+IsoMax:
+  n_steps: [2, 100]
+
+JointEnergy: {}
+
+JTLA:
+  test:
+    - {"type": "multinomial", "k": *min_k, "mode": "mle", "special_prior": 0.1}
+    - {"type": "multinomial", "k": *min_k, "mode": "map"}
+    - {"type": "multinomial", "k": *min_k, "mode": "dcm", "prior": 0.01}
+  layer_aggregation:
+    - "lpe"
+    - "fisher:1,3"
+    - "prod"
+    - "harmonic:2"
+    - "sum"
+    - "mean"
+  layer_aggregation_consecutive: *bool
+  class_aggregation: ["nat", "adv"]
+  pred_conditional: *bool
+  act_norm: *act_norm
+
+KNN:
+  k: *k
+  act_norm: *act_norm
+
+LID:
+  k: *k
+  act_norm: *act_norm
+
+Logit: {}
+
+Odds:
+  epsilon: *epsilon
+  noise_samples: [3, 10]
+  z_aggregation: ["sum", "detect", "rectify"]
+  rng_seed: [0, null]
+
+ODIN:
+  temperature: *temperature
+  epsilon: *epsilon
+  fgm_norm: [1, 2, .inf]
+
+ReAct:
+  percentile: [65, 80]
+  symmetric: *bool
+  per_layer: *bool
+
+RelativeMahalanobis: *DeepMahalanobis
+
+Softmax: {}
+
+Trust:
+  alpha: [0, 0.2, 0.5]
+  k: *k

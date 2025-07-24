@@ -1,0 +1,146 @@
+[project]
+name = "scio"
+version = "1.0.0.a1"
+description = "Statistical Confidence from Internal Observations"
+authors = [{name = "Élie Goudout", email = "elie.goudout@thalesgroup.com"}]
+maintainers = [{name = "Élie Goudout", email = "elie.goudout@thalesgroup.com"}]
+requires-python = ">=3.12, <3.14"
+readme = "README.rst"
+license = {file = "LICENSE"}
+keywords = [
+    "out-of-distribution detection",
+    "machine learning",
+    "statistics",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries",
+    "Typing :: Typed",
+]
+dependencies = [
+    "dill>=0.4",
+    "faiss-cpu>=1.11",
+    "matplotlib>=3.10",
+    "numpy>=2.2.2",
+    "pandas>=2.2.3",
+    "paramclasses>=0.4.0",
+    "rich>=13.9.4",
+    "scikit-learn>=1.6.1",
+    "scipy>=1.16",
+    "seaborn>=0.13.2",
+    "torch>=2.3",
+    "torchinfo>=1.8",
+    # Indirect dependencies for which the original package does not specify lower bounds
+    "filelock>=3.13", # torch<=2.7.1
+    "fsspec>=2023.10", # torch<=2.7.1
+    "networkx>=3.2", # torch<=2.7.1
+    "pillow>=11", # matplotlib
+    "pyyaml>=6.0.2", # sphinxcontrib-bibtex > pybtex
+    "typing-extensions>=4.12", # torch<=2.7.1
+    "lazy-loader>=0.4",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.17",
+    "mypy-extensions>=1.1",
+    "pandas-stubs>=2.2.3.241126",
+    "pydata-sphinx-theme>=0.16.1",
+    "pytest>=8.3.4",
+    "pytest-cov>=6",
+    "ruamel-yaml>=0.18.7",
+    "sphinx>=8.2.3",
+    "sphinx-gallery>=0.19",
+    "sphinxcontrib-bibtex>=2.6.4",
+    "sphinxcontrib-katex>=0.9.11",
+    "torchvision>=0.22",
+    # Indirect dependencies for which the original package does not specify lower bounds
+    "accessible-pygments>=0.0.5",  # pydata-sphinx-theme
+    "beautifulsoup4>=4.12.3",  # pydata-sphinx-theme
+    "iniconfig>=2.1",  # pytest
+    "ruamel-yaml-clib>=0.2.11",  # ruamel-yaml
+]
+
+
+[tool.ruff]
+extend-exclude = ["docs/src/auto_*"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D416"]  # Numpy docstyle, see https://github.com/PyCQA/pydocstyle/blob/master/docs/error_codes.rst
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"test/**/*.py" = [
+    "ANN001",                        # Optional argument typing in fixtures
+    "N802", "N803", "N806",          # Fixtures and variables may be capitalized
+    "PLR2004",                       # May use "magic numbers" in tests
+    "S101",                          # Authorize `assert` in `test/`
+]
+"test/**/test_*.py" = [
+    "ANN201",                        # No return typing for tests
+    "B018",                          # Useless expressions (actually useful)
+    "PLR0913",                       # Many fixtures needed sometimes
+    "T201",                          # Print statements
+]
+"docs/src/conf.py" = [
+    "INP001",                        # Implicit namespace package
+]
+"docs/src/tutorials/*" = [
+    "B018",                          # Useless statements
+    "D205", "D212", "D400", "D415",  # Incorrect module docstring
+    "E402", "I001",                  # Import not at top/sorted/formatted
+    "INP001",                        # Implicit namespace package
+    "T201",                          # Print statements
+]
+
+[tool.ruff.format]
+docstring-code-format = true  # Enable reformatting of code snippets in docstrings.
+preview = true
+
+
+[tool.mypy]
+files = [
+    "scio",
+    "test",
+    "docs/src/conf.py",
+    "docs/src/tutorials",
+]
+warn_incomplete_stub = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+pretty = true
+
+
+[tool.pytest.ini_options]
+testpaths = "test"
+addopts = [
+    "--cov",  # Nonlast option (github.com/pytest-dev/pytest-cov/issues/701)
+    "--import-mode=importlib",  # Recommended by pytest
+]
+
+[tool.coverage.run]
+source = ["scio", "test"]
+
+[tool.coverage.report]
+precision = 2
+skip_empty = true
+show_missing = true
+
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

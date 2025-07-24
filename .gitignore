@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Dotted as white-list
+.*
+!.github
+!.gitignore
+
+# Doc
+docs/_build/
+docs/**/autosummary
+!docs/src/_templates/autosummary
+docs/src/auto_*
+docs/src/sg_execution_times.rst
