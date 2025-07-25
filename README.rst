@@ -8,7 +8,7 @@
    <div align="center">
      <h3 align="center">Confidence scores for Neural Networks, made easy!</h3>
      <p align="center">
-       <a href="index.html"><strong>Explore the docs »</strong></a>
+       <a href="https://scio.rtd.readthedocs.io/en/latest/index.html"><strong>Explore the docs »</strong></a>
        <br />
        <a href="https://github.com/ThalesGroup/scio/issues/new?labels=question">Ask Help</a>
        &middot;
@@ -27,7 +27,7 @@
 
 Demo 🎮
 -------
-demo.gif
+*Coming soon...*
 
 Documentation 📖
 ----------------
@@ -39,13 +39,13 @@ See `citing <https://scio.rtd.readthedocs.io/en/latest/citing_scio.html>`_.
 
 Contributing 🚀
 ---------------
-Questions, `issues <https://github.com/ThalesGroup/scio/issues>`_, `discussions <https://github.com/ThalesGroup/scio/discussions>`_ and `pull requests <https://github.com/ThalesGroup/scio/pulls>`_ are welcome! Read our [Contributing Guide](CONTRIBUTING.md) and join our team of [contributors](CONTRIBUTORS.md) ✨
+Questions, `issues <https://github.com/ThalesGroup/scio/issues>`_, `discussions <https://github.com/ThalesGroup/scio/discussions>`_ and `pull requests <https://github.com/ThalesGroup/scio/pulls>`_ are welcome! Read our [Contributing Guide](CONTRIBUTING.md) and join our team of `contributors <CONTRIBUTORS.md>`_ ✨
 
 For development, we recommend using `uv` since we ship `uv.lock` for better development reproducibility.
 
 License ⚖️
 ----------
-This package is distributed under the [MIT license](LICENSE). The use of nvidia proprietary modules (for GPU acceleration) is optional.
+This package is distributed under the `MIT license <LICENSE>`_. The use of nvidia proprietary modules (for GPU acceleration) is optional.
 
 
 .. BADGES
