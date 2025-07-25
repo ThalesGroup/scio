@@ -52,7 +52,7 @@ jobs:
       - name: Build & Install
         run: |
           uv -v build
-          uv -v pip install dist/scio-1.0.0a1-py3-none-any.whl
+          uv -v pip install dist/scio_pypi-1.0.0a1-py3-none-any.whl
 
       - name: Run pytest
         id: run-pytest

@@ -1,5 +1,5 @@
 [project]
-name = "scio"
+name = "scio-pypi"
 version = "1.0.0.a1"
 description = "Statistical Confidence from Internal Observations"
 authors = [{name = "Élie Goudout", email = "elie.goudout@thalesgroup.com"}]
@@ -142,5 +142,9 @@ show_missing = true
 
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.8.3,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "scio"
+module-root = ""

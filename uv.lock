@@ -1093,7 +1093,7 @@ wheels = [
 ]
 
 [[package]]
-name = "scio"
+name = "scio-pypi"
 version = "1.0.0a1"
 source = { editable = "." }
 dependencies = [
