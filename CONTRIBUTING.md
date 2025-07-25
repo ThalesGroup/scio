@@ -95,8 +95,15 @@ uvx ruff check
 ```
 
 If your contribution changes the documentation, you can rebuild it with the following – append `help` for more options.
+
 ```bash
+# Ubuntu or MacOS
 uv run make -C docs
+```
+
+```powershell
+# Windows
+uv -v run cmd /c "docs\make.bat"
 ```
 
 #### First time codebase contributors
