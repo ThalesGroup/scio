@@ -8,7 +8,7 @@
    <div align="center">
      <h3 align="center">Confidence scores for Neural Networks, made easy!</h3>
      <p align="center">
-       <a href="https://scio.rtd.readthedocs.io/en/latest/index.html"><strong>Explore the docs »</strong></a>
+       <a href="https://sciortd.readthedocs.io/en/latest/index.html"><strong>Explore the docs »</strong></a>
        <br />
        <a href="https://github.com/ThalesGroup/scio/issues/new?labels=question">Ask Help</a>
        &middot;
@@ -31,11 +31,11 @@ Demo 🎮
 
 Documentation 📖
 ----------------
-The full documentation can be found `here <https://scio.rtd.readthedocs.io/en/latest/index.html>`_. You may specifically refer to `tutorials <https://scio.rtd.readthedocs.io/en/latest/auto_tutorials/index.html>`_, `examples <https://scio.rtd.readthedocs.io/en/latest/auto_examples/index.html>`_, `API references <https://scio.rtd.readthedocs.io/en/latest/api_references.html>`_ or scientific literature `references <https://scio.rtd.readthedocs.io/en/latest/bib_references.html>`_.
+The full documentation can be found `here <https://sciortd.readthedocs.io/en/latest/index.html>`_. You may specifically refer to `tutorials <https://sciortd.readthedocs.io/en/latest/auto_tutorials/index.html>`_, `API references <https://sciortd.readthedocs.io/en/latest/api_references.html>`_ or scientific literature `references <https://sciortd.readthedocs.io/en/latest/bib_references.html>`_.
 
 Citing ``scio``
 ---------------
-See `citing <https://scio.rtd.readthedocs.io/en/latest/citing_scio.html>`_.
+See `citing <https://sciortd.readthedocs.io/en/latest/citing_scio.html>`_.
 
 Contributing 🚀
 ---------------
