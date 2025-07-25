@@ -15,7 +15,7 @@ As of today, only the latest version is being supported with security updates.
 
 ## Reporting and disclosing a Vulnerability
 
-If you believe you have found a security vulnerability in `scio`, we encourage you to report it in a dedicated [security issue](https://github.com/ThalesGroup/scio/issues/new?labels=security) or to contact [security@opensource.thalesgroup.com](mailto:security@opensource.thalesgroup.com) right away. It is **important** that every publicly shared concern remain high-level as to avoid spreading exploitation steps.
+If you believe you have found a security vulnerability in `scio`, we encourage you to report it in a dedicated [security issue](https://github.com/ThalesGroup/scio/issues/new?labels=security) or to contact [oss@thalesgroup.com](mailto:oss@thalesgroup.com) right away. It is **important** that every publicly shared concern remain high-level as to avoid spreading exploitation steps.
 
 We will investigate all legitimate reports and do our best to quickly fix the problem.
 
