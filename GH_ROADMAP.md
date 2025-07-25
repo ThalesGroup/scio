@@ -1,10 +1,10 @@
 - [x] Check RTD (`scio.rtd`) setup works (+ valid links to RTD)
 - [x] Check `sphinx.ext.linkcode` works as expected
-- [ ] Upload to PyPI (`scio-pypi`)
+- [x] Upload to PyPI (`scio-pypi`)
 - [x] Transfer CI (including OS & doc build)
 - [x] Link to `codecov`
 - [x] Check badges link correctly
-- [ ] Fix badge gh rendering
+- [x] Fix badge gh rendering
 - [ ] Write listed tutorials
 - [ ] Transfer relevant issues
 - [ ] Citation guide
