@@ -48,8 +48,8 @@ License ⚖️
 This package is distributed under the `MIT license <LICENSE>`_. The use of nvidia proprietary modules (for GPU acceleration) is optional.
 
 
-.. BADGES
 .. Use raw HTML for tooltips (title="...") in badges
+.. BADGES
 .. |os| raw:: html
 
    <a href="https://github.com/ThalesGroup/scio#readme" title="Tested on Ubuntu, Windows & MacOS" class="image-link">
