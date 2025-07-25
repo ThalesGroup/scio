@@ -86,8 +86,8 @@ This package is distributed under the `MIT license <LICENSE>`_. The use of nvidi
 
 .. |coverage| raw:: html
 
-   <a href="https://codecov.io/gh/ThalesGroup/scio" title="Test coverage" class="image-link">
-     <img src="https://codecov.io/gh/ThalesGroup/scio/graph/badge.svg?token=__________" alt="coverage" />
+   <a href="https://codecov.io/github/ThalesGroup/scio" title="Test coverage" class="image-link">
+     <img src="https://codecov.io/github/ThalesGroup/scio/graph/badge.svg?token=7L1KWAHGR6" alt="coverage" />
    </a>
 
 .. |ruff| raw:: html
