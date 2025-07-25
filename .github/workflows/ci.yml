@@ -57,7 +57,7 @@ jobs:
       - name: Run pytest
         id: run-pytest
         continue-on-error: true
-        if: matrix.os == 'ubuntu-latest'  # Temporary
+        if: matrix.os != 'macos-latest'  # Temporary
         run: |
           uv -v run pytest -vv --cov-report=xml
 
@@ -83,7 +83,7 @@ jobs:
       - name: Run pytest with lowest resolution
         id: run-pytest-lowest
         continue-on-error: true
-        if: matrix.os == 'ubuntu-latest'  # Temporary
+        if: matrix.os != 'macos-latest'  # Temporary
         run: |
           uv -v run --refresh --resolution=lowest pytest -vv
 
