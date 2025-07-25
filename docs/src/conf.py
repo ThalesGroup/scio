@@ -40,6 +40,7 @@ extensions = [
     "sphinx.ext.linkcode",
     "sphinx_gallery.gen_gallery",
     "sphinxcontrib.katex",
+    "myst_parser",
 ]
 
 templates_path = ["_templates"]

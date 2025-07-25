@@ -31,15 +31,3 @@ div.sphx-glr-download a {
 div.sphx-glr-download a:hover {
     background-color: #BCD4DF;
 }
-
-/* Remove ugly hyperlink underline for badges
- * https://stackoverflow.com/a/4785601/20943465
- */
-a img
-{
-  border: 0 none;
-}
-.image-link
-{
-  text-decoration: none;
-}

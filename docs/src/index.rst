@@ -1,14 +1,13 @@
 Welcome to ``scio``'s documentation!
 ====================================
 
-.. include:: ../../README.rst
-   :end-before: ``scio``
+.. include:: ../../README.md
+   :parser: myst_parser.sphinx_
+   :end-before: <!-- End of Badges -->
 
-.. include:: ../../README.rst
-   :start-after: .. BADGES
-
-.. include:: ../../README.rst
-   :start-after: ====
+.. include:: ../../README.md
+   :parser: myst_parser.sphinx_
+   :start-after: # `scio`
    :end-before: ----
 
 ----
@@ -34,6 +33,6 @@ In this documentation, you will find an extensive :doc:`api_references`, scienti
 
 *The source code for this documentation is released under the same license as the* |lib_license|_.
 
-.. _lib_license: https://github.com/ThalesGroup/scio/blob/main/LICENSE
+.. _lib_license: https://github.com/ThalesGroup/scio?tab=MIT-1-ov-file#MIT-1-ov-file
 
 .. |lib_license| replace:: *library's*
