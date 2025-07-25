@@ -52,53 +52,53 @@ This package is distributed under the `MIT license <LICENSE>`_. The use of nvidi
 .. Use raw HTML for tooltips (title="...") in badges
 .. |os| raw:: html
 
-   <a href="https://github.com/ThalesGroup/scio#readme" title="Tested on Ubuntu, Windows & MacOS" class="image-link" style="text-decoration: none;">
+   <a href="https://github.com/ThalesGroup/scio#readme" title="Tested on Ubuntu, Windows & MacOS" class="image-link">
      <img src="https://img.shields.io/badge/OS_Independant-%E2%9C%93-blue" alt="os" />
    </a>
 .. |python| raw:: html
 
-   <a href="https://devguide.python.org/versions" title="Compatible Python versions" class="image-link" style="text-decoration: none;">
+   <a href="https://devguide.python.org/versions" title="Compatible Python versions" class="image-link">
      <img src="https://img.shields.io/badge/python-3.12%20|%203.13-blue" alt="python" />
    </a>
 
 .. |pypi| raw:: html
 
-   <a href="https://pypi.org/project/scio.pypi" title="Latest PyPI release" class="image-link" style="text-decoration: none;">
+   <a href="https://pypi.org/project/scio.pypi" title="Latest PyPI release" class="image-link">
      <img src="https://img.shields.io/pypi/v/scio.pypi" alt="pypi" />
    </a>
 
 .. |typed| raw:: html
 
-   <a href="https://peps.python.org/pep-0561" title="This package is typed" class="image-link" style="text-decoration: none;">
+   <a href="https://peps.python.org/pep-0561" title="This package is typed" class="image-link">
      <img src="https://img.shields.io/pypi/types/scio.pypi" alt="typed" />
    </a>
 
 .. |license| raw:: html
 
-   <a href="LICENSE" title="Distributed under" class="image-link" style="text-decoration: none;">
+   <a href="LICENSE" title="Distributed under" class="image-link">
      <img src="https://img.shields.io/github/license/ThalesGroup/scio" alt="license" />
    </a>
 
 .. |pipeline| raw:: html
 
-   <a href="https://github.com/ThalesGroup/scio/actions" title="Pipeline status" class="image-link" style="text-decoration: none;">
+   <a href="https://github.com/ThalesGroup/scio/actions" title="Pipeline status" class="image-link">
      <img src="https://github.com/ThalesGroup/scio/actions/workflows/ci.yml/badge.svg" alt="pipeline" />
    </a>
 
 .. |coverage| raw:: html
 
-   <a href="https://codecov.io/github/ThalesGroup/scio" title="Test coverage" class="image-link" style="text-decoration: none;">
+   <a href="https://codecov.io/github/ThalesGroup/scio" title="Test coverage" class="image-link">
      <img src="https://codecov.io/github/ThalesGroup/scio/graph/badge.svg?token=7L1KWAHGR6" alt="coverage" />
    </a>
 
 .. |ruff| raw:: html
 
-   <a href="https://github.com/astral-sh/ruff#readme" title="Linted and formatted with Ruff" class="image-link" style="text-decoration: none;">
+   <a href="https://github.com/astral-sh/ruff#readme" title="Linted and formatted with Ruff" class="image-link">
      <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="ruff" />
    </a>
 
 .. |uv| raw:: html
 
-   <a href="https://github.com/astral-sh/uv#readme" title="Developed with uv" class="image-link" style="text-decoration: none;">
+   <a href="https://github.com/astral-sh/uv#readme" title="Developed with uv" class="image-link">
      <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json" alt="uv" />
    </a>
