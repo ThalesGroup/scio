@@ -4,7 +4,7 @@
 # Required
 version: 2
 
-# Set the OS, Python version, and other tools you might need
+# Set the OS and Python version. Install uv and build/install docs
 build:
   os: ubuntu-24.04
   tools:
@@ -12,8 +12,10 @@ build:
   commands:
     - pip install uv
     - uv run make -C docs
+    - mkdir -p $READTHEDOCS_OUTPUT
+    - mv docs/_build/html $READTHEDOCS_OUTPUT
 
-# Build documentation in the "docs/" directory with Sphinx
+# Sphinx configuration
 sphinx:
    configuration: docs/src/conf.py
    fail_on_warning: true
