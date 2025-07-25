@@ -21,7 +21,7 @@
 .. code:: bash
 
     # Install from PyPI
-    pip install scio.pypi  # the `.pypi` suffix will be removed soon
+    pip install scio-pypi  # the `-pypi` suffix will be removed soon
 
 ----
 
@@ -63,14 +63,14 @@ This package is distributed under the `MIT license <LICENSE>`_. The use of nvidi
 
 .. |pypi| raw:: html
 
-   <a href="https://pypi.org/project/scio.pypi" title="Latest PyPI release" class="image-link">
-     <img src="https://img.shields.io/pypi/v/scio.pypi" alt="pypi" />
+   <a href="https://pypi.org/project/scio-pypi" title="Latest PyPI release" class="image-link">
+     <img src="https://img.shields.io/pypi/v/scio-pypi" alt="pypi" />
    </a>
 
 .. |typed| raw:: html
 
    <a href="https://peps.python.org/pep-0561" title="This package is typed" class="image-link">
-     <img src="https://img.shields.io/pypi/types/scio.pypi" alt="typed" />
+     <img src="https://img.shields.io/pypi/types/scio-pypi" alt="typed" />
    </a>
 
 .. |license| raw:: html

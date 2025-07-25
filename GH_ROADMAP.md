@@ -1,6 +1,6 @@
 - [x] Check RTD (`scio.rtd`) setup works (+ valid links to RTD)
 - [x] Check `sphinx.ext.linkcode` works as expected
-- [ ] Upload to PyPI (`scio.pypi`)
+- [ ] Upload to PyPI (`scio-pypi`)
 - [x] Transfer CI (including OS & doc build)
 - [x] Link to `codecov`
 - [x] Check badges link correctly
