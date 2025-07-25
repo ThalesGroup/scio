@@ -1,4 +1,4 @@
-|os| |python| |pypi| |typed| |license| |pipeline| |coverage| |ruff| |uv|
+|python| |pypi| |typed| |license| |pipeline| |coverage| |ruff| |uv|
 
 ``scio``
 ========
@@ -52,8 +52,8 @@ This package is distributed under the `MIT license <LICENSE>`_. The use of nvidi
 .. BADGES
 .. |os| raw:: html
 
-   <a href="https://github.com/ThalesGroup/scio#readme" title="Tested on Ubuntu & Windows" class="image-link">
-     <img src="https://img.shields.io/badge/os-Ubuntu%20|%20Windows-blue" alt="os" />
+   <a href="https://github.com/ThalesGroup/scio#readme" title="Tested on Ubuntu, Windows & MacOS" class="image-link">
+     <img src="https://img.shields.io/badge/OS_Independant-%E2%9C%93-blue" alt="os" />
    </a>
 .. |python| raw:: html
 
