@@ -8,7 +8,7 @@
 [![ruff][ruff_img]][ruff_target]
 [![uv][uv_img]][uv_target]
 
-[os_img]: https://img.shields.io/badge/cross_platform-%E2%9C%93-blue "Tested on Ubuntu, Windows & MacOS"
+[os_img]: https://img.shields.io/badge/cross--platform-%E2%9C%93-blue "Tested on Ubuntu, Windows & MacOS"
 [os_target]: https://github.com/ThalesGroup/scio#readme
 
 [python_img]: https://img.shields.io/badge/python-3.12%20|%203.13-blue "Compatible Python versions"

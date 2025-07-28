@@ -1,5 +1,6 @@
 """scio package."""
 
+import os
 import platform
 from importlib.metadata import PackageNotFoundError, version
 
@@ -14,9 +15,11 @@ import lazy_loader as lazy
 __getattr__, __dir__, __all__ = lazy.attach_stub(__name__, __file__)
 
 # Monkeypatch the use of ``faiss`` on non-Linux platforms
-if platform.system() != "Linux":  # pragma: no cover
+if (
+    platform.system() != "Linux"
+    and os.environ.get("KMP_DUPLICATE_LIB_OK", None) != "TRUE"
+):  # pragma: no cover
     import importlib
-    import os
     import sys
     import types
     from warnings import warn
