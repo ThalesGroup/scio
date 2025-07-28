@@ -149,7 +149,7 @@ def assert_same_outerr(stem_path, captured_outerr) -> None:  # pragma: no cover
                 )
                 continue
             try:
-                assert captured == path.read_text()
+                assert captured == path.read_text(encoding="utf-8")
             except AssertionError as e:
                 excs[ext] = e
         elif path.exists():
@@ -215,7 +215,7 @@ def match_outerr(
         if not captured:
             continue
         path = capture_stem.with_name(f"{capture_stem.name}.{ext}")
-        path.write_text(captured)
+        path.write_text(captured, encoding="utf-8")
 
     pytest.skip(reason=f"Updated related capture files in {capture_stem.parent}/")
 

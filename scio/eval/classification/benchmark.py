@@ -36,6 +36,7 @@ from torch import Tensor, nn
 
 from scio.recorder import DepthIdx, Recorder
 from scio.scores import BaseScoreClassif
+from scio.utils.misc import HEAVY_HEAD_ROUNDED_BOTTOM
 
 from .discriminative_power import BaseDiscriminativePower
 from .roc import ROC
@@ -298,7 +299,14 @@ def summary_table(
 
     # Create columns with headers
     title = Console().render_str(title_str)
-    table = Table(title=title, highlight=True, show_lines=True, caption_justify="left")
+    table = Table(
+        title=title,
+        highlight=True,
+        show_lines=True,
+        caption_justify="left",
+        box=HEAVY_HEAD_ROUNDED_BOTTOM,
+        safe_box=False,
+    )
     table.add_column("Scores" + ("\n↳ Recorded layers" if recorded else ""))
     for i, ood_title in enumerate(oods_title):
         ood_str = f"OoD {i + 1}{f':\n{ood_title}' if ood_title else ''}"

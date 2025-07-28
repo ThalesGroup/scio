@@ -1,6 +1,12 @@
 """Module with misc utils."""
 
-__all__ = ["ScoreTimer", "ScoreTimerStat", "check", "format_time"]
+__all__ = [
+    "HEAVY_HEAD_ROUNDED_BOTTOM",
+    "ScoreTimer",
+    "ScoreTimerStat",
+    "check",
+    "format_time",
+]
 
 from collections.abc import Iterator
 from contextlib import contextmanager
@@ -13,10 +19,13 @@ from weakref import ref
 
 import rich
 from dill import copy  # type: ignore[import-untyped]
+from rich.box import Box
 from rich.highlighter import ReprHighlighter
 from rich.table import Table
 
 from .enums import ScoreTimerOperation, ScoreTimerOperationLike
+
+HEAVY_HEAD_ROUNDED_BOTTOM = Box("┏━┳┓\n┃ ┃┃\n┡━╇┩\n│ ││\n├─┼┤\n├─┼┤\n│ ││\n╰─┴╯\n")
 
 
 def check(condition: object, message: str = "") -> None:
@@ -253,7 +262,14 @@ class ScoreTimer:
             title_raw += f"\nat {hex(id(target))}"
         title = ReprHighlighter()(title_raw).markup
         caption = "Entries are listed from newest to oldest"
-        table = Table(title=title, caption=caption, highlight=True, show_lines=True)
+        table = Table(
+            title=title,
+            caption=caption,
+            highlight=True,
+            show_lines=True,
+            box=HEAVY_HEAD_ROUNDED_BOTTOM,
+            safe_box=False,
+        )
 
         # Headers
         headers = ("Extra params", "Operation", "# samples", "Duration")
