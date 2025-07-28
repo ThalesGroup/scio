@@ -1,4 +1,4 @@
-<!-- [![os][os_img]][os_target] Temporarily disabled (requires faiss fix) -->
+[![os][os_img]][os_target]
 [![python][python_img]][python_target]
 [![pypi][pypi_img]][pypi_target]
 [![typed][typed_img]][typed_target]
