@@ -49,9 +49,25 @@ suppress_warnings = ["config.cache"]  # Unpicklable ``autosummary_context``
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
-html_theme = "pydata_sphinx_theme"
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
+html_theme = "pydata_sphinx_theme"
+html_theme_options = {
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/ThalesGroup/scio",
+            "icon": "fab fa-github-square",
+            "type": "fontawesome",
+        },
+        {
+            "name": "PyPI",
+            "url": "https://pypi.org/project/scio-pypi",
+            "icon": "_static/assets/pypi_logo.png",
+            "type": "local",
+        },
+    ],
+}
 
 # -- Options for LaTeX output -------------------------------------------------
 latex_engine = "lualatex"
