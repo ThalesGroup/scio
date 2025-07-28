@@ -12,9 +12,9 @@ Welcome to ``scio``'s documentation!
 
 ----
 
-This library is meant for research scientists, developers and even amateur programmers who wish to augment their Neural Network predictions with **confidence scores**.
+This library is meant for AI engineers, research scientists or amateur programmers, who wish to augment their Neural Network predictions with **confidence scores**. It applies to **trained models**, facilitating collaborative work and real-world deployment!
 
-In this documentation, you will find an extensive :doc:`api_references`, scientific literature :doc:`bib_references` and hands-on :doc:`auto_tutorials/index` (*very soon*). If you need to reach out to our community, please visit the `GitHub repository <https://github.com/ThalesGroup/scio>`_.
+In this documentation, you will find extensive :doc:`api_references`, scientific literature :doc:`bib_references` and hands-on :doc:`auto_tutorials/index` (*very soon*). If you need to reach out to our community, please visit the `GitHub repository <https://github.com/ThalesGroup/scio>`_.
 
 .. toctree::
    :caption: Using scio

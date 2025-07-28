@@ -44,7 +44,7 @@
   <h3 align="center">Confidence scores for Neural Networks, made easy!</h3>
 
   <p align="center">
-    <a href="https://sciortd.readthedocs.io/en/latest/index.html"><strong>Explore the docs »</strong></a>
+    <a href="https://sciortd.readthedocs.io/en/latest/index.html"><strong>Explore the Docs »</strong></a>
     <br />
     <a href="https://github.com/ThalesGroup/scio/issues/new?labels=question">Ask Help</a>
     &middot;
