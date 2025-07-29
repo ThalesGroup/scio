@@ -23,7 +23,7 @@
 [license_img]: https://img.shields.io/github/license/ThalesGroup/scio "Distributed under"
 [license_target]: https://github.com/ThalesGroup/scio?tab=MIT-1-ov-file#MIT-1-ov-file
 
-[pipeline_img]: https://github.com/ThalesGroup/scio/actions/workflows/ci.yml/badge.svg "Pipeline status"
+[pipeline_img]: https://github.com/ThalesGroup/scio/actions/workflows/ci.yml/badge.svg?branch=release "Pipeline status"
 [pipeline_target]: https://github.com/ThalesGroup/scio/actions
 
 [coverage_img]: https://codecov.io/github/ThalesGroup/scio/graph/badge.svg?token=7L1KWAHGR6 "Test coverage"
@@ -44,7 +44,7 @@
   <h3 align="center">Confidence scores for Neural Networks, made easy!</h3>
 
   <p align="center">
-    <a href="https://sciortd.readthedocs.io/en/latest/index.html"><strong>Explore the Docs »</strong></a>
+    <a href="https://sciortd.readthedocs.io/en/stable/index.html"><strong>Explore the Docs »</strong></a>
     <br />
     <a href="https://github.com/ThalesGroup/scio/issues/new?labels=question">Ask Help</a>
     &middot;
@@ -79,11 +79,11 @@ For development, we recommend using `uv` since we ship `uv.lock` for better deve
 This package is distributed under the [MIT license](LICENSE). The use of nvidia proprietary modules (for GPU acceleration) is optional.
 
 <!-- References -->
-[docs]: https://sciortd.readthedocs.io/en/latest/index.html
-[tutorials]: https://sciortd.readthedocs.io/en/latest/auto_tutorials/index.html
-[api]: https://sciortd.readthedocs.io/en/latest/api_references.html
-[references]: https://sciortd.readthedocs.io/en/latest/bib_references.html
-[citing]:  https://sciortd.readthedocs.io/en/latest/citing_scio.html
+[docs]: https://sciortd.readthedocs.io/en/stable/index.html
+[tutorials]: https://sciortd.readthedocs.io/en/stable/auto_tutorials/index.html
+[api]: https://sciortd.readthedocs.io/en/stable/api_references.html
+[references]: https://sciortd.readthedocs.io/en/stable/bib_references.html
+[citing]:  https://sciortd.readthedocs.io/en/stable/citing_scio.html
 [issues]: https://github.com/ThalesGroup/scio/issues
 [discussions]: https://github.com/ThalesGroup/scio/discussions
 [pulls]: https://github.com/ThalesGroup/scio/pulls

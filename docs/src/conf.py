@@ -6,6 +6,7 @@
 
 import importlib
 import inspect
+import os
 import re
 from collections.abc import Mapping
 from enum import EnumType
@@ -216,7 +217,11 @@ bibtex_bibfiles = ["refs.bib"]
 
 # -- Options for "sphinx.ext.linkcode" ---------------------------------------
 github_url = "https://github.com/ThalesGroup/scio"
-branch = "main"
+ref = (  # Commit hash for PR builds, else checked out branch
+    os.environ["READTHEDOCS_GIT_COMMIT_HASH"]
+    if os.environ.get("READTHEDOCS_VERSION_TYPE", "") == "external"
+    else os.environ.get("READTHEDOCS_GIT_IDENTIFIER", "develop")
+)
 
 
 def linkcode_resolve(
@@ -270,7 +275,7 @@ def linkcode_resolve(
 
     linespec = f"#L{lineno}-L{lineno_final}" if lineno else ""
 
-    return f"{github_url}/blob/{branch}/scio/{fn}{linespec}"
+    return f"{github_url}/blob/{ref}/scio/{fn}{linespec}"
 
 
 # -- Options for "sphinx_gallery.gen_gallery" --------------------------------

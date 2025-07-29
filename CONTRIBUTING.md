@@ -47,7 +47,7 @@ Within GitHub, navigate to <https://github.com/ThalesGroup/scio> and fork the re
 
 ##### 2. Create a new branch
 
-It is recommended to create pull requests from a specific (not `main`) branch. This allows you have multiple pending PRs in parallel if required. Creating a new branch can be done directly on GitHub or locally (in which case its first push requires the `--set-upstream origin <pr-branch-name>` option).
+It is recommended to create pull requests from a specific (not `develop`) branch. This allows you have multiple pending PRs in parallel if required. Creating a new branch can be done directly on GitHub or locally (in which case its first push requires the `--set-upstream origin <pr-branch-name>` option).
 
 ##### 3. Clone the repository locally and relocate
 
