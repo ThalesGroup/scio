@@ -48,9 +48,9 @@
     <br />
     <a href="https://github.com/ThalesGroup/scio/issues/new?labels=question">Ask Help</a>
     &middot;
-    <a href="https://github.com/ThalesGroup/scio/issues/new?labels=enhancement">Request Feature</a>
+    <a href="https://github.com/ThalesGroup/scio/issues/new?template=feature_request.yml">Request Feature</a>
     &middot;
-    <a href="https://github.com/ThalesGroup/scio/issues/new?labels=bug">Report Bug</a>
+    <a href="https://github.com/ThalesGroup/scio/issues/new?template=bug_report.yml">Report Bug</a>
   </p>
 </div>
 
