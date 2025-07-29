@@ -5,11 +5,11 @@
 - [x] Link to `codecov`
 - [x] Check badges link correctly
 - [x] Fix badge gh rendering
+- [x] Issue templates
 - [ ] Write listed tutorials
 - [ ] Transfer relevant issues
 - [ ] Citation guide
 - [ ] Contributors
-- [ ] Issue templates
 
 ----
 

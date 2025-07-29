@@ -1,0 +1,14 @@
+name: Feature request
+description: Suggest your enhancement idea
+title: "[ENH] "
+labels: enhancement
+
+body:
+  - type: textarea
+    attributes: 
+      label: "Describe the proposed new feature or enhancement:"
+      description: >
+        Please provide a concise and **contextualized** description of
+        your enhancement proposal.
+    validations:
+      required: true
