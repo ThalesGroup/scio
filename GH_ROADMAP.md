@@ -5,7 +5,7 @@
 - [x] Link to `codecov`
 - [x] Check badges link correctly
 - [x] Fix badge gh rendering
-- [x] Issue templates
+- [x] Issue templates²
 - [ ] Write listed tutorials
 - [ ] Transfer relevant issues
 - [ ] Citation guide
@@ -13,5 +13,6 @@
 
 ----
 
+- [ ] Update `README.md` RTD links once `v1.0.0` is released (first "stable" version for RTD)
 - [ ] Transfer PyPI name once [PEP541 request](https://github.com/pypi/support/issues/6146) goes through
 - [ ] Transfer RTD name once request goes through
