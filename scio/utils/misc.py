@@ -221,7 +221,7 @@ class ScoreTimer:
             │ max_gram_order=4 │  inference  │        20 │ 246.5 ms │
             │                  │  inference  │      1352 │ 13.78 s  │
             │                  │ calibration │       677 │ 6.819 s  │
-            └──────────────────┴─────────────┴───────────┴──────────┘
+            ╰──────────────────┴─────────────┴───────────┴──────────╯
                     Entries are listed from newest to oldest
 
         Note
