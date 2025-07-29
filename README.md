@@ -1,3 +1,5 @@
+Test RTD PR build and check that linkcode links as expected.
+
 [![os][os_img]][os_target]
 [![python][python_img]][python_target]
 [![pypi][pypi_img]][pypi_target]
