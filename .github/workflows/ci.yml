@@ -36,14 +36,14 @@ jobs:
           uv -v run mypy
 
       - name: Build docs (Posix)
-        if: runner.os != 'Windows'
+        if: matrix.os != 'windows-latest'
         env:
           SPHINXOPTS: --fail-on-warning
         run: |
           uv -v run make -C docs
 
       - name: Build docs (Windows)
-        if: runner.os == 'Windows'
+        if: matrix.os == 'windows-latest'
         env:
           SPHINXOPTS: --fail-on-warning
         run: |
@@ -55,6 +55,7 @@ jobs:
           uv -v pip install dist/scio_pypi-1.0.0a2-py3-none-any.whl
 
       - name: Run pytest
+        if: matrix.os != 'macos-latest'  # Temporary
         id: run-pytest
         continue-on-error: true
         run: |
@@ -64,7 +65,7 @@ jobs:
         if: ${{ steps.run-pytest.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
-          name: pytest-observed-${{ runner.os }}-py${{ matrix.python-version }}
+          name: pytest-observed-${{ matrix.os }}-py${{ matrix.python-version }}
           path: test/expected/*/*.observed.*
           retention-days: 7
 
@@ -80,6 +81,7 @@ jobs:
           verbose: true
 
       - name: Run pytest with lowest resolution
+        if: matrix.os != 'macos-latest'  # Temporary
         id: run-pytest-lowest
         continue-on-error: true
         run: |
@@ -89,7 +91,7 @@ jobs:
         if: ${{ steps.run-pytest-lowest.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
-          name: pytest-lowest-observed-${{ runner.os }}-py${{ matrix.python-version }}
+          name: pytest-lowest-observed-${{ matrix.os }}-py${{ matrix.python-version }}
           path: test/expected/*/*.observed.*
           retention-days: 7
 

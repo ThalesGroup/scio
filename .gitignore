@@ -13,6 +13,7 @@ wheels/
 .*
 !.github
 !.gitignore
+!.readthedocs.yaml
 
 # Doc
 docs/_build/
