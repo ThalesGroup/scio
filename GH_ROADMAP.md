@@ -6,10 +6,10 @@
 - [x] Check badges link correctly
 - [x] Fix badge gh rendering
 - [x] Issue templates²
+- [x] Contributors
 - [ ] Write listed tutorials
 - [ ] Transfer relevant issues
 - [ ] Citation guide
-- [ ] Contributors
 
 ----
 
