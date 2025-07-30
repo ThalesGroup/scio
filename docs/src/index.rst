@@ -30,6 +30,7 @@ In this documentation, you will find extensive :doc:`api_references`, scientific
    api_references
    bib_references
    citing_scio
+   contributors
 
 *The source code for this documentation is released under the same license as the* |lib_license|_.
 
