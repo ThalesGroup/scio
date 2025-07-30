@@ -106,6 +106,9 @@ convention = "numpy"
     "INP001",                        # Implicit namespace package
     "T201",                          # Print statements
 ]
+".github/scripts/*.py" = [
+    "INP001",                        # Implicit namespace package
+]
 
 [tool.ruff.format]
 docstring-code-format = true  # Enable reformatting of code snippets in docstrings.
