@@ -1,1 +1,2 @@
-- Élie Goudout (elie.goudout@thalesgroup.com)
+- Élie Goudout <elie.goudout@thalesgroup.com>
+- Élie Goudout <eliegoudout@hotmail.com>
