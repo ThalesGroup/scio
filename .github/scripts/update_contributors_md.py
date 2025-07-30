@@ -100,7 +100,7 @@ def generate_html(entries: tuple[Entry, ...]) -> str:
 
         entry_html = f"""
 <div align="center" style="width: 16.66%; padding: 0.8%;">
-  <img src="{avatar_url}" width="100%" alt="@{username}" style="border-radius: 5%;">
+  <img src="{avatar_url}" width="100px" alt="@{username}" style="border-radius: 5%;">
   <p>
     {f"<strong>{name}</strong><br/>" if name else ""}
     <a href="https://github.com/{username}" style="font-family: monospace;
