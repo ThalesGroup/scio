@@ -68,7 +68,11 @@ pip install scio-pypi  # the `-pypi` suffix will be removed soon
 The full documentation can be found [here][docs]. You may specifically refer to [tutorials], [API references][api] or scientific literature [references].
 
 ### Citing `scio` 🎓
-See [citing].
+<!-- START CITING -->
+If you find our library useful in your work, please reference it using the following entry (for bibtex).
+
+*Coming soon ...*
+<!-- END CITING -->
 
 ### Contributing 💫
 Questions, [issues], [discussions] and [pull requests][pulls] are welcome! Read our [Contributing Guide](CONTRIBUTING.md) and join our team of [contributors](CONTRIBUTORS.md) ✨
