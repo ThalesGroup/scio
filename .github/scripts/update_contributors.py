@@ -104,7 +104,7 @@ def generate_html(entries: tuple[Entry, ...]) -> str:
 
     for username_raw, contributions, (lastname, firstname) in entries:
         username = html.escape(username_raw)
-        emojis = " ".join(EMOJI_SPAN.format(*EMOJI_MAP[contrib]) for contrib in contributions)
+        emojis = " ".join(EMOJI_SPAN.format(*EMOJI_MAP[c]) for c in contributions)
         name = html.escape(f"{firstname} {lastname}".strip())
         avatar_url = f"https://github.com/{username}.png"
 

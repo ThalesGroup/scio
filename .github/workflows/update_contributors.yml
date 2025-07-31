@@ -4,9 +4,11 @@ on:
   push:
     paths:
       - 'CONTRIBUTORS.md'
+      - '.github/scripts/update_contributors.py'
   pull_request:
     paths:
       - 'CONTRIBUTORS.md'
+      - '.github/scripts/update_contributors.py'
 
 jobs:
   update-contributors:
@@ -23,7 +25,7 @@ jobs:
       - name: Install the latest version of uv and set the python version
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.3"
+          version: "0.8.4"
           python-version: ${{ matrix.python-version }}
 
       - name: Run script
