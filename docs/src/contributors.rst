@@ -15,7 +15,7 @@ Thanks to these wonderful *alphabetically sorted* people, who make this project 
             font-size: 0.9em;">
            @ego-thales
          </a><br/>
-         <span title="Bug reports">🐛</span> <span title="Code">💻</span> <span title="Documentation">📚</span> <span title="Fixes">🛠️</span> <span title="Ideas">💡</span> <span title="Maintenance">🚧</span> <span title="PR reviews">👀</span> <span title="Testing">⚙️</span> <span title="Tutorials">🎓</span>
+         <span class="contrib-emoji" legend="Bug reports">🐛</span> <span class="contrib-emoji" legend="Code">💻</span> <span class="contrib-emoji" legend="Documentation">📚</span> <span class="contrib-emoji" legend="Fixes">🛠️</span> <span class="contrib-emoji" legend="Ideas">💡</span> <span class="contrib-emoji" legend="Maintenance">🚧</span> <span class="contrib-emoji" legend="PR reviews">👀</span> <span class="contrib-emoji" legend="Testing">⚙️</span> <span class="contrib-emoji" legend="Tutorials">🎓</span>
        </p>
      </div>
 
@@ -27,7 +27,7 @@ Thanks to these wonderful *alphabetically sorted* people, who make this project 
             font-size: 0.9em;">
            @eliegoudout
          </a><br/>
-         <span title="Fixes">🛠️</span>
+         <span class="contrib-emoji" legend="Fixes">🛠️</span>
        </p>
      </div>
 
@@ -39,7 +39,7 @@ Thanks to these wonderful *alphabetically sorted* people, who make this project 
             font-size: 0.9em;">
            @Sebastienlejeune
          </a><br/>
-         <span title="Infrastructure">🧱</span>
+         <span class="contrib-emoji" legend="Infrastructure">🧱</span>
        </p>
      </div>
 

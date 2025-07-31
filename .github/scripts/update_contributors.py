@@ -13,20 +13,21 @@ CONTRIBUTORS_RST = (
 )
 
 # Map known contributions to emojis (extend as needed)
+EMOJI_SPAN = '<span class="contrib-emoji" legend="{}">{}</span>'
 EMOJI_MAP = MappingProxyType({
-    "answering questions": '<span title="Answering questions">💬</span>',
-    "bug reports": '<span title="Bug reports">🐛</span>',
-    "code": '<span title="Code">💻</span>',
-    "dissemination": '<span title="Dissemination">📢</span>',
-    "documentation": '<span title="Documentation">📚</span>',
-    "fixes": '<span title="Fixes">🛠️</span>',
-    "ideas": '<span title="Ideas">💡</span>',
-    "infrastructure": '<span title="Infrastructure">🧱</span>',
-    "maintenance": '<span title="Maintenance">🚧</span>',
-    "pr reviews": '<span title="PR reviews">👀</span>',
-    "research": '<span title="Research">🔬</span>',
-    "testing": '<span title="Testing">⚙️</span>',
-    "tutorials": '<span title="Tutorials">🎓</span>',
+    "answering questions": ("Answering questions", "💬"),
+    "bug reports": ("Bug reports", "🐛"),
+    "code": ("Code", "💻"),
+    "dissemination": ("Dissemination", "📢"),
+    "documentation": ("Documentation", "📚"),
+    "fixes": ("Fixes", "🛠️"),
+    "ideas": ("Ideas", "💡"),
+    "infrastructure": ("Infrastructure", "🧱"),
+    "maintenance": ("Maintenance", "🚧"),
+    "pr reviews": ("PR reviews", "👀"),
+    "research": ("Research", "🔬"),
+    "testing": ("Testing", "⚙️"),
+    "tutorials": ("Tutorials", "🎓"),
 })
 
 # Markers in CONTRIBUTORS.md and docs/src/contributors.rst
@@ -103,7 +104,7 @@ def generate_html(entries: tuple[Entry, ...]) -> str:
 
     for username_raw, contributions, (lastname, firstname) in entries:
         username = html.escape(username_raw)
-        emojis = " ".join(EMOJI_MAP[contrib] for contrib in contributions)
+        emojis = " ".join(EMOJI_SPAN.format(*EMOJI_MAP[contrib]) for contrib in contributions)
         name = html.escape(f"{firstname} {lastname}".strip())
         avatar_url = f"https://github.com/{username}.png"
 
