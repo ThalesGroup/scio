@@ -5,7 +5,7 @@ What is ``scio``?
 
 It is an open-source Python library for designing, using and evaluating **confidence scores in Neural Networks**. This topic has recently gained significant attention, as deploying of Deep Learning models raises pressing reliability concerns – specifically for critical applications.
 
-The project was initiated by Élie Goudout in 2024, internally at cortAIX Labs, and its `first open-source release <first-release_>`_ dates back to July 25th, 2025, under the `MIT License <first-license_>`_.
+The project was initiated by Élie Goudout in 2024, internally at cortAIx Labs, and its `first open-source release <first-release_>`_ dates back to July 25th, 2025, under the `MIT License <first-license_>`_.
 
 The following sections introduce the broader context and outline the conceptual framework that guides the development and usage of ``scio``.
 
