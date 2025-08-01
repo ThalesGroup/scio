@@ -4,21 +4,29 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+import html
 import importlib
 import inspect
 import os
 import re
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from enum import EnumType
 from itertools import zip_longest
+from operator import itemgetter
 from os.path import dirname, relpath
+from pathlib import Path
+from time import perf_counter
+from types import MappingProxyType
 from typing import TYPE_CHECKING, Literal, cast
 
 from paramclasses import IMPL, MISSING, isparamclass
 from sphinx.application import Sphinx
+from sphinx.util import logging
 from sphinx_gallery.sorting import ExplicitOrder  # type: ignore[import-untyped]
 
 if TYPE_CHECKING:
+    from re import Match
+
     from sphinx.ext.autodoc import _AutodocObjType  # noqa: TC004 (unclear...)
 
 import scio
@@ -47,6 +55,7 @@ extensions = [
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 suppress_warnings = ["config.cache"]  # Unpicklable ``autosummary_context``
+logger = logging.getLogger(__name__)
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -220,8 +229,9 @@ github_url = "https://github.com/ThalesGroup/scio"
 ref = (  # Commit hash for PR builds, else checked out branch
     os.environ["READTHEDOCS_GIT_COMMIT_HASH"]
     if os.environ.get("READTHEDOCS_VERSION_TYPE", "") == "external"
-    else os.environ.get("READTHEDOCS_GIT_IDENTIFIER", "develop")
+    else os.environ.get("READTHEDOCS_GIT_IDENTIFIER", "")
 )
+root_url = f"{github_url}/blob/{ref}" if ref else Path(__file__).parents[2]
 
 
 def linkcode_resolve(
@@ -275,7 +285,7 @@ def linkcode_resolve(
 
     linespec = f"#L{lineno}-L{lineno_final}" if lineno else ""
 
-    return f"{github_url}/blob/{ref}/scio/{fn}{linespec}"
+    return f"{root_url}/scio/{fn}{linespec if ref else ''}"
 
 
 # -- Options for "sphinx_gallery.gen_gallery" --------------------------------
@@ -294,11 +304,154 @@ sphinx_gallery_conf = {
     "within_subsection_order": ExplicitOrder(tutorials_order),
 }
 
-# -- Options for custom rendering --------------------------------------------
-# Process docstrings of enums to display members and values cleanly, as well as
-# paramclasses to complete doc for inherited parameters.
+# -- Callbacks for sphinx events (custom rendering) --------------------------
+# 1. auto_contributors: Create pretty HTML contributors page by parsing
+#    ``CONTRIBUTORS.md``
+# 2. process_enum_docstring: Nice members table for documented enums
+# 3. process_paramclass_docstring: Complete paramclass docstring for inherited
+#    parameters
+
+# 1. auto_contributors
+EMOJI_SPAN = '<span class="contrib-emoji" legend="{}">{}</span>'
+EMOJI_MAP = MappingProxyType({
+    "answering questions": ("Answering questions", "💬"),
+    "bug reports": ("Bug reports", "🐛"),
+    "code": ("Code", "💻"),
+    "dissemination": ("Dissemination", "📢"),
+    "documentation": ("Documentation", "📚"),
+    "fixes": ("Fixes", "🛠️"),
+    "ideas": ("Ideas", "💡"),
+    "infrastructure": ("Infrastructure", "🧱"),
+    "maintenance": ("Maintenance", "🚧"),
+    "pr reviews": ("PR reviews", "👀"),
+    "research": ("Research", "🔬"),
+    "testing": ("Testing", "⚙️"),
+    "tutorials": ("Tutorials", "🎓"),
+})
+
+# Markers in CONTRIBUTORS.md
+TABLE_START = "<!-- TABLE START -->"
+TABLE_END = "<!-- TABLE END -->"
+
+
+type Entry = tuple[str, tuple[str, ...], tuple[str, str]]
+
+
+def parse_contributors_table(path: Path) -> tuple[Entry, ...]:
+    """Find manual entries and parse the table.
+
+    Not very robust on purpose, expects a precise format. See example
+    below for output specification.
+
+    Example
+    -------
+    Sample output::
+
+        (
+            ("alice", ("code", "documentation", "fixes"), ("Smith", "Alice")),
+            ("bob", ("fixes",), ("Lee", "Bob")),
+            ("noname", (), ("", "")),
+        )
+
+    """
+    content = path.read_text(encoding="utf-8")
+    pattern = f"{re.escape(TABLE_START)}\n(.*)\n{re.escape(TABLE_END)}\n$"
+    match = cast("Match[str]", re.search(pattern, content, re.DOTALL))
+    entries_str = match[1].split("\n")[2:]  # Drop header lines
+    entries_tpl = tuple(
+        tuple(map(str.strip, entry.split("|")[1:-1])) for entry in entries_str
+    )
+    return tuple(
+        (  # type: ignore[misc]  # ``itemgetter(0, 2)`` not understood
+            username,
+            tuple(map(str.strip, contrib_str.split(","))) if contrib_str else (),
+            tuple(map(str.strip, itemgetter(0, 2)(name_str.partition(",")))),
+        )
+        for username, contrib_str, name_str in entries_tpl
+    )
+
+
+def generate_html(entries: Sequence[Entry], contributors_md_url: str) -> str:
+    """Generate HTML content corresponding to parsed entries."""
+    lines = []
+    lines.append(
+        '<div style="display: flex; flex-wrap: wrap; justify-content: flex-start;">',
+    )
+
+    for username_raw, contributions, (lastname, firstname) in entries:
+        username = html.escape(username_raw)
+        emojis = " ".join(EMOJI_SPAN.format(*EMOJI_MAP[c]) for c in contributions)
+        name = html.escape(f"{firstname} {lastname}".strip())
+        avatar_url = f"https://github.com/{username}.png"
+
+        lines.extend(
+            f"""
+  <div align="center" style="width: 16.66%; padding: 0.7%;">
+    <img src="{avatar_url}" width="100%" alt="@{username}" style="border-radius: 5%;">
+    <p>
+      {f"<strong>{name}</strong><br/>" if name else ""}
+      <a href="https://github.com/{username}" style="font-family: monospace;
+         font-size: 0.9em;">
+        @{username}
+      </a><br/>
+      {emojis}
+    </p>
+  </div>
+""".split("\n")[1:],
+        )
+
+    auto_gen_info = (
+        '<i>This HTML content was automatically generated by parsing <a href="'
+        f'{contributors_md_url}"><code>CONTRIBUTING.md</code></a>.</i>'
+    )
+    lines.extend(["</div>", "", auto_gen_info, ""])
+    return "\n".join(lines)
+
+
+LAST_CHAR = chr(0x10FFFF)
+
+
+def sort_key(entry: Entry) -> tuple[str, str, str, int]:
+    """Generate sort key for given entry."""
+    username, contributions, (lastname, firstname) = entry
+    if not username:
+        msg = f"Contributor entries require at least a username. Invalid entry: {entry}"
+        raise ValueError(msg)
+
+    return (
+        lastname.title() or LAST_CHAR,
+        firstname.title() or LAST_CHAR,
+        username,
+        -len(contributions),
+    )
+
+
+def auto_contributors(app: Sphinx) -> None:
+    """Parse ``CONTRIBUTORS.md`` generate ``auto_contributors.html``."""
+    start = perf_counter()
+    auto_contributors_html = app.srcdir / "auto_contributors.html"
+    contributors_md = (app.srcdir / ".." / ".." / "CONTRIBUTORS.md").resolve()
+    contributors_md_url = f"{root_url}/CONTRIBUTORS.md"
+    logger.info(
+        """[auto-contributors] Generating auto_contributors.html
+    Parsing: %s
+    Target: %s""",
+        contributors_md,
+        auto_contributors_html,
+    )
+
+    # Parse ``CONTRIBUTORS.md`` and generate html content
+    entries = parse_contributors_table(contributors_md)
+    html = generate_html(sorted(entries, key=sort_key), contributors_md_url)
+
+    # Generate ``auto_contributors.html``
+    auto_contributors_html.write_text(html, encoding="utf-8")
+    end = perf_counter()
+    logger.info("[auto-contributors] Done in %ss", f"{end-start:.3f}")
+
+
+# 2. process_enum_docstring
 ATTRIBUTE_DIRECTIVE = ".. attribute:: "
-RUBRIC_DIRECTIVE = ".. rubric:: "
 INDENT = "   "
 TYPESEP = "\n" + INDENT + ":type: "
 MEMBERS = "Member"
@@ -446,6 +599,10 @@ def process_enum_docstring(
         transform_attribute_section_into_members_table(obj, lines)
 
 
+# 3. process_paramclass_docstring
+RUBRIC_DIRECTIVE = ".. rubric:: "
+
+
 def get_undoc_params(obj: type, lines: list[str]) -> tuple[set[str], int]:
     """Get undocumented params and where to insert new ones.
 
@@ -467,10 +624,10 @@ def get_undoc_params(obj: type, lines: list[str]) -> tuple[set[str], int]:
             continue
 
         # Documented parameter found
-        documented.append(match.group(param_group))
+        documented.append(match[param_group])
 
         # Handle multiline field description
-        field_indent = " " * (len(match.group(0)) + 1)
+        field_indent = " " * (len(match[0]) + 1)
 
         offset += 1
         insert_here = offset
@@ -559,7 +716,9 @@ def process_paramclass_docstring(
             add_undocumented_parameters(cls, lines)
 
 
+# -- Connect callbacks to events ---------------------------------------------
 def setup(app: Sphinx) -> None:
     """Connect our custom callbacks."""
+    app.connect("builder-inited", auto_contributors)
     app.connect("autodoc-process-docstring", process_enum_docstring)
     app.connect("autodoc-process-docstring", process_paramclass_docstring)
