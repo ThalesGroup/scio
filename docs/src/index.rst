@@ -39,7 +39,7 @@ In this documentation, you will find hands-on :doc:`auto_tutorials/index` (*very
          </div>
 
    .. grid-item-card::
-      :link: confidence-scores
+      :link: what-is-scio
       :link-type: ref
 
       .. raw:: html

@@ -1,5 +1,3 @@
-.. _confidence-scores:
-
 Confidence Scores
 =================
 

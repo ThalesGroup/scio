@@ -6,9 +6,10 @@ The user guide is a great place to start if you are new to this project!
 .. rubric:: Table of content
 
 .. toctree::
-   :caption: What is scio?
+   :caption: About scio
    :maxdepth: 1
 
+   user_guide/what_is_scio
    user_guide/confidence_scores
    user_guide/ood_detection
    user_guide/paradigm
