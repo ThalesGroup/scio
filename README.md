@@ -8,8 +8,8 @@
 [![ruff][ruff_img]][ruff_target]
 [![uv][uv_img]][uv_target]
 
-[os_img]: https://img.shields.io/badge/cross--platform-%E2%9C%93-blue "Tested on Ubuntu, Windows"
-[os_target]: https://github.com/ThalesGroup/scio#readme
+[os_img]: https://img.shields.io/badge/cross--platform-%E2%9C%93-blue "Tested on Ubuntu & Windows"
+[os_target]: https://sciortd.readthedocs.io/en/latest/user_guide/installation_compatibility.html#os-compatibility
 
 [python_img]: https://img.shields.io/badge/python-3.12%20|%203.13-blue "Compatible Python versions"
 [python_target]: https://devguide.python.org/versions
