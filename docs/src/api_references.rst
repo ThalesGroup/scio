@@ -1,3 +1,5 @@
+.. _api-references:
+
 API References
 ==============
 
@@ -15,6 +17,7 @@ You may also refer to the :doc:`api_references/misc` section, detailing most of 
    :includehidden:
    :maxdepth: 2
    :titlesonly:
+   :caption: API References
 
    api_references/recorder
    api_references/scores

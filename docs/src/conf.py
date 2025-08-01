@@ -50,6 +50,7 @@ extensions = [
     "sphinx_gallery.gen_gallery",
     "sphinxcontrib.katex",
     "myst_parser",
+    "sphinx_design",
 ]
 
 templates_path = ["_templates"]
@@ -59,6 +60,7 @@ logger = logging.getLogger(__name__)
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+html_show_sourcelink = False
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
 html_theme = "pydata_sphinx_theme"
@@ -73,7 +75,7 @@ html_theme_options = {
         {
             "name": "PyPI",
             "url": "https://pypi.org/project/scio-pypi",
-            "icon": "_static/assets/pypi_logo.png",
+            "icon": "_static/pypi_logo.png",
             "type": "local",
         },
     ],

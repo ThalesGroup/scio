@@ -87,3 +87,43 @@ div.sphx-glr-download a:hover {
   opacity: 1;
   visibility: visible;
 }
+
+/* Index cards */
+.card-container {
+  display: flex;
+  aspect-ratio: 3.5;
+  width: 100%;
+  background: var(--sd-color-card-background);
+  border: 2px solid var(--sd-color-card-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.card-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e0e0e0;
+  padding: 0.5rem;
+}
+.card-image img {
+  width: auto;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.card-text {
+  flex: 2.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem 1rem;
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  line-height: 1.2;
+  overflow: hidden;
+}
+.card-text > div:first-child {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}

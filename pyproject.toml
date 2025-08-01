@@ -70,6 +70,7 @@ dev = [
     "beautifulsoup4>=4.12.3", # pydata-sphinx-theme
     "iniconfig>=2.1", # pytest
     "ruamel-yaml-clib>=0.2.11", # ruamel-yaml
+    "sphinx-design>=0.6.1",
 ]
 
 

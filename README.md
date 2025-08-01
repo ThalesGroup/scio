@@ -41,7 +41,8 @@
 # `scio`
 
 <div align="center">
-  <h3 align="center">Confidence scores for Neural Networks, made easy!</h3>
+  <h3>Confidence scores for Neural Networks, made easy!</h3>
+  <p><i>« <strong>scio</strong> me nihil scire »</i></p>
 
   <p align="center">
     <a href="https://sciortd.readthedocs.io/en/latest/index.html"><strong>Explore the Docs »</strong></a>
