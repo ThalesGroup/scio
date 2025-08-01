@@ -447,7 +447,7 @@ def auto_contributors(app: Sphinx) -> None:
     # Generate ``auto_contributors.html``
     auto_contributors_html.write_text(html, encoding="utf-8")
     end = perf_counter()
-    logger.info("[auto-contributors] Done in %ss", f"{end-start:.3f}")
+    logger.info("[auto-contributors] Done in %ss", f"{end - start:.3f}")
 
 
 # 2. process_enum_docstring

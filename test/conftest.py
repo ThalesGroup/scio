@@ -104,7 +104,7 @@ def test_stem(request) -> Path:  # pragma: no cover
 
     regex = rf"^{orig_name}\[(.+)\]$"  # ``test_func[foo=0]`` matches ``foo=0``
     if (match := re.match(regex, test_name)) is not None:
-        name = match.group(1)
+        name = match[1]
     else:
         name = test_name.removeprefix("test_")
 
