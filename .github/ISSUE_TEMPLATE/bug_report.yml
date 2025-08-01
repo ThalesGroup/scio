@@ -35,7 +35,9 @@ body:
   - type: textarea
     attributes:
       label: "Error message:"
-      description: "Please include full error message, if any."
+      description: |
+        If any, please include the _full_ error message – after removing all
+        **sensitive** details.
       placeholder: "<traceback>"
       render: shell
 
@@ -60,5 +62,10 @@ body:
         Machine type: {platform.machine()}
         """)
         ```
+      placeholder: |
+        `scio` version: 1.0.0
+         Python version: 3.13.5
+         Platform: Linux (#67~22.04.1-Ubuntu ...)
+         Machine type: x86_64
     validations:
       required: true
