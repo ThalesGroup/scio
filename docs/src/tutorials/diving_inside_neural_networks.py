@@ -56,7 +56,7 @@ rnet  # Visualize
 #
 # The penultimate line of the above summary reports the layers that are
 # currently set to be recorded (stored in :attr:`rnet.recording
-# <scio.recorder.Recorder.recording>`). By default after instanciation,
+# <scio.recorder.Recorder.recording>`). By default after instantiation,
 # there are none.
 
 print(repr(rnet).split("\n")[-2])  # Show penultimate summary line

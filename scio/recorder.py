@@ -223,7 +223,7 @@ class Recorder(nn.Module):
     ) -> object:
         """Forward pass with optional recording & on-the-fly processing.
 
-        During instanciation, the structure of the network is computed
+        During instantiation, the structure of the network is computed
         with ``torchinfo``. By using :meth:`record`, the user defines
         layers of interest. During a forward pass, their activations are
         recorded and later accessible through the :attr:`activations`

@@ -78,7 +78,7 @@ class BaseDiscriminativePower(ParamClass):
     def __post_init__(self) -> None:
         """Run final params check.
 
-        Redundant only if params were passed at instanciation.
+        Redundant only if params were passed at instantiation.
         """
         self._check_params(SimpleNamespace(**self.params))  # type: ignore[operator]  # github.com/eliegoudout/paramclasses/issues/34
 
@@ -219,7 +219,7 @@ class TPR(BaseDiscriminativePower):
 
     @staticmethod
     def _check_params(params: SimpleNamespace) -> None:
-        """Sanitize ``max_fpr`` and ``min_tnr`` at instanciation."""
+        """Sanitize ``max_fpr`` and ``min_tnr`` at instantiation."""
         if (max_fpr := params.max_fpr) is not None:
             check(0 <= max_fpr <= 1)
         if (min_tnr := params.min_tnr) is not None:
@@ -266,7 +266,7 @@ class TNR(BaseDiscriminativePower):
 
     @staticmethod
     def _check_params(params: SimpleNamespace) -> None:
-        """Sanitize ``min_tpr`` and ``max_fnr`` at instanciation."""
+        """Sanitize ``min_tpr`` and ``max_fnr`` at instantiation."""
         if (min_tpr := params.min_tpr) is not None:
             check(0 <= min_tpr <= 1)
         if (max_fnr := params.max_fnr) is not None:
