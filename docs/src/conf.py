@@ -436,7 +436,7 @@ def auto_contributors(app: Sphinx) -> None:
     """Parse ``CONTRIBUTORS.md`` generate ``auto_contributors.html``."""
     start = perf_counter()
     auto_contributors_html = app.srcdir / "auto_contributors.html"
-    contributors_md = (app.srcdir.parents[1] / "CONTRIBUTORS.md").resolve()
+    contributors_md = app.srcdir.resolve().parents[1] / "CONTRIBUTORS.md"
     contributors_md_uri = (
         f"{root_uri}/CONTRIBUTORS.md"
         if ref
