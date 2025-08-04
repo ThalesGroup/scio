@@ -11,6 +11,11 @@ Most API references for this package are grouped in the following three sections
 
 You may also refer to the :doc:`api_references/misc` section, detailing most of the remaining internal utilities.
 
+Note that all submodules are lazily imported and accessible as top-level attributes. For example::
+
+   import scio
+   scio.eval.summary(...)  # Directly available
+
 .. rubric:: Table of content
 
 .. toctree::

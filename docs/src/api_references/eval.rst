@@ -1,7 +1,7 @@
 Visualization & Evaluation
 ==========================
 
-Both vizualization and evaluation paradigms differ across tasks. Currently, ``scio`` only provides :doc:`tools regarding classification <eval/classification>`.
+Both vizualization and evaluation paradigms differ across tasks. Currently, ``scio.eval`` only provides :doc:`tools regarding classification <eval/classification>`.
 
 .. rubric:: Visualization & Evaluation tools
 

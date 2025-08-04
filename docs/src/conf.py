@@ -51,6 +51,7 @@ extensions = [
     "sphinxcontrib.katex",
     "myst_parser",
     "sphinx_design",
+    "sphinxcontrib.tikz",
 ]
 
 templates_path = ["_templates"]
@@ -225,6 +226,15 @@ napoleon_custom_sections = [
 
 # -- Options for "sphinxcontrib.bibtex" --------------------------------------
 bibtex_bibfiles = ["refs.bib"]
+
+# -- Options for "sphinxcontrib.tikz" ----------------------------------------
+tikz_latex_engine = "pdflatex"
+tikz_proc_suite = "pdf2svg"
+tikz_transparent = False
+tikz_latex_preamble = r"""
+\definecolor{myorange}{RGB}{254,128,16}
+\definecolor{mygreen}{RGB}{47,161,46}
+"""
 
 # -- Options for "sphinx.ext.linkcode" ---------------------------------------
 github_url = "https://github.com/ThalesGroup/scio"
