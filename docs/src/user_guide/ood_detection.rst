@@ -25,7 +25,7 @@ Ultimately, the choice of threshold is a trade-off between False Positives and T
        \draw[thick, -stealth] (-2.4, 0) -- (6, 0) node[below left] {Score value for $S_{\text{bad}}$};
        \draw[thick, -stealth] (0, 0) -- (0, 3.3) node[left] {Density};
 
-       \fill[color=myorange, fill opacity=.35] (-2.3, 0) -- plot (\x, {2.2*1.2^(-(\x -.7)*(\x -.7)}) -- (5.8, 0);
+       \fill[color=myornge, fill opacity=.35] (-2.3, 0) -- plot (\x, {2.2*1.2^(-(\x -.7)*(\x -.7)}) -- (5.8, 0);
        \draw[color=myorange, thick] plot (\x, {2.2*1.2^(-(\x -.7)*(\x -.7)});
        \draw[color=myorange] (-1.7, 1.45) node {\large $X_{\text{\normalfont OoD}}$};
 
