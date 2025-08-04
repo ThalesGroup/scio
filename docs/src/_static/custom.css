@@ -127,3 +127,9 @@ div.sphx-glr-download a:hover {
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
+
+/* Bold italic */
+.bolditalic {
+  font-weight: bold;
+  font-style: italic;
+}

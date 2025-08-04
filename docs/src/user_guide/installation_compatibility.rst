@@ -10,7 +10,11 @@ We recommend installing ``scio`` from `PyPI <https://pypi.org/project/scio-pypi>
 
 	pip install scio-pypi  # the `-pypi` suffix will be removed soon
 
-If you wish to install from source or wheels manually, you can download `release assets <https://github.com/ThalesGroup/scio/releases>`_ directly on the GitHub repository.
+If you wish to install from source or wheels manually, you can download `release assets <https://github.com/ThalesGroup/scio/releases>`_ directly on the GitHub repository, or clone its current state with:
+
+.. code-block:: bash
+
+	git clone https://github.com/ThalesGroup/scio.git
 
 OS Compatibility
 ----------------

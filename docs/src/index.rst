@@ -12,7 +12,7 @@ Welcome to ``scio``'s documentation!
 
 ----
 
-This Python library is meant for AI engineers, research scientists or amateur programmers, who wish to augment their Neural Network predictions with **confidence scores**. It applies to **trained models**, facilitating collaborative work and real-world deployment!
+This Python library is meant for ML engineers, research scientists or amateur programmers, who wish to augment their Neural Network predictions with **confidence scores**. It applies to **trained models**, facilitating collaborative work and real-world deployment!
 
 In this documentation, you will find hands-on :doc:`auto_tutorials/index` (*very soon*), extensive :doc:`api_references` and scientific literature :doc:`bib_references`. If you need to reach out to our community, please visit the `GitHub repository <https://github.com/ThalesGroup/scio>`_.
 
