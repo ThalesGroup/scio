@@ -33,6 +33,6 @@ Our library is **fully compatible** and tested with CUDA devices for native use 
 
 Supported Data Types
 --------------------
-The package is **fully compatible** and tested with ``torch.half`` (float16), ``torch.float`` (float32) and ``torch.double`` (float64) data types. However, we **discourage** the use of gradient-based algorithms with ``torch.half`` data, as they can easily generate irrelevant results due to potential ``nan`` values. Finally, note that ``faiss``-related operations temporarily convert to 32 bits data independently of the input type.
+The package is **fully compatible** and tested with ``torch.half`` (float16), ``torch.float`` (float32) and ``torch.double`` (float64) data types. However, we **discourage** the use of gradient-based algorithms with ``torch.half`` data, as they can easily generate irrelevant results due to potential ``nan`` values. Finally, note that ``faiss``-related operations temporarily convert to 32 bits data, regardless of the input type.
 
-There is currently no support for ``torch.bfloat16`` but do not hesitate to express interest by opening a related issue.
+There is currently no official support for ``torch.bfloat16`` even though many features may be compatible. Do not hesitate to express interest by opening a related issue.
