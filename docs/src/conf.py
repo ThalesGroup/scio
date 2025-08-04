@@ -51,7 +51,6 @@ extensions = [
     "sphinxcontrib.katex",
     "myst_parser",
     "sphinx_design",
-    "sphinxcontrib.tikz",
 ]
 
 templates_path = ["_templates"]
@@ -84,15 +83,6 @@ html_theme_options = {
 
 # -- Options for LaTeX output -------------------------------------------------
 latex_engine = "lualatex"
-
-# -- Options for "sphinxcontrib.tikz" ----------------------------------------
-tikz_latex_engine = "pdflatex"
-tikz_proc_suite = "GhostScript"
-tikz_transparent = False
-tikz_latex_preamble = r"""
-\definecolor{myorange}{RGB}{254,128,16}
-\definecolor{mygreen}{RGB}{47,161,46}
-"""
 
 # -- Options for "sphinxcontrib.bibtex" --------------------------------------
 bibtex_bibfiles = ["refs.bib"]
