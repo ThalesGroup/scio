@@ -20,12 +20,12 @@ Both examples above use scores between :math:`0` and :math:`1` *by design* (comp
 
 The general hope is that if an input is completely irrelevant to the context in which a model was trained, then the score should be very low (and vice-versa).
 
-Only Order Matters
+Only order matters
 ------------------
 
 In the context of ``scio``, the **only assumption** about confidence scores is that **order matters**. For example, if one trusts a model regarding prediction :math:`A` with confidence :math:`\alpha`, they should be consistent and also trust every prediction :math:`B` with confidence :math:`\beta\geqslant\alpha`.
 
-Besides order, we specifically **ignore scale**, in order avoid any bias regarding the interpretation of confidence scores. We think this approach sound as we might use many different methods for assigning confidence scores, most of which do not have natural scales that any human operator (even field experts) could confidently interpret. Note that there is a lot of scientific litterature regarding the recalibration of the softmax output, which is out of scope for our project.
+Besides order, we specifically **ignore scale**, in order avoid any bias regarding the interpretation of confidence scores. We think this approach sound as we might use many different methods for assigning confidence scores, most of which do not have natural scales that any human operator (even field experts) could confidently interpret. Note that there is a lot of scientific literature regarding the recalibration of the softmax output, which is out of scope for our project.
 
 Vocabulary
 ----------

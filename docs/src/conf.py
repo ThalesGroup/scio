@@ -84,6 +84,9 @@ html_theme_options = {
 # -- Options for LaTeX output -------------------------------------------------
 latex_engine = "lualatex"
 
+# -- Options for "sphinxcontrib.bibtex" --------------------------------------
+bibtex_bibfiles = ["refs.bib"]
+
 # -- Options for "sphinx.ext.autodoc" ----------------------------------------
 autodoc_use_type_comments = False
 autodoc_typehints = "none"  # At least until github.com/sphinx-doc/sphinx/issues/13489
@@ -222,9 +225,6 @@ napoleon_use_admonition_for_notes = True
 napoleon_custom_sections = [
     ("Fields", "params_style"),  # For ``TypedDict``
 ]
-
-# -- Options for "sphinxcontrib.bibtex" --------------------------------------
-bibtex_bibfiles = ["refs.bib"]
 
 # -- Options for "sphinx.ext.linkcode" ---------------------------------------
 github_url = "https://github.com/ThalesGroup/scio"
