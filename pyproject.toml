@@ -64,7 +64,6 @@ dev = [
     "sphinx-gallery>=0.19",
     "sphinxcontrib-bibtex>=2.6.4",
     "sphinxcontrib-katex>=0.9.11",
-    "torchvision>=0.22",
     # Indirect dependencies for which the original package does not specify lower bounds
     "accessible-pygments>=0.0.5", # pydata-sphinx-theme
     "beautifulsoup4>=4.12.3", # pydata-sphinx-theme

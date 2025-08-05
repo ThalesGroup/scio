@@ -11,6 +11,8 @@ build:
     python: "3.13"
   commands:
     - pip install uv
+    # Clone the repo hub first to avoid log in sphinx-gallery tutorials
+    - git clone --branch hub https://github.com/ThalesGroup/scio.git ~/.cache/torch/hub/ThalesGroup_scio_hub
     - uv run make -C docs
     - mkdir -p $READTHEDOCS_OUTPUT
     - mv docs/_build/html $READTHEDOCS_OUTPUT

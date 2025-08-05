@@ -15,16 +15,18 @@ from scio.recorder import Recorder
 # Wrapping and visualizing your Neural Network
 # --------------------------------------------
 #
-# Let us first load a Neural Network, ``net``, say a ResNet18 with
-# :math:`8` output classes. We also prepare future input data for this
-# tutorial.
+# Let us first load an arbitrary Neural Network. We use a lightweight
+# `Tiniest <https://github.com/xvel/cifar10-tiniest>`_ architecture
+# trained on CIFAR10 and hosted on
+# `our hub <https://github.com/ThalesGroup/scio/tree/hub>`_. We also
+# prepare future input data for this tutorial.
 
 import torch
-from torchvision.models import resnet18  # type: ignore[import-untyped]
 
 sample_shape = (3, 32, 32)
 inputs = torch.rand((5, *sample_shape))  # Random inputs with 5 samples
-net = resnet18(num_classes=8).to(inputs)
+net = torch.hub.load("ThalesGroup/scio:hub", "tiniest", trust_repo=True, verbose=False)
+net = net.to(inputs)
 
 # %%
 # To wrap it into a :class:`~scio.recorder.Recorder` Net, ``rnet``,
@@ -65,10 +67,10 @@ print(repr(rnet).split("\n")[-2])  # Show penultimate summary line
 # One can arbitrarily set this using :meth:`rnet.record()
 # <scio.recorder.Recorder.record>` with the ``depth-idx`` identifiers
 # from the summary (*e.g.* ``1-9``). For example, the following
-# specifies that the output of the first and last ``BasicBlock`` as well
-# as the penultimate layer should be recorded.
+# specifies that the output of the first ``Block`` and the penultimate
+# layer should be recorded.
 
-rnet.record((2, 1), (2, 8), (1, 9))
+rnet.record((1, 3), (1, 11))
 print(repr(rnet).split("\n")[-2])  # Show penultimate summary line
 
 # %%
