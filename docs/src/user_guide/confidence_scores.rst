@@ -4,7 +4,7 @@ Confidence Scores
 The concept
 -----------
 
-In the context of Machine Learning, confidence scores are real numbers paired with runtime predictions, meant to inform the operator about the « level of trust » they should have regarding individual model outputs. We illustrate very common examples below for Image Classification (left) and Object Detection (right).
+In the context of Machine Learning, confidence scores are real numbers paired with runtime predictions, meant to inform the operator about the "level of trust" they should have regarding individual model outputs. We illustrate very common examples below for Image Classification (left) and Object Detection (right).
 
 |panda| |traffic|
 
@@ -30,7 +30,7 @@ Besides order, we specifically **ignore scale**, in order avoid any bias regardi
 Vocabulary
 ----------
 
-Throughout the documentation and source code, « confidence score » is loosely used to denote one of **three possible meanings**, which is hopefully clear from the context. These are:
+Throughout the documentation and source code, "confidence score" is loosely used to denote one of **three possible meanings**, which is hopefully clear from the context. These are:
 
 #. **Actual confidence score.** For example :math:`2.78`.
 #. **Confidence score function.** That is a function which assigns an actual confidence score to every given input. In Classification, a confidence score function has signature :math:`\text{Score}: \langle\text{input space}\rangle\rightarrow\overline{\mathbb{R}}`. It is much less clear in Object Detection for example, as one could assign confidence scores either to every predicted object (*e.g.* example above), to the entire image, or even at the internal cell level when it makes sense.

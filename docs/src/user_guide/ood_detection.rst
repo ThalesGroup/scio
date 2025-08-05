@@ -4,7 +4,7 @@ Out-of-Distribution Detection
 The concept
 -----------
 
-The task of « **Out-of-Distribution** Detection » (or « **OoD** Detection ») is a particular case of `novelty detection <https://en.wikipedia.org/wiki/Novelty_detection>`_. It consists in identifying, at runtime, inputs for which a model's prediction should be rejected, by lack of informed support. For example, if a Neural Network was trained to classify images of cats and dogs, it would seem irrelevant to trust its output on a tree image. Although there is no absolute definitive answer to this question (depending on the context, what a person considers OoD might be considered **In-Distribution** (**InD**) by another), it is still possible to perform deviation estimations through confidence scores.
+The task of "**Out-of-Distribution** Detection" (or "**OoD** Detection") is a particular case of `novelty detection <https://en.wikipedia.org/wiki/Novelty_detection>`_. It consists in identifying, at runtime, inputs for which a model's prediction should be rejected, by lack of informed support. For example, if a Neural Network was trained to classify images of cats and dogs, it would seem irrelevant to trust its output on a tree image. Although there is no absolute definitive answer to this question (depending on the context, what a person considers OoD might be considered **In-Distribution** (**InD**) by another), it is still possible to perform deviation estimations through confidence scores.
 
 In ``scio``, we aim at performing OoD Detection naturally by **thresholding** confidence scores. That is, defining the following decision function for a given threshold :math:`\tau`:
 
