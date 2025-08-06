@@ -201,7 +201,7 @@ def get_api_warning(fullname: str) -> str | None:
     warning = (
         "**Below this point**, the documentation is meant for development purposes "
         "only. Manual use of any listed member is **highly discouraged**. For usage, "
-        "see :doc:`/auto_tutorials/performing_ood_detection`."
+        "see :doc:`/auto_tutorials/infer_with_confidence`."
     )
 
     if not fullname.startswith(prefix):
@@ -296,7 +296,7 @@ def linkcode_resolve(
 
 # -- Options for "sphinx_gallery.gen_gallery" --------------------------------
 tutorials_order = [
-    "performing_ood_detection.py",
+    "infer_with_confidence.py",
     "visualizing_and_evaluating_ood_detection_algorithms.py",
     "implementing_your_own_ood_detection_algorithm.py",
     "implementing_your_own_discriminative_power_metric.py",

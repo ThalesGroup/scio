@@ -36,7 +36,7 @@ net = net.to(inputs)
 # <https://github.com/TylerYep/torchinfo>`_ library.
 
 rnet = Recorder(net, input_data=inputs)
-rnet  # Visualize
+rnet  # Visualize layers
 
 # %%
 # .. tip::
