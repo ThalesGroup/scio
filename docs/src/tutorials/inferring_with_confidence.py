@@ -1,6 +1,6 @@
 """
-Infer with Confidence
-=====================
+Inferring with Confidence
+=========================
 """
 
 # %%
