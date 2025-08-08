@@ -41,15 +41,7 @@ dependencies = [
     "seaborn>=0.13.2",
     "torch>=2.3",
     "torchinfo>=1.8",
-    # Indirect dependencies for which the original package does not specify lower bounds
-    "filelock>=3.13", # torch<=2.7.1
-    "fsspec>=2023.10", # torch<=2.7.1
-    "networkx>=3.2", # torch<=2.7.1
-    "pillow>=11", # matplotlib
-    "pyyaml>=6.0.2", # sphinxcontrib-bibtex > pybtex
-    "typing-extensions>=4.12", # torch<=2.7.1
 ]
-
 [dependency-groups]
 dev = [
     "mypy>=1.17",
@@ -61,15 +53,33 @@ dev = [
     "pytest-cov>=6",
     "ruamel-yaml>=0.18.7",
     "sphinx>=8.2.3",
+    "sphinx-design>=0.6.1",
     "sphinx-gallery>=0.19",
     "sphinxcontrib-bibtex>=2.6.4",
     "sphinxcontrib-katex>=0.9.11",
-    # Indirect dependencies for which the original package does not specify lower bounds
+]
+
+[tool.uv]
+# Until github.com/astral-sh/uv/issues/15125 is fixed
+required-environments = [
+  "python_version >= '3.12' and python_version < '3.13'",
+  "python_version >= '3.13'"
+]
+# Adjust indirect dependencies lower bound
+constraint-dependencies = [
     "accessible-pygments>=0.0.5", # pydata-sphinx-theme
     "beautifulsoup4>=4.12.3", # pydata-sphinx-theme
+    "filelock>=3.13", # torch<=2.7.1
+    "fsspec>=2023.10", # torch<=2.7.1
     "iniconfig>=2.1", # pytest
+    "networkx>=3.2", # torch<=2.7.1
+    "nvidia-nvjitlink-cu12>=12.1", # torch > nvidia-cusolver-cu12 > nvidia-cusparse-cu12
+    "pillow>=11", # matplotlib
+    "pyyaml>=6.0.2", # sphinxcontrib-bibtex > pybtex
     "ruamel-yaml-clib>=0.2.11", # ruamel-yaml
-    "sphinx-design>=0.6.1",
+    "setuptools>=58.3", # sphinxcontrib-bibtex
+    "sympy>=1.9", # torch<=2.7.1
+    "typing-extensions>=4.12", # torch<=2.7.1
 ]
 
 
