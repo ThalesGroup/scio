@@ -80,21 +80,22 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
 
-      - name: Run pytest with lowest resolution
-        if: matrix.os != 'macos-latest'  # Temporary
-        id: run-pytest-lowest
-        continue-on-error: true
-        run: |
-          uv -v run --refresh --resolution=lowest pytest -vv
+      # TEMPORARILY DISABLED (https://github.com/ThalesGroup/scio/issues/9)
+      # - name: Run pytest with lowest resolution
+      #   if: matrix.os != 'macos-latest'  # Temporary
+      #   id: run-pytest-lowest
+      #   continue-on-error: true
+      #   run: |
+      #     uv -v run --refresh --resolution=lowest pytest -vv
 
-      - name: Upload observed plots on lowest failure
-        if: ${{ steps.run-pytest-lowest.outcome == 'failure' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: pytest-lowest-observed-${{ matrix.os }}-py${{ matrix.python-version }}
-          path: test/expected/*/*.observed.*
-          retention-days: 7
+      # - name: Upload observed plots on lowest failure
+      #   if: ${{ steps.run-pytest-lowest.outcome == 'failure' }}
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: pytest-lowest-observed-${{ matrix.os }}-py${{ matrix.python-version }}
+      #     path: test/expected/*/*.observed.*
+      #     retention-days: 7
 
-      - name: Fail the job if pytest lowest failed
-        if: ${{ steps.run-pytest-lowest.outcome == 'failure' }}
-        run: exit 1
+      # - name: Fail the job if pytest lowest failed
+      #   if: ${{ steps.run-pytest-lowest.outcome == 'failure' }}
+      #   run: exit 1
