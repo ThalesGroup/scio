@@ -19,6 +19,8 @@ In light of the above caracterization, we provide a :class:`~scio.eval.ROC` util
 
    ~scio.eval.ROC
 
+.. _implemented-discriminative-power-metrics:
+
 .. rubric:: Implemented Discriminative Power metrics
 
 We also provide implementation for a few standard such metrics, all derived from the base :class:`~scio.eval.BaseDiscriminativePower` class.

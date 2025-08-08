@@ -23,8 +23,7 @@ from scio.recorder import Recorder
 
 import torch
 
-sample_shape = (3, 32, 32)
-inputs = torch.rand((5, *sample_shape))  # Random inputs with 5 samples
+inputs = torch.rand(5, 3, 32, 32)  # Random inputs with 5 samples
 net = torch.hub.load("ThalesGroup/scio:hub", "tiniest", trust_repo=True, verbose=False)
 net = net.to(inputs)
 
@@ -35,7 +34,7 @@ net = net.to(inputs)
 # store the control flow of the model, using the `torchinfo
 # <https://github.com/TylerYep/torchinfo>`_ library.
 
-rnet = Recorder(net, input_data=inputs)
+rnet = Recorder(net, input_data=inputs[[0]])
 rnet  # Visualize layers
 
 # %%

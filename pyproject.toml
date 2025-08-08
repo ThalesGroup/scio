@@ -28,7 +28,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "dill>=0.4",
+    "dill>=0.3.8",
     "faiss-cpu>=1.11",
     "lazy-loader>=0.4",
     "matplotlib>=3.10",
@@ -44,6 +44,7 @@ dependencies = [
 ]
 [dependency-groups]
 dev = [
+    "datasets>=3",
     "mypy>=1.17",
     "mypy-extensions>=1.1",
     "myst-parser>=4.0.1",
@@ -67,14 +68,18 @@ required-environments = [
 ]
 # Adjust indirect dependencies lower bound
 constraint-dependencies = [
+    "aiohttp>=3.10", # datasets
     "accessible-pygments>=0.0.5", # pydata-sphinx-theme
     "beautifulsoup4>=4.12.3", # pydata-sphinx-theme
     "filelock>=3.13", # torch<=2.7.1
+    "frozenlist>=1.5", # datasets > aiohttp
     "fsspec>=2023.10", # torch<=2.7.1
     "iniconfig>=2.1", # pytest
+    "multiprocess>=0.70.13", # datasets
     "networkx>=3.2", # torch<=2.7.1
     "nvidia-nvjitlink-cu12>=12.1", # torch > nvidia-cusolver-cu12 > nvidia-cusparse-cu12
     "pillow>=11", # matplotlib
+    "pyarrow>=18", # datasets
     "pyyaml>=6.0.2", # sphinxcontrib-bibtex > pybtex
     "ruamel-yaml-clib>=0.2.11", # ruamel-yaml
     "setuptools>=58.3", # sphinxcontrib-bibtex
@@ -114,6 +119,7 @@ convention = "numpy"
     "D205", "D212", "D400", "D415",  # Incorrect module docstring
     "E402", "I001",                  # Import not at top/sorted/formatted
     "INP001",                        # Implicit namespace package
+    "PLR2004",                       # Magic values
     "T201",                          # Print statements
 ]
 ".github/scripts/*.py" = [

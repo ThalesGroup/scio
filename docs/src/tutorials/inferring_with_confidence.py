@@ -45,7 +45,7 @@ from scio.recorder import Recorder
 from scio.scores import KNN
 
 score = KNN(k=int(len(calib_data) ** 0.4))
-rnet = Recorder(net, input_size=(1, *sample_shape), device=calib_data.device)
+rnet = Recorder(net, input_data=calib_data[[0]])
 rnet  # Visualize layers
 
 # %%
