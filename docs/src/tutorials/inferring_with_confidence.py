@@ -6,7 +6,8 @@ Inferring with Confidence
 # %%
 # This tutorial shows how to quickly setup confidence scores for
 # inference in a classification setup, using algorithms already
-# implemented in ``scio.scores``.
+# :ref:`implemented <confidence-score-algorithms-classif>` in
+# ``scio.scores``.
 #
 # Let's start with preparing a trained model and some (fake) calibration
 # data. Both should be naturally defined by your own use-case. For this
@@ -28,8 +29,8 @@ net = net.to(calib_data)
 # %%
 # 1. Choose an algorithm & define internal representations
 # --------------------------------------------------------
-# Let us choose a **confidence score algorithm** :doc:`implemented
-# </api_references/scores/classification>` in ``scio.scores``, say
+# Let us choose a **confidence score algorithm** :ref:`implemented
+# <confidence-score-algorithms-classif>` in ``scio.scores``, say
 # :class:`~scio.scores.KNN`. The only required parameter for this method
 # is ``k``, defining which neighbors to look for in latent spaces. As a
 # rule of thumb, the scientific community uses
@@ -98,3 +99,14 @@ for i, (pred, conf) in enumerate(zip(preds, confs, strict=True)):
 # If you wish to use these scores to perform OoD Detection and compare
 # different algorithms, read
 # :doc:`visualizing_and_evaluating_ood_detection_algorithms`.
+#
+# .. _inferring-with-confidence-profiling:
+#
+# [Bonus] Profiling
+# -----------------
+# The :attr:`~scio.scores.BaseScore.timer` attribute contains
+# information about execution times. Querying its
+# :attr:`~scio.utils.ScoreTimer.report` attribute shows a complete
+# report over the object's lifetime.
+
+score.timer.report  # Report execution times

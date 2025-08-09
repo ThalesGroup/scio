@@ -15,6 +15,8 @@ Please refer to the base class :class:`~scio.scores.BaseScoreClassif` or the tem
 
 ----
 
+.. _confidence-score-algorithms-classif:
+
 For inference
 -------------
 
