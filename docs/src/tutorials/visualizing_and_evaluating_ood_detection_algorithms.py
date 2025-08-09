@@ -4,11 +4,13 @@ Visualizing & Evaluating OoD Detection algorithms
 """
 
 # %%
-# .. hint:: We recommend reading :doc:`/auto_tutorials/inferring_with_confidence` first.
+# .. hint:: We recommend reading
+#    :doc:`/auto_tutorials/inferring_with_confidence` first.
 #
-# In this tutorial, we use ``scio.eval`` to compare several confidence
-# score algorithms in a classification setup, both **visually** and
-# **quantitatively**.
+# In this tutorial, we use the
+# :doc:`/api_references/eval/classification` API from ``scio.eval`` to
+# compare several confidence score algorithms in a classification setup,
+# both **visually** and **quantitatively**.
 #
 # Let's start with preparing a trained model and some InD calibration
 # data. These should be naturally defined by your own use-case. For this
@@ -22,7 +24,9 @@ Visualizing & Evaluating OoD Detection algorithms
 
 # These should be defined by your use-case
 import torch
-from datasets import load_dataset  # type: ignore[import-untyped]
+from datasets import load_dataset, logging  # type: ignore[import-untyped]
+
+logging.set_verbosity(logging.CRITICAL)  # Hide download logs
 
 calib_set = load_dataset("ego-thales/cifar10", name="calibration")["unique_split"]
 calib_data, calib_labels, calib_classnames = calib_set.with_format("torch")[:].values()
@@ -35,8 +39,8 @@ net = net.to(calib_data)
 # %%
 # 1. Configure algorithms to compare
 # ----------------------------------
-# Let use choose, say :math:`3` **confidence score algorithm** from
-# those :doc:`implemented </api_references/scores/classification>` in
+# Let use choose, say :math:`3` **confidence score algorithms** from
+# those :ref:`implemented <confidence-score-algorithms-classif>` in
 # ``scio.scores``. We will compare them to the
 # :class:`~scio.scores.Softmax` baseline. We arbitrarily choose
 # :class:`~scio.scores.GradNorm`, :class:`~scio.scores.Gram` and
@@ -52,9 +56,7 @@ Recorder(net, input_data=calib_data[[0]])  # Visualize layers
 
 # %%
 
-BLOCK1 = (1, 3)
 BLOCK3 = (1, 5)
-BLOCK5 = (1, 9)
 FEATURE_MAPS = (1, 11)
 LOGITS = (1, 12)
 
@@ -70,7 +72,7 @@ from scio.scores import GradNorm, Gram, KNN, Softmax
 scores_and_layers = (  # type: ignore[var-annotated]
     (Softmax(), []),
     (GradNorm(), [LOGITS]),
-    (Gram(), [BLOCK1, BLOCK3, BLOCK5, FEATURE_MAPS, LOGITS]),
+    (Gram(), [BLOCK3, FEATURE_MAPS, LOGITS]),
     (KNN(k=int(len(calib_data) ** 0.4)), [FEATURE_MAPS]),
 )
 
@@ -88,23 +90,23 @@ scores_fit = fit_scores(scores_and_layers, net, calib_data, calib_labels)
 # 3. Define InD and OoD scenarios
 # -------------------------------
 # Our InD scenario is already naturally defined as the leftover CIFAR10
-# training data. We only take :math:`1\,000` out of the :math:`10\,000`
-# available samples.
+# training data. We only take :math:`1\,000` random samples out of the
+# :math:`10\,000` available.
 
 test_set = load_dataset("ego-thales/cifar10", name="test")["unique_split"]
 ind = test_set.with_format("torch").shuffle()[:1000]["image"] / 255
 
 # %%
-# As for OoD, we use uniformly random samples and simulated darker
-# ``ind``.
+# As for OoD, we arbitrarily use vertical flips, darker images and
+# uniformly random samples.
 
-oods = (torch.rand_like(ind), ind * 0.7)
-oods_title = ("Uniformly random", "Darker")
+oods_title = ("Vertical flip", "Darker", "Uniformly random")
+oods = (ind.flip(2), ind * 0.5, torch.rand_like(ind))
 
 # %%
 # 4. Compute confidence scores on scenarios
 # -----------------------------------------
-# We can easily compute confidence scores for the prepared scenarios
+# We can easily compute confidence scores for all the prepared scenarios
 # with :func:`~scio.eval.compute_confidence`.
 
 from scio.eval import compute_confidence
@@ -119,10 +121,14 @@ confs_ind, confs_oods = compute_confidence(
 # %%
 # 5. Visualize the results
 # ------------------------
-# Use :func:`~scio.eval.summary_plot` to visualize the results.
+# Now, we simply use :func:`~scio.eval.summary_plot` to visualize the
+# results.
+
+from matplotlib import rcParams
 
 from scio.eval import summary_plot
 
+rcParams["figure.figsize"] = (15, 9)  # Adjust tutorial layout
 summary_plot(
     confs_ind,
     confs_oods,
@@ -133,12 +139,13 @@ summary_plot(
 # %%
 # The first row shows the actual confidence scores distributions, one
 # graph per scores function. Colors inside a given graph represent
-# different scenarios: *InD*, *Random* and *Darker*.
+# different scenarios: *InD*, *Vertical flip*, *Darker* and *Uniformly
+# random*.
 #
 # The second row shows the ROC curves for the OoD Detection task (which
 # is *in fine* a binary classification task). There is one graph per
-# InD/OoD pair, so :math:`2` graphs here. In each graph, colors
-# represent score functions.
+# InD/OoD pair, so :math:`3` graphs here. In each graph, colors
+# represent score functions: *Softmax*, *GradNorm*, *Gram* and *KNN*.
 #
 # This visualization provides very insightful details for experienced
 # users. The next section will help with quantifying these results.
@@ -156,7 +163,7 @@ summary_plot(
 # Using :func:`~scio.eval.compute_metrics` and
 # :func:`~scio.eval.summary_table`, we get quantitative results from our
 # confidence scores. Locally, you can use the ``baseline`` option in
-# :func:`~scio.eval.summary_table` for advanced formatting.
+# :func:`~scio.eval.summary_table` for advanced CLI highlighting.
 
 from scio.eval import AUC, TPR, compute_metrics, summary_table
 
