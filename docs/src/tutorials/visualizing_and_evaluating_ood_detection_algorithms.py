@@ -150,6 +150,11 @@ summary_plot(
 # This visualization provides very insightful details for experienced
 # users. The next section will help with quantifying these results.
 #
+# .. important:: Confidence scores evaluation characterizes the ability
+#    to identify OoD samples *based on the confidence scores associated
+#    with the predictions of the model*. It provides **no information**
+#    regarding the *correctness* of the predictions themselves.
+#
 # 6. Define metrics to get quantified results
 # -------------------------------------------
 # In ``scio.eval``, we :ref:`implemented
@@ -162,8 +167,7 @@ summary_plot(
 #
 # Using :func:`~scio.eval.compute_metrics` and
 # :func:`~scio.eval.summary_table`, we get quantitative results from our
-# confidence scores. Locally, you can use the ``baseline`` option in
-# :func:`~scio.eval.summary_table` for advanced CLI highlighting.
+# confidence scores.
 
 from scio.eval import AUC, TPR, compute_metrics, summary_table
 
@@ -174,12 +178,12 @@ summary_table(
     scores_and_layers=scores_and_layers,
     oods_title=oods_title,
     metrics=metrics,
-    baseline=0,
 )
 
 # %%
-# In each cell, the :math:`2` values correspond to the :math:`2`
-# chosen metrics.
+# In each cell, the :math:`2` values correspond to the :math:`2` chosen
+# metrics. Locally, you can also use the ``baseline`` option in
+# :func:`~scio.eval.summary_table` for advanced CLI highlighting.
 #
 # 7. Be lazy
 # ----------
@@ -187,3 +191,19 @@ summary_table(
 # performs the :func:`~scio.eval.summary_plot`,
 # :func:`~scio.eval.compute_metrics` and
 # :func:`~scio.eval.summary_table` calls described above,  **at once**!
+#
+# [Bonus] Profiling
+# -----------------
+# Let us compare the execution times of our :math:`4` algorithms
+# (including the baseline) using the
+# :attr:`~scio.scores.BaseScore.timer` attribute presented in
+# :ref:`Inferring with Confidence
+# <inferring-with-confidence-profiling>`.
+
+for score, _ in scores_and_layers:
+    score.timer.report  # Report execution times
+    print("----")
+
+# %%
+# These facilitate overhead computation and provide decisive information
+# when choosing an algorithm for a time-sensitive use-case.

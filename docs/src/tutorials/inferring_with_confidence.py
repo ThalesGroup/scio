@@ -99,3 +99,14 @@ for i, (pred, conf) in enumerate(zip(preds, confs, strict=True)):
 # If you wish to use these scores to perform OoD Detection and compare
 # different algorithms, read
 # :doc:`visualizing_and_evaluating_ood_detection_algorithms`.
+#
+# .. _inferring-with-confidence-profiling:
+#
+# [Bonus] Profiling
+# -----------------
+# The :attr:`~scio.scores.BaseScore.timer` attribute contains
+# information about execution times. Querying its
+# :attr:`~scio.utils.ScoreTimer.report` attribute shows a complete
+# report over the object's lifetime.
+
+score.timer.report  # Report execution times
