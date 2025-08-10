@@ -23,7 +23,7 @@ jobs:
       - name: Install the latest version of uv and set the python version
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.5"
+          version: "0.8.8"
           python-version: ${{ matrix.python-version }}
 
       - name: Run ruff
@@ -36,7 +36,7 @@ jobs:
           uv -v run mypy
 
       - name: Build docs (Posix)
-        if: matrix.os != 'windows-latest'
+        if: matrix.os != 'windows-latest' && matrix.os != 'macos-latest'  # Temporary (github.com/ThalesGroup/scio/issues/2)
         env:
           SPHINXOPTS: --fail-on-warning
         run: |
@@ -55,7 +55,7 @@ jobs:
           uv -v pip install dist/scio_pypi-1.0.0a3-py3-none-any.whl
 
       - name: Run pytest
-        if: matrix.os != 'macos-latest'  # Temporary
+        if: matrix.os != 'macos-latest'  # Temporary (github.com/ThalesGroup/scio/issues/2)
         id: run-pytest
         continue-on-error: true
         run: |
@@ -82,7 +82,7 @@ jobs:
 
       # TEMPORARILY DISABLED (https://github.com/ThalesGroup/scio/issues/9)
       # - name: Run pytest with lowest resolution
-      #   if: matrix.os != 'macos-latest'  # Temporary
+      #   if: matrix.os != 'macos-latest'  # Temporary (github.com/ThalesGroup/scio/issues/2)
       #   id: run-pytest-lowest
       #   continue-on-error: true
       #   run: |
