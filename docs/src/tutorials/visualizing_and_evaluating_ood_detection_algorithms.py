@@ -87,8 +87,8 @@ scores_fit = fit_scores(scores_and_layers, net, calib_data, calib_labels)
 # %%
 # 3. Define InD and OoD scenarios
 # -------------------------------
-# Our InD scenario is already naturally defined as the leftover CIFAR10
-# training data. We only take :math:`1\,000` random samples out of the
+# For evaluation, our InD scenario is naturally defined as the CIFAR10
+# test data. We only use :math:`1\,000` random samples out of the
 # :math:`10\,000` available.
 
 test_set = load_dataset("ego-thales/cifar10", name="test")["unique_split"]
@@ -135,10 +135,9 @@ summary_plot(
 )
 
 # %%
-# The first row shows the actual confidence scores distributions, one
-# graph per scores function. Colors inside a given graph represent
-# different scenarios: *InD*, *Vertical flip*, *Darker* and *Uniformly
-# random*.
+# The first row shows the confidence scores distributions, one graph per
+# scores function. Colors inside a given graph represent different
+# scenarios: *InD*, *Vertical flip*, *Darker* and *Uniformly random*.
 #
 # The second row shows the ROC curves for the OoD Detection task (which
 # is *in fine* a binary classification task). There is one graph per
