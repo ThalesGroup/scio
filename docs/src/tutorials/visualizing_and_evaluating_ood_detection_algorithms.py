@@ -27,7 +27,7 @@ import torch
 from datasets import load_dataset  # type: ignore[import-untyped]
 
 calib_set = load_dataset("ego-thales/cifar10", name="calibration")["unique_split"]
-calib_data, calib_labels, calib_classnames = calib_set.with_format("torch")[:].values()
+calib_data, calib_labels, _ = calib_set.with_format("torch")[:].values()
 calib_data = calib_data / 255  # Convert [0, 255] uint8 from HuggingFace to [0, 1] float
 
 sample_shape = calib_data.shape[1:]
