@@ -19,7 +19,6 @@ from time import perf_counter
 from types import MappingProxyType
 from typing import TYPE_CHECKING, Literal, cast
 
-import datasets  # type: ignore[import-untyped]
 from paramclasses import IMPL, MISSING, isparamclass
 from sphinx.application import Sphinx
 from sphinx.util import logging
@@ -296,7 +295,7 @@ def linkcode_resolve(
 
 
 # -- Options for "sphinx_gallery.gen_gallery" --------------------------------
-datasets.logging.set_verbosity(datasets.logging.CRITICAL)  # To avoid download logs
+os.environ.setdefault("HF_DATASETS_DISABLE_PROGRESS_BARS", "true")  # No download logs
 tutorials_order = [
     "inferring_with_confidence.py",
     "visualizing_and_evaluating_ood_detection_algorithms.py",

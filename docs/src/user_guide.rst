@@ -16,7 +16,7 @@ The user guide is a great place to start if you are new to this project!
 
 .. toctree::
    :caption: Getting started
-   :maxdepth: 1
+   :maxdepth: 2
 
    user_guide/installation_compatibility
    auto_tutorials/index
