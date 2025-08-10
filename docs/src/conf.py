@@ -295,6 +295,7 @@ def linkcode_resolve(
 
 
 # -- Options for "sphinx_gallery.gen_gallery" --------------------------------
+os.environ.setdefault("HF_DATASETS_DISABLE_PROGRESS_BARS", "true")  # No download logs
 tutorials_order = [
     "inferring_with_confidence.py",
     "visualizing_and_evaluating_ood_detection_algorithms.py",

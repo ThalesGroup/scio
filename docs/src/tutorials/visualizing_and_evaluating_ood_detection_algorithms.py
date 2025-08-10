@@ -24,9 +24,7 @@ Visualizing & Evaluating OoD Detection algorithms
 
 # These should be defined by your use-case
 import torch
-from datasets import load_dataset, logging  # type: ignore[import-untyped]
-
-logging.set_verbosity(logging.CRITICAL)  # Hide download logs
+from datasets import load_dataset  # type: ignore[import-untyped]
 
 calib_set = load_dataset("ego-thales/cifar10", name="calibration")["unique_split"]
 calib_data, calib_labels, calib_classnames = calib_set.with_format("torch")[:].values()
