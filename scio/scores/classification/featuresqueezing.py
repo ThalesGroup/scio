@@ -45,7 +45,6 @@ class FeatureSqueezing(BaseScoreClassif):
           For :math:`3`\ D samples, operates per channel, with
           channel-first convention.
 
-        Use ``"median:2"`` to match :cite:`FeatCW`.
     dist_norm: ``float``
         Order of the vector norm used to compute the distance between
         natural and squeezed softmax outputs. Defaults to ``1.0``.
@@ -59,8 +58,7 @@ class FeatureSqueezing(BaseScoreClassif):
     .. bibliography::
        :filter: false
 
-       Feat
-       FeatCW
+       FeatureSqueezing
 
     """
 
