@@ -1,6 +1,6 @@
 [project]
 name = "scio-pypi"
-version = "1.0.0rc1"
+version = "1.0.0rc2"
 description = "Statistical Confidence from Internal Observations"
 authors = [{name = "Élie Goudout", email = "elie.goudout@thalesgroup.com"}]
 maintainers = [{name = "Élie Goudout", email = "elie.goudout@thalesgroup.com"}]

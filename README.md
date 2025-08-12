@@ -9,7 +9,7 @@
 [![uv][uv_img]][uv_target]
 
 [os_img]: https://img.shields.io/badge/cross--platform-%E2%9C%93-blue "Tested on Ubuntu & Windows"
-[os_target]: https://sciortd.readthedocs.io/en/latest/user_guide/installation_compatibility.html#os-compatibility
+[os_target]: https://sciortd.readthedocs.io/latest/user_guide/installation_compatibility.html#os-compatibility
 
 [python_img]: https://img.shields.io/badge/python-3.12%20|%203.13-blue "Compatible Python versions"
 [python_target]: https://devguide.python.org/versions
@@ -45,7 +45,7 @@
   <p><i>“<strong>scio</strong> me nihil scire”</i></p>
 
   <p align="center">
-    <a href="https://sciortd.readthedocs.io/en/latest/index.html"><strong>Explore the Docs »</strong></a>
+    <a href="https://sciortd.readthedocs.io/latest/index.html"><strong>Explore the Docs »</strong></a>
     <br />
     <a href="https://github.com/ThalesGroup/scio/issues/new?labels=question">Ask Help</a>
     &middot;
@@ -84,11 +84,11 @@ For development, we recommend using `uv` since we ship `uv.lock` for better deve
 This package is distributed under the [MIT license](LICENSE). The use of nvidia proprietary modules (for GPU acceleration) is optional.
 
 <!-- References -->
-[docs]: https://sciortd.readthedocs.io/en/latest/index.html
-[tutorials]: https://sciortd.readthedocs.io/en/latest/auto_tutorials/index.html
-[api]: https://sciortd.readthedocs.io/en/latest/api_references.html
-[references]: https://sciortd.readthedocs.io/en/latest/bib_references.html
-[citing]:  https://sciortd.readthedocs.io/en/latest/citing_scio.html
+[docs]: https://sciortd.readthedocs.io/latest/index.html
+[tutorials]: https://sciortd.readthedocs.io/latest/auto_tutorials/index.html
+[api]: https://sciortd.readthedocs.io/latest/api_references.html
+[references]: https://sciortd.readthedocs.io/latest/bib_references.html
+[citing]:  https://sciortd.readthedocs.io/latest/citing_scio.html
 [issues]: https://github.com/ThalesGroup/scio/issues
 [discussions]: https://github.com/ThalesGroup/scio/discussions
 [pulls]: https://github.com/ThalesGroup/scio/pulls
