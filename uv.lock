@@ -1515,7 +1515,7 @@ wheels = [
 
 [[package]]
 name = "scio-pypi"
-version = "1.0.0a3"
+version = "1.0.0rc1"
 source = { editable = "." }
 dependencies = [
     { name = "dill" },

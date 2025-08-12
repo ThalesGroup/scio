@@ -23,7 +23,7 @@ jobs:
       - name: Install the latest version of uv and set the python version
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.8"
+          version: "0.8.9"
           python-version: ${{ matrix.python-version }}
 
       - name: Run ruff
@@ -52,7 +52,7 @@ jobs:
       - name: Build & Install
         run: |
           uv -v build
-          uv -v pip install dist/scio_pypi-1.0.0a3-py3-none-any.whl
+          uv -v pip install dist/scio_pypi-1.0.0rc1-py3-none-any.whl
 
       - name: Run pytest
         if: matrix.os != 'macos-latest'  # Temporary (github.com/ThalesGroup/scio/issues/2)
