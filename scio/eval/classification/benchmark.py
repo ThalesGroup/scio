@@ -20,6 +20,7 @@ import numpy as np
 import pandas as pd
 import rich
 import seaborn as sns  # type: ignore[import-untyped]
+from matplotlib.lines import Line2D
 from numpy.typing import NDArray
 from rich.console import Console
 from rich.highlighter import ReprHighlighter
@@ -404,6 +405,7 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
     scores_and_layers: Iterable[ScoreClassifAndLayers] | None = None,
     ood_title: str | None = None,
     legend: bool = True,
+    show_convex_hull: bool = False,
     ax: plt.Axes | None = None,
 ) -> plt.Axes:
     """For a given OoD set, plot ROCs over all scores.
@@ -424,6 +426,8 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
         plot title.
     legend: ``bool``
         Whether or not to show legend. Defaults to ``True``.
+    show_convex_hull: ``bool``
+        Whether to show the convex hull for each Pareto front. Defaults to ``False``.
     ax: ``plt.Axes``, optional
         If provided, ROCs are plotted on this ``ax``.
 
@@ -464,16 +468,28 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
     ax.plot([0, 1], [0, 1], "--", color="black", lw=0.5)
 
     colors = sns.color_palette(n_colors=len(rocs))
+    handles = []
     for roc, color, score_str in zip(rocs, colors, scores_str, strict=False):
         # Pareto
         ax.scatter(roc.FPR, roc.TPR, s=5, color=color, label=score_str)
         ax.step(*np.c_[[roc.FPR, roc.TPR], [1, 1]], color=color, where="post", lw=1)
+        # Enlarge legend handles manually
+        handles.append(
+            Line2D([0], [0], marker="o", markersize=5, color=color, label=score_str),
+        )
 
         # Convex Hull
-        ax.plot(*np.c_[[roc.FPRch, roc.TPRch], [1, 1]], color=color, ls=":")
+        if show_convex_hull:
+            ax.plot(*np.c_[[roc.FPRch, roc.TPRch], [1, 1]], color=color, ls=":")
+
+    # Shared legend for convex hull
+    if show_convex_hull:
+        handles.append(
+            Line2D([0], [0], linestyle=":", lw=2, color="gray", label="Convex Hull"),
+        )
 
     if legend:
-        ax.legend(title="Scores")
+        ax.legend(handles=handles, title="Scores")
 
     return ax
 
@@ -485,6 +501,7 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
     scores_and_layers: tuple[ScoreClassifAndLayers, ...] | None = None,
     oods_title: tuple[str, ...] | None = None,
     legend: tuple[bool, bool] | bool = True,
+    show_convex_hull: bool = False,
     block: bool | None = None,
     **hist_kw: object,
 ) -> None:
@@ -504,6 +521,8 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
         Whether to show legends for histograms and ROCs respectively.
         If a unique ``bool`` is provided, it is used for both. Defaults
         to ``True``.
+    show_convex_hull: ``bool``
+        See :func:`roc_scores`.
     block: ``bool``, optional
         Passed to :func:`plt.show`.
     **hist_kw:
@@ -566,18 +585,28 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
             scores_and_layers=scores_and_layers,
             ood_title=ood_title,
             legend=legend_roc,
+            show_convex_hull=show_convex_hull,
             ax=ax,
         )
 
-    # Layout
+    # Layout: remove hist yticks, keep only leftmost legend, restyle legends
     axes_hist[0].set_yticks([])
-    axes_rocs[-1].legend(loc="lower right", bbox_to_anchor=(1, 0))
+
     for ax in chain(axes_hist[1:], axes_rocs[1:]):
         ax.get_yaxis().set_visible(False)
         if (ax_legend := ax.get_legend()) is not None:
             ax_legend.remove()
 
-    plt.subplots_adjust(0.04, 0.06, 0.99, 0.94, wspace=0)
+    for ax in (axes_hist[0], axes_rocs[0]):
+        if (ax_legend := ax.get_legend()) is not None:
+            ax_legend.get_frame().set(
+                edgecolor="black",
+                linewidth=0.8,
+                alpha=0.9,
+                facecolor="whitesmoke",
+            )
+
+    plt.subplots_adjust(0.045, 0.06, 0.98, 0.94, wspace=0)
     plt.show(block=block)
 
 
@@ -590,6 +619,7 @@ def summary(  # noqa: PLR0913 (too many arguments)
     metrics: tuple[BaseDiscriminativePower, ...] | None = None,
     baseline: int | None = None,
     legend: tuple[bool, bool] | bool = True,
+    show_convex_hull: bool = False,
     block: bool | None = None,
     **hist_kw: object,
 ) -> None:
@@ -616,6 +646,7 @@ def summary(  # noqa: PLR0913 (too many arguments)
         scores_and_layers=scores_and_layers,
         oods_title=oods_title,
         legend=legend,
+        show_convex_hull=show_convex_hull,
         block=block,
         **hist_kw,
     )

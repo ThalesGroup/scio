@@ -148,13 +148,17 @@ def test_histogram_oods(
     plt.show()
 
 
-@parametrize_bool("with_scores_and_layers, with_ood_title, with_ax", lite=1)
+@parametrize_bool(
+    "with_scores_and_layers, with_ood_title, show_convex_hull, with_ax",
+    lite=1,
+)
 def test_roc_scores(
     confs_ind,
     confs_oods,
     scores_and_layers,
     with_scores_and_layers,
     with_ood_title,
+    show_convex_hull,
     with_ax,
     match_plots_torch,  # noqa: ARG001 (unused argument)
 ):
@@ -166,6 +170,7 @@ def test_roc_scores(
         scores_and_layers=scores_and_layers if with_scores_and_layers else None,
         ood_title=OODS_TITLE[BASELINE] if with_ood_title else None,
         legend=with_scores_and_layers,
+        show_convex_hull=show_convex_hull,
         ax=ax,
     )
 
@@ -175,13 +180,17 @@ def test_roc_scores(
     plt.show()
 
 
-@parametrize_bool("with_scores_and_layers, with_oods_title, with_hist_kw", lite=1)
+@parametrize_bool(
+    "with_scores_and_layers, with_oods_title, show_convex_hull, with_hist_kw",
+    lite=1,
+)
 def test_summary_plot(
     confs_ind,
     confs_oods,
     scores_and_layers,
     with_scores_and_layers,
     with_oods_title,
+    show_convex_hull,
     with_hist_kw,
     match_plots_torch,  # noqa: ARG001 (unused argument)
 ):
@@ -199,6 +208,7 @@ def test_summary_plot(
             scores_and_layers=scores_and_layers if with_scores_and_layers else None,
             oods_title=OODS_TITLE if with_oods_title else None,
             legend=legend,
+            show_convex_hull=show_convex_hull,
             block=False,
             **hist_kw,
         )
@@ -209,8 +219,8 @@ def test_summary_plot(
 # Error upon double teardown skips when updating both outerr and plots
 # No problem, update still works as intended
 @parametrize_bool(
-    "with_scores_and_layers, with_oods_title, with_metrics, with_baseline, "
-    "with_hist_kw",
+    "with_scores_and_layers, with_oods_title, with_metrics, show_convex_hull, "
+    "with_baseline, with_hist_kw",
     lite=1,
 )
 def test_summary(
@@ -222,6 +232,7 @@ def test_summary(
     with_oods_title,
     with_metrics,
     with_baseline,
+    show_convex_hull,
     with_hist_kw,
     match_outerr_torch,  # noqa: ARG001 (unused argument)
     match_plots_torch,  # noqa: ARG001 (unused argument)
@@ -235,6 +246,7 @@ def test_summary(
         oods_title=OODS_TITLE if with_oods_title else None,
         metrics=metrics if with_metrics else None,
         baseline=BASELINE if with_baseline else None,
+        show_convex_hull=show_convex_hull,
         block=False,
         **hist_kw,
     )
