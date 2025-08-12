@@ -9,12 +9,14 @@ In the context of Machine Learning, confidence scores are real numbers paired wi
 |panda| |traffic|
 
 .. |panda| image:: /_static/panda.png
-   :width: 21.86%
    :alt: panda
+   :title: Image classification with softmax as confidence
+   :width: 22.76%
 
 .. |traffic| image:: /_static/traffic.png
-   :width: 76.64%
    :alt: trtraffic
+   :title: Object detections with objectness as confidence
+   :width: 75.74%
 
 Both examples above use scores between :math:`0` and :math:`1` *by design* (computed via the softmax function), but in general they can be **any real number** (or even :math:`\pm\infty`).
 

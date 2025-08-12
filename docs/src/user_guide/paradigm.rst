@@ -20,5 +20,6 @@ The rules above ultimately force any compatible approach to leverage the knowled
 
 .. image:: /_static/paradigm.png
    :alt: paradigm
+   :title: Paradigm for the design of confidence score functions in scio
 
 Of course, not all methods implemented in ``scio`` use every components of this diagram. In general, think of the *complementary samples* (optional) as slight modifications of calibration samples: compressed, noised, adversarially transformed, etc... Finally, note that methods may also use gradient-based information with respect to inputs or model weights, undepicted here.

@@ -16,6 +16,7 @@ Ultimately, the choice of threshold is a trade-off between False Positives and T
 
 .. image:: /_static/histograms.svg
    :alt: histograms illustration
+   :title: Illustration of two different score distributions: right offers better FPR/TPR trade-offs
    :align: center
    :width: 100%
 

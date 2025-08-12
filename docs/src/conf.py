@@ -51,6 +51,7 @@ extensions = [
     "sphinxcontrib.katex",
     "myst_parser",
     "sphinx_design",
+    "sphinxcontrib.images",
 ]
 
 templates_path = ["_templates"]
@@ -309,6 +310,13 @@ sphinx_gallery_conf = {
     "gallery_dirs": ["auto_tutorials"],
     "filename_pattern": "",
     "within_subsection_order": ExplicitOrder(tutorials_order),
+}
+
+# -- Options for "sphinxcontrib.images" --------------------------------------
+images_config = {
+    "override_image_directive": True,
+    "download": False,
+    "cache_path": ".cache",
 }
 
 # -- Callbacks for sphinx events (custom rendering) --------------------------
