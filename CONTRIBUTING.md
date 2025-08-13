@@ -103,7 +103,7 @@ uv run make -C docs
 
 ```powershell
 # Windows
-uv -v run cmd /c "docs\make.bat"
+uv run cmd /c "docs\make.bat"
 ```
 
 #### First time codebase contributors

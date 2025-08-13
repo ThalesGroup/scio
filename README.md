@@ -57,7 +57,7 @@
 
 ```bash
 # Install from PyPI
-pip install scio-pypi  # the `-pypi` suffix will be removed soon
+pip install scio-pypi  # The `-pypi` suffix will be removed soon
 ```
 
 ----
