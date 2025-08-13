@@ -87,7 +87,7 @@ class FeatureSqueezing(BaseScoreClassif):
         for i, squeezer in enumerate(self.squeezers_fn):
             out_squeezed = self.rnet(squeezer(inputs), dont_record=True)
             diff = out.softmax(1) - out_squeezed.softmax(1)
-            distances[:, i] = torch.linalg.vector_norm(diff, ord=self.dist_norm)
+            distances[:, i] = torch.linalg.vector_norm(diff, ord=self.dist_norm, dim=1)
 
         # Aggregation
         conformity = -get_aggregator(self.aggregation)(distances, dim=1)
