@@ -45,7 +45,7 @@
   <p><i>“<strong>scio</strong> me nihil scire”</i></p>
 
   <p align="center">
-    <a href="https://sciortd.readthedocs.io/latest/index.html"><strong>Explore the Docs »</strong></a>
+    <a href="https://sciortd.readthedocs.io"><strong>Explore the Docs »</strong></a>
     <br />
     <a href="https://github.com/ThalesGroup/scio/issues/new?labels=question">Ask Help</a>
     &middot;
@@ -84,7 +84,7 @@ For development, we recommend using `uv` since we ship `uv.lock` for better deve
 This package is distributed under the [MIT license](LICENSE). The use of nvidia proprietary modules (for GPU acceleration) is optional.
 
 <!-- References -->
-[docs]: https://sciortd.readthedocs.io/latest/index.html
+[docs]: https://sciortd.readthedocs.io
 [tutorials]: https://sciortd.readthedocs.io/latest/auto_tutorials/index.html
 [api]: https://sciortd.readthedocs.io/latest/api_references.html
 [references]: https://sciortd.readthedocs.io/latest/bib_references.html
