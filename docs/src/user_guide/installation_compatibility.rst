@@ -18,7 +18,7 @@ If you wish to install from source or wheels manually, you can download `release
 
 OS Compatibility
 ----------------
-The library is available and functional on **Ubuntu**, **Windows** and *MacOS* (minus ``faiss``-related features ─ feel free to show your interest `here <https://github.com/ThalesGroup/scio/issues/2>`_).
+The library is available and functional on **Ubuntu**, **Windows** and *MacOS* (minus ``faiss``-related features ─ feel free to show your interest `here <https://github.com/ThalesGroup/scio/issues/2>`__).
 
 Framework Compatiblity
 ----------------------
@@ -26,7 +26,7 @@ Although confidence scores are not a particularity of Neural Networks, ``scio`` 
 
 GPU Compatibility
 -----------------
-Our library is **fully compatible** and tested with CUDA devices for native use of GPU acceleration! Note however that features using ``faiss`` currently use CPU-bound indexes, introducing a potential GPU > CPU > GPU bottleneck. This may be improved in future versions ─ feel free to show your interest `here <https://github.com/ThalesGroup/scio/issues/18>`_.
+Our library is **fully compatible** and tested with CUDA devices for native use of GPU acceleration! Note however that features using ``faiss`` currently use CPU-bound indexes, introducing a potential GPU > CPU > GPU bottleneck. This may be improved in future versions ─ feel free to show your interest `here <https://github.com/ThalesGroup/scio/issues/18>`__.
 
 Supported Data Types
 --------------------
