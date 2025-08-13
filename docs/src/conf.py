@@ -1,9 +1,9 @@
 """For ruff :)."""
+
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
-
 import html
 import importlib
 import inspect
@@ -11,6 +11,7 @@ import os
 import re
 from collections.abc import Mapping, Sequence
 from enum import EnumType
+from functools import partial
 from itertools import zip_longest
 from operator import itemgetter
 from os.path import dirname, relpath
@@ -19,6 +20,7 @@ from time import perf_counter
 from types import MappingProxyType
 from typing import TYPE_CHECKING, Literal, cast
 
+import torch
 from paramclasses import IMPL, MISSING, isparamclass
 from sphinx.application import Sphinx
 from sphinx.util import logging
@@ -297,6 +299,9 @@ def linkcode_resolve(
 
 # -- Options for "sphinx_gallery.gen_gallery" --------------------------------
 os.environ.setdefault("HF_DATASETS_DISABLE_PROGRESS_BARS", "true")  # No download logs
+# Monkeypatch for github.com/ThalesGroup/scio/issues/11
+torch.hub.load = partial(torch.hub.load, skip_validation=True)
+
 tutorials_order = [
     "inferring_with_confidence.py",
     "visualizing_and_evaluating_ood_detection_algorithms.py",
