@@ -29,7 +29,7 @@ classifiers = [
 ]
 dependencies = [
     "dill>=0.3.8",
-    "faiss-cpu>=1.11",
+    "faiss-cpu>=1.12",
     "lazy-loader>=0.4",
     "matplotlib>=3.10",
     "numpy>=2.2.2",
