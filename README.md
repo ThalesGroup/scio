@@ -63,7 +63,13 @@ pip install scio-pypi  # The `-pypi` suffix will be removed soon
 ----
 
 ### Demo 🎮
-*Coming soon...*
+<p align="center">
+  <a href="https://sciortd.readthedocs.io/latest/auto_tutorials/visualizing_and_evaluating_ood_detection_algorithms.html"
+     title="Click to follow along the tutorial!">
+    <img src="https://github.com/ego-thales/scio-assets/blob/main/assets/demo.gif" alt="demo gif">
+  </a>
+</p>
+
 
 ### Documentation 📖
 The full documentation can be found [here][docs]. You may specifically refer to [tutorials], [API references][api] or scientific literature [references].
