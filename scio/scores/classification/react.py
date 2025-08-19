@@ -83,8 +83,8 @@ class ReAct(BaseScoreClassif):
     @torch.no_grad()
     def get_conformity(self, inputs: Tensor) -> tuple[Tensor, Tensor]:
         """Compute output and associated conformity at inference."""
-        out = self.rnet(inputs)
-        new_out = self.rnet(inputs, activation_postproc=self.clippers)
+        out = self.rnet(inputs, dont_record=True)
+        new_out = self.rnet(inputs, activation_postproc=self.clippers, dont_record=True)
         conformity = new_out.softmax(1)
 
         return out, conformity
