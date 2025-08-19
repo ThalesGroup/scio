@@ -18,5 +18,5 @@ The name "scio" carries two meanings.
 The following sections introduce the broader context and outline the conceptual framework that guides the development and usage of ``scio``.
 
 .. _first-release: https://github.com/ThalesGroup/scio/releases/tag/v1.0.0a1
-.. _first-license: https://github.com/ThalesGroup/scio/tree/2766ac958da28cc6acf6eed0a3c84fedec7c565c?tab=License-1-ov-file
+.. _first-license: https://github.com/ThalesGroup/scio/blob/v1.0.0a1/LICENSE
 .. _scio-latin: https://en.wiktionary.org/wiki/scio#Verb_2
