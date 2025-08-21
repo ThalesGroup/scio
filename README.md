@@ -72,25 +72,37 @@ pip install scio-pypi  # The `-pypi` suffix will be removed soon
 
 
 ### Documentation 📖
-The full documentation can be found [here][docs]. You may specifically refer to [tutorials], [API references][api] or scientific literature [references].
+The full documentation can be found [**here**][docs]. You may learn more [about scio][about], [get started][get_started] and follow [tutorials], or specifically browse [API references][api] and scientific literature [references].
 
 ### Citing `scio` 🎓
 <!-- START CITING -->
-If you find our library useful in your work, please reference it using the following entry (for bibtex).
-
-*Coming soon ...*
+If our library contributed to your research or project, please consider citing it. For convenience, we provide the following BibTeX entry.
+```BibTeX
+Coming soon...
+```
 <!-- END CITING -->
 
 ### Contributing 💫
-Questions, [issues], [discussions] and [pull requests][pulls] are welcome! Read our [Contributing Guide](CONTRIBUTING.md) and join our team of [contributors](CONTRIBUTORS.md) ✨
+Questions, [issues], [discussions] and [pull requests][pulls] are welcome! Read our [contributing guide](CONTRIBUTING.md) and join our team of [contributors] ✨
 
 For development, we recommend using `uv` since we ship `uv.lock` for better development reproducibility.
 
+### Star history ⭐
+<picture>
+  <source media="(prefers-color-scheme: dark)"
+          srcset="https://api.star-history.com/svg?repos=ThalesGroup/scio&type=Date&theme=dark" />
+  <img alt="Star History Chart"
+       src="https://api.star-history.com/svg?repos=ThalesGroup/scio&type=Date"
+       title="Help me grow! Feed me a ⭐" />
+</picture>
+
 ### License ⚖️
-This package is distributed under the [MIT license](LICENSE). The use of nvidia proprietary modules (for GPU acceleration) is optional.
+This package is distributed under the [MIT license](LICENSE). The use of NVIDIA proprietary modules (for GPU acceleration) is optional.
 
 <!-- References -->
 [docs]: https://sciortd.readthedocs.io
+[about]: https://sciortd.readthedocs.io/latest/user_guide/what_is_scio.html#what-is-scio
+[get_started]: https://sciortd.readthedocs.io/latest/user_guide/installation_compatibility.html#installation-compatibility
 [tutorials]: https://sciortd.readthedocs.io/latest/auto_tutorials/index.html
 [api]: https://sciortd.readthedocs.io/latest/api_references.html
 [references]: https://sciortd.readthedocs.io/latest/bib_references.html
@@ -98,3 +110,4 @@ This package is distributed under the [MIT license](LICENSE). The use of nvidia 
 [issues]: https://github.com/ThalesGroup/scio/issues
 [discussions]: https://github.com/ThalesGroup/scio/discussions
 [pulls]: https://github.com/ThalesGroup/scio/pulls
+[contributors]: https://sciortd.readthedocs.io/latest/contributors.html
