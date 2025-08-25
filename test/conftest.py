@@ -573,7 +573,7 @@ def match_array(  # noqa: C901 (too complex)
 
 # Adapted from github.com/eliegoudout/paramclasses
 def parametrize_bool(argnames: str, *, lite: int = -1) -> pytest.MarkDecorator:
-    """Parametrize each argument to be ``True`` or ``False``.
+    r"""Parametrize each argument to be ``True`` or ``False``.
 
     Arguments
     ---------
@@ -581,7 +581,11 @@ def parametrize_bool(argnames: str, *, lite: int = -1) -> pytest.MarkDecorator:
         Coma-separated list of argument names.
     lite: ``int``
         If nonnegative, filter to only argvalues with sum at most
-        ``lite``, and all true. Negative values are treated as infinity.
+        ``lite``, plus all true. Negative values are treated as
+        infinity. This is used to avoid a :math:`2^{n_{\text{args}}}`
+        explosion of tests. It requires assumptions about the behaviour
+        of the code so it's not ideal, but it is the best balance
+        between completeness and feasibility we found.
 
     """
     args = tuple(raw.strip() for raw in argnames.split(","))

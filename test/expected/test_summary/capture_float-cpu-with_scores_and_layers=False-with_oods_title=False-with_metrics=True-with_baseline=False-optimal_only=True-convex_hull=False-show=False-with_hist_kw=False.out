@@ -1,0 +1,9 @@
+ Evaluation of 1 scores against 2 OoD sets 
+              and 2 metrics:               
+          MetricMaxPosFactory() /          
+           MetricMinNegFactory()           
+┏━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Scores  ┃     OoD 1     ┃     OoD 2     ┃
+┡━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ Score 1 │ 0.865 / 0.225 │ 0.933 / 0.225 │
+╰─────────┴───────────────┴───────────────╯

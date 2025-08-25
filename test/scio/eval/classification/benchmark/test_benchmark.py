@@ -218,13 +218,10 @@ def test_summary_plot(
         plt.show()
 
 
-# github.com/pytest-dev/pytest/issues/13537
-# Error upon double teardown skips when updating both outerr and plots
-# No problem, update still works as intended
 @parametrize_bool(
     "with_scores_and_layers, with_oods_title, with_metrics, with_baseline, "
     "optimal_only, convex_hull, show, with_hist_kw",
-    lite=1,
+    lite=2,
 )
 def test_summary(
     confs_ind,
@@ -243,6 +240,23 @@ def test_summary(
     match_plots_torch,  # noqa: ARG001 (unused argument)
 ):
     """Test :func:`summary` outerr and plots."""
+    # We use ``lite=2`` to test multiple configurations with
+    # ``with_metrics``. Remove those with 2 flags and without
+    # ``with_metrics``. Today, this manual filtering removes almost
+    # :math:`40\%` of the test time for this module.
+    flags = (
+        with_scores_and_layers,
+        with_oods_title,
+        with_metrics,
+        with_baseline,
+        optimal_only,
+        convex_hull,
+        show,
+        with_hist_kw,
+    )
+    if sum(flags) == 2 and not with_metrics:
+        return
+
     hist_kw = HIST_KW if with_hist_kw else {}
     none = summary(
         confs_ind,
