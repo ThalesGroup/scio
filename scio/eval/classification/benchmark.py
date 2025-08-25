@@ -491,7 +491,7 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
         )
 
     if legend:
-        ax.legend(handles=handles, title="Scores")
+        ax.legend(handles=handles, title="Scores", loc="lower right")
 
     return ax
 
