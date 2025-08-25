@@ -405,7 +405,7 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
     scores_and_layers: Iterable[ScoreClassifAndLayers] | None = None,
     ood_title: str | None = None,
     legend: bool = True,
-    show_convex_hull: bool = False,
+    convex_hull: bool = False,
     ax: plt.Axes | None = None,
 ) -> plt.Axes:
     """For a given OoD set, plot ROCs over all scores.
@@ -416,8 +416,8 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
         Confidence scores on In-Distribution data. Shape ``(n_scores,
         n_ind_samples)``.
     confs_ood: ``NDArray``
-        Confidence scores on Out-of-Distribution data. Shape ``(n_scores,
-        n_ood_samples)``.
+        Confidence scores on Out-of-Distribution data. Shape
+        ``(n_scores, n_ood_samples)``.
     scores_and_layers: ``Iterable[ScoreClassifAndLayers]``, optional
         Scores (and layers) used to compute ``confs_*`` in
         :func:`compute_confidence`. Used only for legend purposes.
@@ -426,8 +426,9 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
         plot title.
     legend: ``bool``
         Whether or not to show legend. Defaults to ``True``.
-    show_convex_hull: ``bool``
-        Whether to show the convex hull for each Pareto front. Defaults to ``False``.
+    convex_hull: ``bool``
+        Whether to show the convex hull for each Pareto front. Defaults
+        to ``False``.
     ax: ``plt.Axes``, optional
         If provided, ROCs are plotted on this ``ax``.
 
@@ -479,11 +480,11 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
         )
 
         # Convex Hull
-        if show_convex_hull:
+        if convex_hull:
             ax.plot(*np.c_[[roc.FPRch, roc.TPRch], [1, 1]], color=color, ls=":")
 
     # Shared legend for convex hull
-    if show_convex_hull:
+    if convex_hull:
         handles.append(
             Line2D([0], [0], linestyle=":", lw=2, color="gray", label="Convex Hull"),
         )
@@ -501,7 +502,7 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
     scores_and_layers: tuple[ScoreClassifAndLayers, ...] | None = None,
     oods_title: tuple[str, ...] | None = None,
     legend: tuple[bool, bool] | bool = True,
-    show_convex_hull: bool = False,
+    convex_hull: bool = False,
     block: bool | None = None,
     **hist_kw: object,
 ) -> None:
@@ -521,7 +522,7 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
         Whether to show legends for histograms and ROCs respectively.
         If a unique ``bool`` is provided, it is used for both. Defaults
         to ``True``.
-    show_convex_hull: ``bool``
+    convex_hull: ``bool``
         See :func:`roc_scores`.
     block: ``bool``, optional
         Passed to :func:`plt.show`.
@@ -585,7 +586,7 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
             scores_and_layers=scores_and_layers,
             ood_title=ood_title,
             legend=legend_roc,
-            show_convex_hull=show_convex_hull,
+            convex_hull=convex_hull,
             ax=ax,
         )
 
@@ -619,7 +620,7 @@ def summary(  # noqa: PLR0913 (too many arguments)
     metrics: tuple[BaseDiscriminativePower, ...] | None = None,
     baseline: int | None = None,
     legend: tuple[bool, bool] | bool = True,
-    show_convex_hull: bool = False,
+    convex_hull: bool = False,
     block: bool | None = None,
     **hist_kw: object,
 ) -> None:
@@ -646,7 +647,7 @@ def summary(  # noqa: PLR0913 (too many arguments)
         scores_and_layers=scores_and_layers,
         oods_title=oods_title,
         legend=legend,
-        show_convex_hull=show_convex_hull,
+        convex_hull=convex_hull,
         block=block,
         **hist_kw,
     )
