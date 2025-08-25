@@ -398,7 +398,7 @@ def torch_quantile(  # noqa: PLR0913 (too many arguments)
         See ``torch.quantile``. Supports only ``False`` currently.
         Defaults to ``False``.
     interpolation: ``{"linear", "lower", "higher", "midpoint", "nearest"}``
-        See ``torch.quantile``. Defaults to ``"linear"``.
+        See ``torch.quantile``. Defaults to ``"nearest"``.
     out: ``Tensor``, optional
         See ``torch.quantile``. Currently not supported.
 
