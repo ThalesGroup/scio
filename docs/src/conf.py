@@ -54,6 +54,7 @@ extensions = [
     "myst_parser",
     "sphinx_design",
     "sphinxcontrib.images",
+    "sphinx_copybutton",
 ]
 
 templates_path = ["_templates"]
@@ -228,6 +229,10 @@ napoleon_use_admonition_for_notes = True
 napoleon_custom_sections = [
     ("Fields", "params_style"),  # For ``TypedDict``
 ]
+
+# -- Options for "sphinx_copybutton" -----------------------------------------
+copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+copybutton_prompt_is_regexp = True
 
 # -- Options for "sphinx.ext.linkcode" ---------------------------------------
 github_url = "https://github.com/ThalesGroup/scio"

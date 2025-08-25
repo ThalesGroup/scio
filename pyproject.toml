@@ -54,6 +54,7 @@ dev = [
     "pytest-cov>=6",
     "ruamel-yaml>=0.18.7",
     "sphinx>=8.2.3",
+    "sphinx-copybutton>=0.5.2",
     "sphinx-design>=0.6.1",
     "sphinx-gallery>=0.19",
     "sphinxcontrib-bibtex>=2.6.4",
