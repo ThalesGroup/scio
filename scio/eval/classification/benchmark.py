@@ -229,8 +229,9 @@ def compute_metrics(
     Returns
     -------
     evals: ``NDArray[np.floating]``
-        Computed metrics for every ``(score, ood_set, metric)`` possible.
-        Shape corresponding to ``(n_scores, n_ood_sets, n_metrics)``.
+        :ref:`discriminative_power` for every possible combination of
+        score, OoD set and metric. Shape corresponding to ``(n_scores,
+        n_ood_sets, n_metrics)``.
 
     """
     evals = np.empty((len(confs_ind), len(confs_oods), len(metrics)))
@@ -405,7 +406,7 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
     scores_and_layers: Iterable[ScoreClassifAndLayers] | None = None,
     ood_title: str | None = None,
     legend: bool = True,
-    show_convex_hull: bool = False,
+    convex_hull: bool = False,
     ax: plt.Axes | None = None,
 ) -> plt.Axes:
     """For a given OoD set, plot ROCs over all scores.
@@ -416,8 +417,8 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
         Confidence scores on In-Distribution data. Shape ``(n_scores,
         n_ind_samples)``.
     confs_ood: ``NDArray``
-        Confidence scores on Out-of-Distribution data. Shape ``(n_scores,
-        n_ood_samples)``.
+        Confidence scores on Out-of-Distribution data. Shape
+        ``(n_scores, n_ood_samples)``.
     scores_and_layers: ``Iterable[ScoreClassifAndLayers]``, optional
         Scores (and layers) used to compute ``confs_*`` in
         :func:`compute_confidence`. Used only for legend purposes.
@@ -426,8 +427,9 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
         plot title.
     legend: ``bool``
         Whether or not to show legend. Defaults to ``True``.
-    show_convex_hull: ``bool``
-        Whether to show the convex hull for each Pareto front. Defaults to ``False``.
+    convex_hull: ``bool``
+        Whether to show the convex hull for each Pareto front. Defaults
+        to ``False``.
     ax: ``plt.Axes``, optional
         If provided, ROCs are plotted on this ``ax``.
 
@@ -479,11 +481,11 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
         )
 
         # Convex Hull
-        if show_convex_hull:
+        if convex_hull:
             ax.plot(*np.c_[[roc.FPRch, roc.TPRch], [1, 1]], color=color, ls=":")
 
     # Shared legend for convex hull
-    if show_convex_hull:
+    if convex_hull:
         handles.append(
             Line2D([0], [0], linestyle=":", lw=2, color="gray", label="Convex Hull"),
         )
@@ -501,7 +503,8 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
     scores_and_layers: tuple[ScoreClassifAndLayers, ...] | None = None,
     oods_title: tuple[str, ...] | None = None,
     legend: tuple[bool, bool] | bool = True,
-    show_convex_hull: bool = False,
+    convex_hull: bool = False,
+    show: bool = True,
     block: bool | None = None,
     **hist_kw: object,
 ) -> None:
@@ -521,10 +524,13 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
         Whether to show legends for histograms and ROCs respectively.
         If a unique ``bool`` is provided, it is used for both. Defaults
         to ``True``.
-    show_convex_hull: ``bool``
+    convex_hull: ``bool``
         See :func:`roc_scores`.
+    show: ``bool``
+        Whether to end with a :func:`plt.show` call. Defaults to
+        ``True``.
     block: ``bool``, optional
-        Passed to :func:`plt.show`.
+        If ``show``, passed to :func:`plt.show`.
     **hist_kw:
         Passed to :func:`sns.histplot`, except the ``ax`` kwarg. Unless
         overidden, the following values are also passed: ``bins=30``,
@@ -585,7 +591,7 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
             scores_and_layers=scores_and_layers,
             ood_title=ood_title,
             legend=legend_roc,
-            show_convex_hull=show_convex_hull,
+            convex_hull=convex_hull,
             ax=ax,
         )
 
@@ -607,7 +613,8 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
             )
 
     plt.subplots_adjust(0.045, 0.06, 0.98, 0.94, wspace=0)
-    plt.show(block=block)
+    if show:
+        plt.show(block=block)
 
 
 def summary(  # noqa: PLR0913 (too many arguments)
@@ -618,20 +625,87 @@ def summary(  # noqa: PLR0913 (too many arguments)
     oods_title: tuple[str, ...] | None = None,
     metrics: tuple[BaseDiscriminativePower, ...] | None = None,
     baseline: int | None = None,
+    optimal_only: bool = False,
     legend: tuple[bool, bool] | bool = True,
-    show_convex_hull: bool = False,
+    convex_hull: bool = False,
+    show: bool = True,
     block: bool | None = None,
     **hist_kw: object,
 ) -> None:
     """Print evaluation table, plot and show histograms and ROCs.
 
-    For arguments specification, refer to :func:`compute_metrics`,
-    :func:`summary_table` and :func:`summary_plot`. If ``metrics`` is
-    not provided, no evaluation table is computed, in which case this is
-    equivalent to a direct :func:`summary_plot` call.
+    Arguments
+    ---------
+    optimal_only: ``bool``
+        If ``metrics`` is provided, whether to restrict the summary to
+        scores achieving the best result in at least one metric. If
+        ``baseline`` is also provided, the corresponding score is
+        considered separately and is always included in the summary.
+        Defaults to ``False``.
+    [...]:
+        For other arguments specification, refer
+        to :func:`compute_metrics`, :func:`summary_table` and
+        :func:`summary_plot`.
+
+    Note
+    ----
+    If ``metrics`` is not provided, no evaluation table is computed, in
+    which case this is equivalent to a simpler :func:`summary_plot`
+    call.
+
+    Tip
+    ---
+    When evaluating many scores at once, we recommend using the
+    ``optimal_only=True`` option with multiple *complementary* metrics,
+    that will capture every behaviour of interest, such as::
+
+        metrics = (AUC(kind="convex_hull"), TPR(max_fpr=0.05), TNR(min_tpr=0.95), MCC())
+
+    The "*complementarity*" of metrics aims at avoiding to hide a
+    suboptimal score which would be second-best everywhere and in fact
+    provide a good compromise. The resulting summary should be easier to
+    read.
+
+    Example
+    -------
+    ::
+
+        summary(
+            confs_ind,
+            confs_oods,
+            scores_and_layers=scores_and_layers,
+            oods_title=oods_title,
+            metrics=metrics,
+            baseline=0,
+        )
+
     """
     if metrics is not None:
         evals = compute_metrics(confs_ind, confs_oods, metrics=metrics)
+
+        # Keep only optimal scores, plus baseline
+        if optimal_only:
+            # Compute mask
+            if baseline is None:
+                mask = (evals == evals.max(0)).any((1, 2))
+            else:
+                evals_baseline = evals[baseline].copy()
+                evals[baseline] = -np.inf
+                mask = (evals == evals.max(0)).any((1, 2))
+                evals[baseline] = evals_baseline
+                mask[baseline] = True
+
+            idxs = mask.nonzero()[0]
+
+            # Apply mask
+            confs_ind = confs_ind[mask]
+            confs_oods = tuple(confs_ood[mask] for confs_ood in confs_oods)
+            if scores_and_layers is not None:
+                scores_and_layers = tuple(scores_and_layers[i] for i in idxs)
+            if baseline is not None:
+                baseline = int(np.searchsorted(idxs, baseline))
+            evals = evals[mask]
+
         summary_table(
             evals,
             scores_and_layers=scores_and_layers,
@@ -646,7 +720,8 @@ def summary(  # noqa: PLR0913 (too many arguments)
         scores_and_layers=scores_and_layers,
         oods_title=oods_title,
         legend=legend,
-        show_convex_hull=show_convex_hull,
+        convex_hull=convex_hull,
+        show=show,
         block=block,
         **hist_kw,
     )

@@ -149,7 +149,7 @@ def test_histogram_oods(
 
 
 @parametrize_bool(
-    "with_scores_and_layers, with_ood_title, show_convex_hull, with_ax",
+    "with_scores_and_layers, with_ood_title, convex_hull, with_ax",
     lite=1,
 )
 def test_roc_scores(
@@ -158,7 +158,7 @@ def test_roc_scores(
     scores_and_layers,
     with_scores_and_layers,
     with_ood_title,
-    show_convex_hull,
+    convex_hull,
     with_ax,
     match_plots_torch,  # noqa: ARG001 (unused argument)
 ):
@@ -170,7 +170,7 @@ def test_roc_scores(
         scores_and_layers=scores_and_layers if with_scores_and_layers else None,
         ood_title=OODS_TITLE[BASELINE] if with_ood_title else None,
         legend=with_scores_and_layers,
-        show_convex_hull=show_convex_hull,
+        convex_hull=convex_hull,
         ax=ax,
     )
 
@@ -181,7 +181,7 @@ def test_roc_scores(
 
 
 @parametrize_bool(
-    "with_scores_and_layers, with_oods_title, show_convex_hull, with_hist_kw",
+    "with_scores_and_layers, with_oods_title, convex_hull, show, with_hist_kw",
     lite=1,
 )
 def test_summary_plot(
@@ -190,13 +190,14 @@ def test_summary_plot(
     scores_and_layers,
     with_scores_and_layers,
     with_oods_title,
-    show_convex_hull,
+    convex_hull,
+    show,
     with_hist_kw,
     match_plots_torch,  # noqa: ARG001 (unused argument)
 ):
     """Test :func:`summary_plot` plots."""
     hist_kw = HIST_KW if with_hist_kw else {}
-    if any((with_scores_and_layers, with_oods_title, with_hist_kw)):
+    if any((with_scores_and_layers, with_oods_title, convex_hull, show, with_hist_kw)):
         legends = [True]
     else:
         legends = (True, False, (True, False), (False, True))
@@ -208,20 +209,19 @@ def test_summary_plot(
             scores_and_layers=scores_and_layers if with_scores_and_layers else None,
             oods_title=OODS_TITLE if with_oods_title else None,
             legend=legend,
-            show_convex_hull=show_convex_hull,
+            convex_hull=convex_hull,
+            show=show,
             block=False,
             **hist_kw,
         )
         assert none is None
+        plt.show()
 
 
-# github.com/pytest-dev/pytest/issues/13537
-# Error upon double teardown skips when updating both outerr and plots
-# No problem, update still works as intended
 @parametrize_bool(
-    "with_scores_and_layers, with_oods_title, with_metrics, show_convex_hull, "
-    "with_baseline, with_hist_kw",
-    lite=1,
+    "with_scores_and_layers, with_oods_title, with_metrics, with_baseline, "
+    "optimal_only, convex_hull, show, with_hist_kw",
+    lite=2,
 )
 def test_summary(
     confs_ind,
@@ -232,12 +232,31 @@ def test_summary(
     with_oods_title,
     with_metrics,
     with_baseline,
-    show_convex_hull,
+    optimal_only,
+    convex_hull,
+    show,
     with_hist_kw,
     match_outerr_torch,  # noqa: ARG001 (unused argument)
     match_plots_torch,  # noqa: ARG001 (unused argument)
 ):
     """Test :func:`summary` outerr and plots."""
+    # We use ``lite=2`` to test multiple configurations with
+    # ``with_metrics``. Remove those with 2 flags and without
+    # ``with_metrics``. Today, this manual filtering removes almost
+    # :math:`40\%` of the test time for this module.
+    flags = (
+        with_scores_and_layers,
+        with_oods_title,
+        with_metrics,
+        with_baseline,
+        optimal_only,
+        convex_hull,
+        show,
+        with_hist_kw,
+    )
+    if sum(flags) == 2 and not with_metrics:
+        return
+
     hist_kw = HIST_KW if with_hist_kw else {}
     none = summary(
         confs_ind,
@@ -246,8 +265,11 @@ def test_summary(
         oods_title=OODS_TITLE if with_oods_title else None,
         metrics=metrics if with_metrics else None,
         baseline=BASELINE if with_baseline else None,
-        show_convex_hull=show_convex_hull,
+        optimal_only=optimal_only,
+        convex_hull=convex_hull,
+        show=show,
         block=False,
         **hist_kw,
     )
     assert none is None
+    plt.show()

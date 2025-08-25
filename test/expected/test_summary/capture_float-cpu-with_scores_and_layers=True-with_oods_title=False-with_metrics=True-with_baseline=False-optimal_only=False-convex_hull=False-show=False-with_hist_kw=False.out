@@ -1,8 +1,8 @@
     Evaluation of 3 scores against 2 OoD sets and 2 metrics:    
          MetricMaxPosFactory() / MetricMinNegFactory()          
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
-┃ Scores                   ┃     OoD 1:      ┃     OoD 2:      ┃
-┃ ↳ Recorded layers        ┃   Test OoD 1    ┃   Test OoD 2    ┃
+┃ Scores                   ┃                 ┃                 ┃
+┃ ↳ Recorded layers        ┃      OoD 1      ┃      OoD 2      ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
 │ ScoreFactory()           │  0.865 / 0.225  │  0.933 / 0.225  │
 │ ↳ (1, 1)                 │                 │                 │

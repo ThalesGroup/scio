@@ -27,5 +27,5 @@ Application
 
 The ability to robustly identify Out-of-Distribution samples may have many useful applications. Simple examples are:
 
-#. **Monitoring.** Using the OoD Detection as a **reject option** may help using safe callbacks more efficiently for deployed models.
+#. **Monitoring.** Using the OoD Detection as a **reject option** may help using safe fallbacks more efficiently for deployed models.
 #. **Training.** Some training procedures may benefit from identifying samples for which a model is currently unfit to infer.
