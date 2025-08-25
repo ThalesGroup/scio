@@ -229,8 +229,9 @@ def compute_metrics(
     Returns
     -------
     evals: ``NDArray[np.floating]``
-        Computed metrics for every ``(score, ood_set, metric)`` possible.
-        Shape corresponding to ``(n_scores, n_ood_sets, n_metrics)``.
+        :ref:`discriminative_power` for every possible combination of
+        score, OoD set and metric. Shape corresponding to ``(n_scores,
+        n_ood_sets, n_metrics)``.
 
     """
     evals = np.empty((len(confs_ind), len(confs_oods), len(metrics)))
@@ -624,6 +625,7 @@ def summary(  # noqa: PLR0913 (too many arguments)
     oods_title: tuple[str, ...] | None = None,
     metrics: tuple[BaseDiscriminativePower, ...] | None = None,
     baseline: int | None = None,
+    optimal_only: bool = False,
     legend: tuple[bool, bool] | bool = True,
     convex_hull: bool = False,
     show: bool = True,
@@ -632,13 +634,64 @@ def summary(  # noqa: PLR0913 (too many arguments)
 ) -> None:
     """Print evaluation table, plot and show histograms and ROCs.
 
-    For arguments specification, refer to :func:`compute_metrics`,
-    :func:`summary_table` and :func:`summary_plot`. If ``metrics`` is
-    not provided, no evaluation table is computed, in which case this is
-    equivalent to a direct :func:`summary_plot` call.
+    Arguments
+    ---------
+    optimal_only: ``bool``
+        If ``metrics`` is provided, whether to restrict the summary to
+        scores achieving the best result in at least one metric. If
+        ``baseline`` is also provided, the corresponding score is
+        considered separately and is always included in the summary.
+    [...]:
+        For other arguments specification, refer
+        to :func:`compute_metrics`, :func:`summary_table` and
+        :func:`summary_plot`.
+
+    Note
+    ----
+    If ``metrics`` is not provided, no evaluation table is computed, in
+    which case this is equivalent to a simpler :func:`summary_plot`
+    call.
+
+    Example
+    -------
+    ::
+
+        summary(
+            confs_ind,
+            confs_oods,
+            scores_and_layers=scores_and_layers,
+            oods_title=oods_title,
+            metrics=metrics,
+            baseline=0,
+        )
+
     """
     if metrics is not None:
         evals = compute_metrics(confs_ind, confs_oods, metrics=metrics)
+
+        # Keep only optimal scores, plus baseline
+        if optimal_only:
+            # Compute mask
+            if baseline is None:
+                mask = (evals == evals.max(0)).any((1, 2))
+            else:
+                evals_baseline = evals[baseline].copy()
+                evals[baseline] = -np.inf
+                mask = (evals == evals.max(0)).any((1, 2))
+                evals[baseline] = evals_baseline
+                mask[baseline] = True
+
+            idxs = mask.nonzero()[0]
+
+            # Apply mask
+            confs_ind = confs_ind[mask]
+            confs_oods = tuple(confs_ood[mask] for confs_ood in confs_oods)
+            if scores_and_layers is not None:
+                scores_and_layers = tuple(scores_and_layers[i] for i in idxs)
+            if baseline is not None:
+                baseline = int(np.searchsorted(idxs, baseline))
+            evals = evals[mask]
+
         summary_table(
             evals,
             scores_and_layers=scores_and_layers,

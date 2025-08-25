@@ -222,8 +222,8 @@ def test_summary_plot(
 # Error upon double teardown skips when updating both outerr and plots
 # No problem, update still works as intended
 @parametrize_bool(
-    "with_scores_and_layers, with_oods_title, with_metrics, convex_hull, show,"
-    "with_baseline, with_hist_kw",
+    "with_scores_and_layers, with_oods_title, with_metrics, with_baseline, "
+    "optimal_only, convex_hull, show, with_hist_kw",
     lite=1,
 )
 def test_summary(
@@ -235,6 +235,7 @@ def test_summary(
     with_oods_title,
     with_metrics,
     with_baseline,
+    optimal_only,
     convex_hull,
     show,
     with_hist_kw,
@@ -250,6 +251,7 @@ def test_summary(
         oods_title=OODS_TITLE if with_oods_title else None,
         metrics=metrics if with_metrics else None,
         baseline=BASELINE if with_baseline else None,
+        optimal_only=optimal_only,
         convex_hull=convex_hull,
         show=show,
         block=False,
