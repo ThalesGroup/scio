@@ -641,6 +641,7 @@ def summary(  # noqa: PLR0913 (too many arguments)
         scores achieving the best result in at least one metric. If
         ``baseline`` is also provided, the corresponding score is
         considered separately and is always included in the summary.
+        Defaults to ``False``.
     [...]:
         For other arguments specification, refer
         to :func:`compute_metrics`, :func:`summary_table` and
@@ -651,6 +652,19 @@ def summary(  # noqa: PLR0913 (too many arguments)
     If ``metrics`` is not provided, no evaluation table is computed, in
     which case this is equivalent to a simpler :func:`summary_plot`
     call.
+
+    Tip
+    ---
+    When evaluating many scores at once, we recommend using the
+    ``optimal_only=True`` option with multiple *complementary* metrics,
+    that will capture every behaviour of interest, such as::
+
+        metrics = (AUC(kind="convex_hull"), TPR(max_fpr=0.05), TNR(min_tpr=0.95), MCC())
+
+    The "*complementarity*" of metrics aims at avoiding to hide a
+    suboptimal score which would be second-best everywhere and in fact
+    provide a good compromise. The resulting summary should be easier to
+    read.
 
     Example
     -------
