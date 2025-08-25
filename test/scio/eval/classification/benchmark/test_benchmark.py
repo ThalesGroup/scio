@@ -181,7 +181,7 @@ def test_roc_scores(
 
 
 @parametrize_bool(
-    "with_scores_and_layers, with_oods_title, convex_hull, with_hist_kw",
+    "with_scores_and_layers, with_oods_title, convex_hull, show, with_hist_kw",
     lite=1,
 )
 def test_summary_plot(
@@ -191,12 +191,13 @@ def test_summary_plot(
     with_scores_and_layers,
     with_oods_title,
     convex_hull,
+    show,
     with_hist_kw,
     match_plots_torch,  # noqa: ARG001 (unused argument)
 ):
     """Test :func:`summary_plot` plots."""
     hist_kw = HIST_KW if with_hist_kw else {}
-    if any((with_scores_and_layers, with_oods_title, with_hist_kw)):
+    if any((with_scores_and_layers, with_oods_title, convex_hull, show, with_hist_kw)):
         legends = [True]
     else:
         legends = (True, False, (True, False), (False, True))
@@ -209,17 +210,19 @@ def test_summary_plot(
             oods_title=OODS_TITLE if with_oods_title else None,
             legend=legend,
             convex_hull=convex_hull,
+            show=show,
             block=False,
             **hist_kw,
         )
         assert none is None
+        plt.show()
 
 
 # github.com/pytest-dev/pytest/issues/13537
 # Error upon double teardown skips when updating both outerr and plots
 # No problem, update still works as intended
 @parametrize_bool(
-    "with_scores_and_layers, with_oods_title, with_metrics, convex_hull, "
+    "with_scores_and_layers, with_oods_title, with_metrics, convex_hull, show,"
     "with_baseline, with_hist_kw",
     lite=1,
 )
@@ -233,6 +236,7 @@ def test_summary(
     with_metrics,
     with_baseline,
     convex_hull,
+    show,
     with_hist_kw,
     match_outerr_torch,  # noqa: ARG001 (unused argument)
     match_plots_torch,  # noqa: ARG001 (unused argument)
@@ -247,7 +251,9 @@ def test_summary(
         metrics=metrics if with_metrics else None,
         baseline=BASELINE if with_baseline else None,
         convex_hull=convex_hull,
+        show=show,
         block=False,
         **hist_kw,
     )
     assert none is None
+    plt.show()

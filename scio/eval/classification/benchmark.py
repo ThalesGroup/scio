@@ -503,6 +503,7 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
     oods_title: tuple[str, ...] | None = None,
     legend: tuple[bool, bool] | bool = True,
     convex_hull: bool = False,
+    show: bool = True,
     block: bool | None = None,
     **hist_kw: object,
 ) -> None:
@@ -524,8 +525,11 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
         to ``True``.
     convex_hull: ``bool``
         See :func:`roc_scores`.
+    show: ``bool``
+        Whether to end with a :func:`plt.show` call. Defaults to
+        ``True``.
     block: ``bool``, optional
-        Passed to :func:`plt.show`.
+        If ``show``, passed to :func:`plt.show`.
     **hist_kw:
         Passed to :func:`sns.histplot`, except the ``ax`` kwarg. Unless
         overidden, the following values are also passed: ``bins=30``,
@@ -608,7 +612,8 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
             )
 
     plt.subplots_adjust(0.045, 0.06, 0.98, 0.94, wspace=0)
-    plt.show(block=block)
+    if show:
+        plt.show(block=block)
 
 
 def summary(  # noqa: PLR0913 (too many arguments)
@@ -621,6 +626,7 @@ def summary(  # noqa: PLR0913 (too many arguments)
     baseline: int | None = None,
     legend: tuple[bool, bool] | bool = True,
     convex_hull: bool = False,
+    show: bool = True,
     block: bool | None = None,
     **hist_kw: object,
 ) -> None:
@@ -648,6 +654,7 @@ def summary(  # noqa: PLR0913 (too many arguments)
         oods_title=oods_title,
         legend=legend,
         convex_hull=convex_hull,
+        show=show,
         block=block,
         **hist_kw,
     )
