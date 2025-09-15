@@ -18,13 +18,13 @@ def test_roc_trivial():
 @parametrize_bool("label")
 def test_roc_requires_positive_and_negative(label):
     """Test that both positive and negative samples are required."""
-    with pytest.raises(AssertionError, match="^$"):
+    with pytest.raises(AssertionError, match=r"^$"):
         ROC([label], [0])
 
 
 def test_roc_rejects_nan():
     """Test that ``nan`` are forbidden."""
-    with pytest.raises(AssertionError, match="^$"):
+    with pytest.raises(AssertionError, match=r"^$"):
         ROC([T, F], [0, np.nan])
 
 
@@ -34,7 +34,7 @@ def test_roc_allows_only_posinf(sign):
     if sign > 0:
         ROC([T, F], [0, I])
     else:
-        with pytest.raises(AssertionError, match="^$"):
+        with pytest.raises(AssertionError, match=r"^$"):
             ROC([T, F], [0, -I])
 
 

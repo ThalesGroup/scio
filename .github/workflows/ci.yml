@@ -7,23 +7,21 @@ on:
     branches: [develop, release]
 
 jobs:
-  build:
-    name: continuous-integration
-    runs-on: ${{ matrix.os }}
+  ci:
+    timeout-minutes: 15
     strategy:
       matrix:
+        os: ["ubuntu-latest", "windows-latest"]  # Remove MacOS (billing + github.com/ThalesGroup/scio/issues/2)
         python-version: ["3.12", "3.13"]
-        os: ["ubuntu-latest", "windows-latest", "macos-latest"]
-
-
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install the latest version of uv and set the python version
+      - name: Install uv and set python version
         uses: astral-sh/setup-uv@v6
         with:
-          version: "0.8.9"
+          version: "0.8.17"
           python-version: ${{ matrix.python-version }}
 
       - name: Run ruff
@@ -35,8 +33,13 @@ jobs:
         run: |
           uv -v run mypy
 
+      - name: Build & Install
+        run: |
+          uv -v build
+          uv -v pip install dist/scio_pypi-1.0.0rc3-py3-none-any.whl
+
       - name: Build docs (Posix)
-        if: matrix.os != 'windows-latest' && matrix.os != 'macos-latest'  # Temporary (github.com/ThalesGroup/scio/issues/2)
+        if: matrix.os != 'windows-latest'
         env:
           SPHINXOPTS: --fail-on-warning
         run: |
@@ -49,13 +52,7 @@ jobs:
         run: |
           uv -v run cmd /c "docs\\make.bat"
 
-      - name: Build & Install
-        run: |
-          uv -v build
-          uv -v pip install dist/scio_pypi-1.0.0rc3-py3-none-any.whl
-
       - name: Run pytest
-        if: matrix.os != 'macos-latest'  # Temporary (github.com/ThalesGroup/scio/issues/2)
         id: run-pytest
         continue-on-error: true
         run: |
@@ -67,13 +64,13 @@ jobs:
         with:
           name: pytest-observed-${{ matrix.os }}-py${{ matrix.python-version }}
           path: test/expected/*/*.observed.*
-          retention-days: 7
+          retention-days: 30
 
       - name: Fail the job if pytest failed
         if: ${{ steps.run-pytest.outcome == 'failure' }}
         run: exit 1
 
-      - name: Upload coverage report to Codecov (Ubuntu, python3.13)
+      - name: Upload coverage report to Codecov
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13'
         uses: codecov/codecov-action@v5
         with:
@@ -82,7 +79,6 @@ jobs:
 
       # TEMPORARILY DISABLED (https://github.com/ThalesGroup/scio/issues/9)
       # - name: Run pytest with lowest resolution
-      #   if: matrix.os != 'macos-latest'  # Temporary (github.com/ThalesGroup/scio/issues/2)
       #   id: run-pytest-lowest
       #   continue-on-error: true
       #   run: |

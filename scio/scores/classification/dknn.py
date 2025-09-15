@@ -61,7 +61,7 @@ class DkNN(BaseScoreClassif):
     def calibrate(self, calib_data: Tensor, calib_labels: Tensor) -> None:
         """Calibrate the scoring algorithm with In-Distribution data."""
         self.calib_labels = calib_labels
-        n_samples, n_classes = self.rnet(calib_data).shape  # Records activations
+        n_samples = len(self.rnet(calib_data))  # Records activations
         all_activations = self.activations()
         self.indexes = make_indexes(all_activations, metric=self.index_metric)
 

@@ -300,7 +300,7 @@ class DeepMahalanobis(BaseScoreClassif):
             if not precision.isfinite().all():
                 raise torch.linalg.LinAlgError  # pragma: no cover  # noqa: TRY301
         except torch.linalg.LinAlgError:
-            data_dim = residues.size(1)
+            data_dim = residues.shape[1]
             return torch.full((data_dim, data_dim), torch.nan).to(residues)
 
         return precision

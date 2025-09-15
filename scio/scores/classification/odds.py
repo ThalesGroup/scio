@@ -68,7 +68,7 @@ class Odds(BaseScoreClassif):
             self.rng = torch.Generator(calib_data.device).manual_seed(self.rng_seed)
 
         logits = self.rnet(calib_data, dont_record=True)
-        n_samples, n_classes = logits.shape
+        n_classes = logits.shape[1]
         self.g_stats_avg = torch.full(
             (n_classes,) * 2,
             torch.nan,

@@ -167,7 +167,7 @@ class JTLA(BaseScoreClassif):
         all_activations = self.activations()
         self.calib_labels_true = calib_labels
         self.calib_labels_pred = out.argmax(1) if self.pred_conditional else None
-        self.prepare_tests(all_activations, out.size(1))
+        self.prepare_tests(all_activations, out.shape[1])
         # Next are tensors of shape (n_classes, n_calib_samples, n_layers) (or None)
         self.calib_tests_true, self.calib_tests_pred = self.run_tests(all_activations)
 
@@ -410,7 +410,7 @@ class JTLA(BaseScoreClassif):
 
         # Special aK-LPE method
         if self.layer_aggregation_method == "lpe":
-            n_calib = self.lpe_true_calib.size(1)
+            n_calib = self.lpe_true_calib.shape[1]
             similarity_search = self.index_metric == "ip"
 
             normed_true = self.lpe_normalizer(tests_true)
@@ -510,7 +510,7 @@ class JTLA(BaseScoreClassif):
             if only_consecutive:
                 return mask.unfold(1, n, 1)
 
-            range_n_layers = torch.arange(mask.size(1)).to(device=device)
+            range_n_layers = torch.arange(mask.shape[1]).to(device=device)
             combs = torch.combinations(range_n_layers, n)
             return mask[:, combs]
 

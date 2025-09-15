@@ -60,7 +60,7 @@ class IsoMax(BaseScoreClassif):
         with torch.no_grad():
             logits = self.rnet(calib_data, dont_record=True)
 
-        n_classes = logits.size(1)
+        n_classes = logits.shape[1]
         # Init at 0 like [IsoMax]
         self.prototypes = torch.zeros(
             n_classes,

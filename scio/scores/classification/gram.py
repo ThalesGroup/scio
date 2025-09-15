@@ -135,7 +135,7 @@ class Gram(BaseScoreClassif):
     def get_conformity(self, inputs: Tensor) -> tuple[Tensor, Tensor]:
         """Compute output and associated conformity at inference."""
         out = self.rnet(inputs)  # Records activations
-        n_samples, n_classes = out.shape
+        n_classes = out.shape[1]
 
         total_deviations = torch.zeros_like(out)
         for activations, low_high, expected_deviation in zip(
@@ -184,7 +184,7 @@ class Gram(BaseScoreClassif):
             )
             raise ValueError(msg)
 
-        n_channels = activations.size(1) if ndim == 4 else 1  # noqa: PLR2004 (magic value 4)
+        n_channels = activations.shape[1] if ndim == 4 else 1  # noqa: PLR2004 (magic value 4)
         per_channel = activations.shape[ndim // 2 :].numel()
         activations_3d = activations.reshape(len(activations), n_channels, per_channel)
 

@@ -24,7 +24,7 @@ def test_raises_on_unexpected_mode(monkeypatch_enum_new_member, score, test_data
 
 def test_accepts_unique_conformity(score, class_aggregation, test_data):
     """Check that the score can output one score only per sample."""
-    out, conformity = score(test_data)
+    conformity = score(test_data)[1]
     same_conformity_over_classes = (conformity == conformity[:, [0]]).all()
 
     assert conformity.shape == (len(test_data), N_CLASSES)
