@@ -12,7 +12,7 @@
 [os_img]: https://img.shields.io/badge/cross--platform-%E2%9C%93-blue "Tested on Ubuntu & Windows"
 [os_target]: https://sciortd.readthedocs.io/stable/user_guide/installation_compatibility.html#os-compatibility
 
-[python_img]: https://img.shields.io/badge/python-3.12%20|%203.13-blue "Compatible Python versions"
+[python_img]: https://img.shields.io/badge/python-3.12%20|%203.13%20|%203.14-blue "Compatible Python versions"
 [python_target]: https://devguide.python.org/versions
 
 [pypi_img]: https://img.shields.io/pypi/v/scio-pypi "Latest PyPI release"

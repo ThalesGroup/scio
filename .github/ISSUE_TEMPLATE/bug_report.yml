@@ -64,7 +64,7 @@ body:
         ```
       placeholder: |
         `scio` version: 1.0.0
-         Python version: 3.13.5
+         Python version: 3.14.0
          Platform: Linux (#67~22.04.1-Ubuntu ...)
          Machine type: x86_64
     validations:
