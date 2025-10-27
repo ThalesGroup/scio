@@ -83,8 +83,8 @@ class EnumWithExplicitSupport(Enum, metaclass=SimplerSignatureEnumType):
     """
 
     __slots__ = ()
-    # Remove following signature fix when python 3.13 is drpoped
-    __signature__ = Signature([Parameter("value", Parameter.POSITIONAL_OR_KEYWORD)])
+    # Remove following signature fix when python 3.13 is dropped
+    __signature__ = Signature([Parameter("value", Parameter.POSITIONAL_OR_KEYWORD)])  # type: ignore[assignment, unused-ignore]
 
     @classmethod
     def _missing_(cls, value: object) -> None:
