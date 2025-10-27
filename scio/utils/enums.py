@@ -33,6 +33,9 @@ class SimplerSignatureEnumType(EnumType):
     While enums may technically accept multiple arguments
     (github.com/python/cpython/issues/132543), we assume only one is
     expected in our case and override the signature for doc style.
+
+    This fix works for python>=3.14 and is useless before. For more
+    info, see https://github.com/python/cpython/pull/116234.
     """
 
     __signature__ = Signature([Parameter("value", Parameter.POSITIONAL_OR_KEYWORD)])
@@ -71,8 +74,7 @@ class EnumWithExplicitSupport(Enum, metaclass=SimplerSignatureEnumType):
         ValueError: 'value3' is not a valid Arg. Supported: 'value1', 'value2'
 
     Finally, it provides a `more sensible
-    <https://github.com/python/cpython/issues/132543>`_ signature
-    through metaclass patching::
+    <https://github.com/python/cpython/issues/132543>`_ signature::
 
         >>> from inspect import signature
         >>> signature(Arg)
@@ -81,6 +83,8 @@ class EnumWithExplicitSupport(Enum, metaclass=SimplerSignatureEnumType):
     """
 
     __slots__ = ()
+    # Remove following signature fix when python 3.13 is drpoped
+    __signature__ = Signature([Parameter("value", Parameter.POSITIONAL_OR_KEYWORD)])
 
     @classmethod
     def _missing_(cls, value: object) -> None:
