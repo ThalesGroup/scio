@@ -22,16 +22,30 @@ __all__ = [
     "ZAggrLike",
 ]
 
-from enum import Enum, unique
+from enum import Enum, EnumType, unique
 from inspect import Parameter, Signature
 from typing import Literal
 
 
-class EnumWithExplicitSupport(Enum):
+class SimplerSignatureEnumType(EnumType):
+    """Adjust the default :class:`Enum` signature.
+
+    While enums may technically accept multiple arguments
+    (github.com/python/cpython/issues/132543), we assume only one is
+    expected in our case and override the signature for doc style.
+    """
+
+    __signature__ = Signature([Parameter("value", Parameter.POSITIONAL_OR_KEYWORD)])
+
+
+class EnumWithExplicitSupport(Enum, metaclass=SimplerSignatureEnumType):
     """Base Enum for explicit error message.
 
     In many place in this package, we use :class:`Enum` in conjunction
     with ``Literal`` as follows::
+
+        from enum import unique
+
 
         @unique
         class Arg(str, EnumWithExplicitSupport):
@@ -56,14 +70,17 @@ class EnumWithExplicitSupport(Enum):
         <traceback>
         ValueError: 'value3' is not a valid Arg. Supported: 'value1', 'value2'
 
+    Finally, it provides a `more sensible
+    <https://github.com/python/cpython/issues/132543>`_ signature
+    through metaclass patching::
+
+        >>> from inspect import signature
+        >>> signature(Arg)
+        <Signature (value)>
+
     """
 
     __slots__ = ()
-    # While enums may technically accept multiple arguments
-    # (github.com/python/cpython/issues/132543), we assume only one is
-    # expected in our case and override the signature for doc style. If
-    # necessary, override again in subclasses.
-    __signature__ = Signature([Parameter("value", Parameter.POSITIONAL_OR_KEYWORD)])  # type: ignore[assignment]  # github.com/python/cpython/issues/132543
 
     @classmethod
     def _missing_(cls, value: object) -> None:
