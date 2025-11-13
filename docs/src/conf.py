@@ -22,14 +22,18 @@ from typing import TYPE_CHECKING, Literal, cast
 
 import torch
 from paramclasses import IMPL, MISSING, isparamclass
-from sphinx.application import Sphinx
-from sphinx.util import logging
-from sphinx_gallery.sorting import ExplicitOrder  # type: ignore[import-untyped]
+from sphinx.application import Sphinx  # type: ignore[import-not-found, unused-ignore]
+from sphinx.util import logging  # type: ignore[import-not-found, unused-ignore]
+from sphinx_gallery.sorting import (  # type: ignore[import-not-found, import-untyped, unused-ignore]
+    ExplicitOrder,
+)
 
 if TYPE_CHECKING:
     from re import Match
 
-    from sphinx.ext.autodoc import _AutodocObjType  # noqa: TC004 (unclear...)
+    from sphinx.ext.autodoc import (  # type: ignore[import-not-found, unused-ignore]
+        _AutodocObjType,  # noqa: TC004 (unclear...)
+    )
 
 import scio
 

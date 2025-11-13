@@ -89,7 +89,7 @@ For developers using `uv`, these can easily be checked with the following.
 ```bash
 # From root directory
 uv run pytest
-uv run mypy
+uv run mypy  # Use `uv run --group=doc mypy` if doc was updated
 uvx ruff format --diff
 uvx ruff check
 ```
