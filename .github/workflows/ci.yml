@@ -39,14 +39,14 @@ jobs:
           uv -v pip install dist/scio_pypi-1.0.2.dev0-py3-none-any.whl
 
       - name: Build docs (Posix)
-        if: matrix.os != 'windows-latest' && matrix.python-version != '3.14'  # github.com/ThalesGroup/scio/issues/38
+        if: matrix.os != 'windows-latest'
         env:
           SPHINXOPTS: --fail-on-warning
         run: |
           uv -v run --group=doc make -C docs
 
       - name: Build docs (Windows)
-        if: matrix.os == 'windows-latest' && matrix.python-version != '3.14'  # github.com/ThalesGroup/scio/issues/38
+        if: matrix.os == 'windows-latest'
         env:
           SPHINXOPTS: --fail-on-warning
         run: |

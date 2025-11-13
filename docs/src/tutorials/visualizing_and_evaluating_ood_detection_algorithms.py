@@ -7,12 +7,6 @@ Visualizing & Evaluating OoD Detection algorithms
 # .. hint:: We recommend reading
 #    :doc:`/auto_tutorials/inferring_with_confidence` first.
 #
-# .. attention:: At the time of this release, the third-party library
-#    `datasets <https://github.com/huggingface/datasets>`_ may not be
-#    fully compatible with Python 3.14 yet. If necessary, use older
-#    Python versions. For more information, see `this issue
-#    <https://github.com/ThalesGroup/scio/issues/38>`_.
-#
 # In this tutorial, we use the
 # :doc:`/api_references/eval/classification` API from ``scio.eval`` to
 # compare several confidence score algorithms in a classification setup,
