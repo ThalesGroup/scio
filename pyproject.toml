@@ -46,17 +46,20 @@ dependencies = [
     "torch>=2.6",
     "torchinfo>=1.8",
 ]
+
 [dependency-groups]
 dev = [
-    "datasets>=4.3.0",
     "mypy>=1.17",
     "mypy-extensions>=1.1",
-    "myst-parser>=4.0.1",
     "pandas-stubs>=2.2.3.241126",
-    "pydata-sphinx-theme>=0.16.1",
     "pytest>=8.3.4",
     "pytest-cov>=6",
     "ruamel-yaml>=0.18.7",
+]
+doc = [
+    "datasets>=4.3.0",
+    "myst-parser>=4.0.1",
+    "pydata-sphinx-theme>=0.16.1",
     "sphinx>=8.2.3",
     "sphinx-copybutton>=0.5.2",
     "sphinx-design>=0.6.1",
