@@ -52,7 +52,7 @@ dev = [
     "mypy>=1.17",
     "mypy-extensions>=1.1",
     "pandas-stubs>=2.2.3.241126",
-    "pytest>=8.3.4",
+    "pytest>=9",
     "pytest-cov>=6",
     "ruamel-yaml>=0.18.7",
 ]
