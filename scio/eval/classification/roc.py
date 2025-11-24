@@ -19,11 +19,10 @@ class ROC:
     only depends on the Pareto front of all the :math:`(FP, TP)` tuples
     when thresholding with every possible threshold. Per convention:
 
-    #. The thresholding test is ``score <= tau``;
+    #. The thresholding test is ``score <= tau``.
     #. **Positive** (*i.e.* OoD) samples should verify this and thus
-       have a **low score**;
-    #. Scores must not be ``nan`` or ``-inf`` (ensuring validity of the
-       first note in :attr:`pareto`);
+       have a **low score**.
+    #. Scores must not be ``nan``.
 
     Arguments
     ---------
@@ -32,6 +31,13 @@ class ROC:
         ``(n_samples,)``.
     scores: ``ArrayLike``
         The score of samples. Shape ``(n_samples,)``.
+
+    Raises
+    ------
+    :exc:`AssertionError`
+        If there is no positive (*resp.* negative) labels.
+    :exc:`AssertionError`
+        If there is at least one ``nan`` score.
 
     """
 
@@ -49,7 +55,6 @@ class ROC:
         check(labels_np.any())
         check(not labels_np.all())
         check(not np.isnan(scores).any())
-        check(-np.inf < scores_np.min())
 
         sorter = np.argsort(scores)
         self._scores = scores_np[sorter]
@@ -67,18 +72,21 @@ class ROC:
         # ``inf`` (considered self equal). Rests on ``scores`` being
         # sorted. Faster than ``np.unique`` which keeps first occurrence
         unique_mask = scores != np.r_[scores[1:], np.nan]
-        PP = np.where(unique_mask)[0]
-        TP = self._labels.cumsum()[PP]
-        FP = PP - TP + 1
-        attainable_fptp = np.insert(np.c_[FP, TP], 0, 0, 0)
-        pareto_mask = (np.diff(attainable_fptp[:, 0], append=inf) > 0) & (
-            np.diff(attainable_fptp[:, 1], prepend=-inf) > 0
-        )
-        self._pareto = attainable_fptp[pareto_mask]
+        unique_thresholds = np.insert(scores[unique_mask], unique_mask.sum(), inf)
+        PP = np.where(unique_mask)[0] + 1  # Predicted Positive
+        TP = self._labels.cumsum()[PP - 1]
+        FP = PP - TP
+
+        # Add ``(0, 0)`` if attainable
+        if scores[0] > -np.inf:
+            unique_thresholds = np.insert(unique_thresholds, 0, -inf)
+            FP = np.insert(FP, 0, 0)
+            TP = np.insert(TP, 0, 0)
+
+        pareto_mask = (np.diff(FP, append=inf) > 0) & (np.diff(TP, prepend=-inf) > 0)
         pareto_idx = np.where(pareto_mask)[0]
-        self._thresholds = np.insert(scores[unique_mask], [0, len(PP)], [-inf, inf])[
-            [pareto_idx, pareto_idx + 1]
-        ].T
+        self._pareto = np.c_[FP, TP][pareto_mask]
+        self._thresholds = unique_thresholds[[pareto_idx, pareto_idx + 1]].T
         self._N, self._P = int(FP[-1]), int(TP[-1])
 
     def _compute_convex_hull(self) -> None:
@@ -116,10 +124,10 @@ class ROC:
 
         Note
         ----
-        The following are always true:
+        The following is always true:
 
-        - ``self.pareto[0, 0] == 0`` since ``-inf`` scores are
-          prohibited;
+        - ``self.pareto[0, 0]`` is the number of negative samples with
+          ``-inf`` score;
         - ``self.pareto[-1, 1] == self.P``.
 
         """
@@ -132,8 +140,15 @@ class ROC:
         Returns
         -------
         thresholds: ``NDArray[np.floating]``
-            Convention: lower bound is included, higher bound is
-            excluded (unless ``inf``). Shape ``(n_points_pareto, 2)``.
+            By convention for **finite** thresholds, the lower bound is
+            included and the upper bound is excluded. The infinite case
+            may vary.
+
+        Note
+        ----
+        We could have used ``nan`` to help define a convention for
+        included *vs.* excluded infinites, but decided not to in order
+        to guarantee real-valued thresholds.
 
         """
         return self._thresholds

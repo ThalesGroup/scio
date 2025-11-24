@@ -7,7 +7,7 @@ import pytest
 from scio.eval import ROC
 from test.conftest import parametrize_bool
 
-from .conftest import EXPECTED, LABELS_SCORES, F, I, T
+from .conftest import EXPECTED, LABELS_SCORES, F, T
 
 
 def test_roc_trivial():
@@ -26,16 +26,6 @@ def test_roc_rejects_nan():
     """Test that ``nan`` are forbidden."""
     with pytest.raises(AssertionError, match=r"^$"):
         ROC([T, F], [0, np.nan])
-
-
-@pytest.mark.parametrize("sign", [-1, 1])
-def test_roc_allows_only_posinf(sign):
-    """Test that infinte values must only be positive."""
-    if sign > 0:
-        ROC([T, F], [0, I])
-    else:
-        with pytest.raises(AssertionError, match=r"^$"):
-            ROC([T, F], [0, -I])
 
 
 def test_roc_sorts(rng, labels, scores):
