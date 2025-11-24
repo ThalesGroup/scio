@@ -19,7 +19,7 @@ class ROC:
     only depends on the Pareto front of all the :math:`(FP, TP)` tuples
     when thresholding with every possible threshold. Per convention:
 
-    #. The thresholding test is ``score <= tau``.
+    #. The thresholding test is ``score <= threshold``.
     #. **Positive** (*i.e.* OoD) samples should verify this and thus
        have a **low score**.
     #. Scores must not be ``nan``.
@@ -38,6 +38,12 @@ class ROC:
         If there is no positive (*resp.* negative) labels.
     :exc:`AssertionError`
         If there is at least one ``nan`` score.
+
+    Note
+    ----
+    If a negative (*i.e.* InD) sample has negative infinity score, the
+    ROC curve starts with a positive :attr:`~ROC.FPR`, which can lead to
+    undefined Discriminative Power.
 
     """
 
