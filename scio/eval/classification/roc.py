@@ -42,8 +42,8 @@ class ROC:
     Note
     ----
     If a negative (*i.e.* InD) sample has negative infinity score, the
-    ROC curve starts with a positive :attr:`~ROC.FPR`, which can lead to
-    undefined Discriminative Power.
+    ROC curve starts with a **positive** :attr:`~ROC.FPR`, that can lead
+    to undefined Discriminative Power.
 
     """
 
@@ -121,7 +121,7 @@ class ROC:
 
     @property
     def pareto(self) -> NDArray[np.integer]:
-        """Ordered :math:`(FP, TP)` tuples defining the Pareto front.
+        r"""Ordered :math:`(FP, TP)` tuples defining the Pareto front.
 
         Returns
         -------
@@ -133,7 +133,7 @@ class ROC:
         The following is always true:
 
         - ``self.pareto[0, 0]`` is the number of negative samples with
-          ``-inf`` score;
+          :math:`-\infty` score;
         - ``self.pareto[-1, 1] == self.P``.
 
         """
