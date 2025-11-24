@@ -24,7 +24,7 @@ Visualizing & Evaluating OoD Detection algorithms
 
 # These should be defined by your use-case
 import torch
-from datasets import load_dataset  # type: ignore[import-untyped]
+from datasets import load_dataset  # type: ignore[import-untyped, unused-ignore]
 
 calib_set = load_dataset("ego-thales/cifar10", name="calibration")["unique_split"]
 calib_data, calib_labels, _ = calib_set.with_format("torch")[:].values()
