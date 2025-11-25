@@ -133,3 +133,9 @@ div.sphx-glr-download a:hover {
   font-weight: bold;
   font-style: italic;
 }
+
+/* Bold small caps */
+.bsc {
+  font-weight: bold;
+  font-variant: small-caps;
+}

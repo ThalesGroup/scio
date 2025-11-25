@@ -55,14 +55,6 @@ class BaseDiscriminativePower(ParamClass):
     Discriminative power classes are `paramclasses
     <https://github.com/eliegoudout/paramclasses>`_ and hyperparameters
     are defined as their *parameters*.
-
-    Important
-    ---------
-    Since ROC curves may start with **positive** :math:`FPR` in case of
-    :math:`-\infty` scores, subclasses **may not** assume that
-    :attr:`ROC.pareto` starts with ``[0, 0]``. As such, when necessary,
-    it may be appropriate to return ``nan``.
-
     """
 
     # ====================== TO IMPLEMENT IN DISCRIMINATIVE POWER ======================
@@ -119,7 +111,7 @@ class AUC(BaseDiscriminativePower):
 
         AUC = \mathbb{P}(\text{score}_{\text{OoD}}<\text{score}_{\text{InD}}),
 
-    when sampling the reference population.
+    when sampling from the reference population.
 
     Arguments
     ---------

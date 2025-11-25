@@ -13,7 +13,7 @@ from scio.utils import check
 
 
 class ROC:
-    """ROC utility for Discriminative Power and visualization.
+    r"""ROC utility for Discriminative Power and visualization.
 
     We recall that a :ref:`Discriminative Power <discriminative_power>`
     only depends on the Pareto front of all the :math:`(FP, TP)` tuples
@@ -41,9 +41,15 @@ class ROC:
 
     Note
     ----
-    If a negative (*i.e.* InD) sample has negative infinity score, the
-    ROC curve starts with a **positive** :attr:`~ROC.FPR`, that can lead
-    to undefined Discriminative Power.
+    .. role:: bsc
+       :class: bsc
+
+    If a negative (*i.e.* InD) sample has a score of :math:`-\infty`,
+    then the ROC curve would theoretically start with a *nonzero*
+    :attr:`~ROC.FPR`. In this case, for consistency in
+    :ref:`discriminative_power` definitions, we artificially add the
+    point :math:`(0, 0)`, corresponding to the trivial :bsc:`False`
+    classifier.
 
     """
 
@@ -83,11 +89,10 @@ class ROC:
         TP = self._labels.cumsum()[PP - 1]
         FP = PP - TP
 
-        # Add ``(0, 0)`` if attainable
-        if scores[0] > -np.inf:
-            unique_thresholds = np.insert(unique_thresholds, 0, -inf)
-            FP = np.insert(FP, 0, 0)
-            TP = np.insert(TP, 0, 0)
+        # Add ``(0, 0)``
+        unique_thresholds = np.insert(unique_thresholds, 0, -inf)
+        FP = np.insert(FP, 0, 0)
+        TP = np.insert(TP, 0, 0)
 
         pareto_mask = (np.diff(FP, append=inf) > 0) & (np.diff(TP, prepend=-inf) > 0)
         pareto_idx = np.where(pareto_mask)[0]
@@ -126,14 +131,13 @@ class ROC:
         Returns
         -------
         pareto: ``NDArray[np.integer]``
-            Shape ``(n_points_pareto, 2)``.
+            Shape ``(n_pareto_points, 2)``.
 
         Note
         ----
-        The following is always true:
+        The following are always true:
 
-        - ``self.pareto[0, 0]`` is the number of negative samples with
-          :math:`-\infty` score;
+        - ``self.pareto[0, 0] == 0`` (see :class:`ROC` note);
         - ``self.pareto[-1, 1] == self.P``.
 
         """
@@ -141,20 +145,24 @@ class ROC:
 
     @property
     def thresholds(self) -> NDArray[np.floating]:
-        """The threshold intervals associated with Pareto points.
+        r"""The threshold intervals associated with Pareto points.
 
         Returns
         -------
         thresholds: ``NDArray[np.floating]``
-            By convention for **finite** thresholds, the lower bound is
-            included and the upper bound is excluded. The infinite case
-            may vary.
+            Intervals for thresholds, to achieve the corresponding
+            :math:`(FP, TP)` point from :attr:`~ROC.pareto`. The lower
+            bound is included and the upper bound is excluded, with the
+            two following exceptions.
 
-        Note
-        ----
-        We could have used ``nan`` to help define a convention for
-        included *vs.* excluded infinites, but decided not to in order
-        to guarantee real-valued thresholds.
+            1. A :math:`+\infty` upper bound is included if and only
+               if ``self.pareto[-1, 0] == self.N``.
+            2. A :math:`-\infty` upper bound is a special case for the
+               point :math:`(0, 0)`, when it is not attainable via
+               thresholding because a negative sample has a score of
+               :math:`-\infty`.
+
+            Shape ``(n_pareto_points, 2)``.
 
         """
         return self._thresholds
@@ -181,7 +189,7 @@ class ROC:
         Returns
         -------
         FP: ``NDArray[np.integer]``
-            Shape ``(n_points_pareto,)``.
+            Shape ``(n_pareto_points,)``.
 
         """
         return self.pareto[:, 0]
@@ -198,7 +206,7 @@ class ROC:
         Returns
         -------
         TP: ``NDArray[np.integer]``
-            Shape ``(n_points_pareto,)``.
+            Shape ``(n_pareto_points,)``.
 
         """
         return self.pareto[:, 1]
@@ -215,7 +223,7 @@ class ROC:
         Returns
         -------
         FN: ``NDArray[np.integer]``
-            Shape ``(n_points_pareto,)``.
+            Shape ``(n_pareto_points,)``.
 
         """
         return self.P - self.TP
@@ -232,7 +240,7 @@ class ROC:
         Returns
         -------
         TN: ``NDArray[np.integer]``
-            Shape ``(n_points_pareto,)``.
+            Shape ``(n_pareto_points,)``.
 
         """
         return self.N - self.FP
@@ -249,7 +257,7 @@ class ROC:
         Returns
         -------
         FPR: ``NDArray[np.floating]``
-            Shape ``(n_points_pareto,)``.
+            Shape ``(n_pareto_points,)``.
 
         """
         return self.FP / self.N
@@ -266,7 +274,7 @@ class ROC:
         Returns
         -------
         TPR: ``NDArray[np.floating]``
-            Shape ``(n_points_pareto,)``.
+            Shape ``(n_pareto_points,)``.
 
         """
         return self.TP / self.P
@@ -283,7 +291,7 @@ class ROC:
         Returns
         -------
         FNR: ``NDArray[np.floating]``
-            Shape ``(n_points_pareto,)``.
+            Shape ``(n_pareto_points,)``.
 
         """
         return self.FN / self.P
@@ -300,7 +308,7 @@ class ROC:
         Returns
         -------
         TNR: ``NDArray[np.floating]``
-            Shape ``(n_points_pareto,)``.
+            Shape ``(n_pareto_points,)``.
 
         """
         return self.TN / self.N
