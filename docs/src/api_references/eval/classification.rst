@@ -76,6 +76,7 @@ Given experimental results, the following help quantify the Discriminative Power
 
    ~scio.eval.compute_metrics
    ~scio.eval.summary_table
+   ~scio.eval.topk_evals
 
 .. rubric:: Visualization & Evaluation
 

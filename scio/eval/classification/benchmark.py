@@ -9,9 +9,10 @@ __all__ = [
     "summary",
     "summary_plot",
     "summary_table",
+    "topk_evals",
 ]
 
-from collections.abc import Collection, Iterable
+from collections.abc import Collection, Iterable, Sequence
 from functools import partial
 from itertools import chain, repeat, starmap
 
@@ -21,7 +22,7 @@ import pandas as pd
 import rich
 import seaborn as sns  # type: ignore[import-untyped]
 from matplotlib.lines import Line2D
-from numpy.typing import NDArray
+from numpy.typing import ArrayLike, NDArray
 from rich.console import Console
 from rich.highlighter import ReprHighlighter
 from rich.progress import (
@@ -224,7 +225,7 @@ def compute_metrics(
         Second output of :func:`compute_confidence`.
     metrics: ``tuple[BaseDiscriminativePower, ...]``
         The different types of metrics to compute for every ``(score,
-        ood)`` combination.
+        ood set)`` combination.
 
     Returns
     -------
@@ -250,23 +251,95 @@ def compute_metrics(
     return evals
 
 
-def summary_table(
+def topk_evals(
+    evals: NDArray[np.floating],
+    k: int = 1,
+    *,
+    baseline: int | None = None,
+) -> NDArray[np.integer]:
+    r"""Identify best performing scores in at least one scenario.
+
+    Arguments
+    ---------
+    evals: ``NDArray[np.floating]``
+        Input evaluations, usually from a :func:`compute_metrics` call.
+        Shape must be ``(n, *scenarios_shape)``.
+    k: ``int``
+        Parameter defining the top :math:`k` for every scenario. If
+        ``not 0 < k <= n``, every row is selected — even if full of
+        ``nan`` (see Note below). Defaults to ``1``.
+    baseline: ``int``, optional
+        If provided, the corresponding row is considered separately and
+        always included in the final result.
+
+    Returns
+    -------
+    idxs: ``NDArray[np.integer]``
+        Indexes of the rows of ``evals`` with at least one value in top
+        ``k``, across rows. Additionally, see ``baseline`` if provided.
+        It is a sorted :math:`1`\ D array.
+
+    Note
+    ----
+    Conventionally, ``nan`` values are never considered amongst top
+    ``k``.
+
+    Tip
+    ---
+    Using ``k=len(evals)`` can be useful to filter out only scores full
+    of ``nan`` evaluation results.
+
+    """
+    n = len(evals)
+    if not 0 < k <= n:
+        return np.arange(n)
+
+    if baseline is not None:
+        evals = evals.copy()
+        evals[baseline] = np.nan
+
+    topk_values = np.nan_to_num(
+        -np.partition(-evals, k - 1, axis=0)[k - 1],
+        nan=-np.inf,
+        neginf=-np.inf,
+        posinf=np.inf,
+    )
+    mask = (evals >= topk_values).reshape(n, -1).any(1)
+
+    if baseline is not None:
+        mask[baseline] = True
+
+    return mask.nonzero()[0]
+
+
+def summary_table(  # noqa: PLR0913 (too many arguments)
     evals: NDArray[np.floating],
     *,
-    scores_and_layers: Iterable[ScoreClassifAndLayers] | None = None,
+    scores_and_layers: Sequence[ScoreClassifAndLayers] | None = None,
+    keep: ArrayLike | None = None,
     oods_title: Iterable[str] | None = None,
     metrics: Iterable[BaseDiscriminativePower] | None = None,
     baseline: int | None = None,
 ) -> None:
-    """Print scores evaluation results summary in rich table.
+    r"""Print scores evaluation results summary in rich table.
 
     Arguments
     ---------
     evals: ``NDArray[np.floating]``
         Result from a :func:`compute_metrics` call. Shape is
         ``(n_scores, n_ood_sets, n_metrics)``.
-    scores_and_layers: ``Iterable[ScoreClassifAndLayers]``, optional
+    scores_and_layers: ``Sequence[ScoreClassifAndLayers]``, optional
         See :func:`fit_scores`. Used only for row headers.
+    keep: ``ArrayLike``, optional
+        If provided, the table is restricted to the corresponding
+        scores. In this case, it must be a :math:`1`\ D array
+        of integer indexes, or a boolean mask. Using integer indexes
+        allows arbitrary reordering of the scores.
+
+        Note that if ``baseline`` is provided, the advanced highlighting
+        is applied *before* the ``keep`` restriction. Use the output of
+        a :func:`topk_evals` call to show only the best performing
+        scores.
     oods_title: ``Iterable[str]``, optional
         See :func:`compute_confidence`. Used only for column headers.
     metrics: ``Iterable[BaseDiscriminativePower]``, optional
@@ -281,12 +354,19 @@ def summary_table(
 
     # Preprocess optional arguments
     recorded = scores_and_layers is not None
-
-    scores_str: Iterable[str]
-    if scores_and_layers is None:
-        scores_str = (f"Score {i + 1}" for i in range(n_scores))
+    idxs: Iterable
+    if keep:
+        keep = np.asarray(keep)
+        idxs = keep if np.issubdtype(keep.dtype, np.integer) else keep.nonzero()[0]
     else:
-        scores_str = starmap(_score_and_layers_str, scores_and_layers)
+        idxs = range(n_scores)
+
+    kept_scores_str: Iterable[str]
+    if scores_and_layers is None:
+        kept_scores_str = (f"Score {i + 1}" for i in idxs)
+    else:
+        kept_scores_and_layers = (scores_and_layers[i] for i in idxs)
+        kept_scores_str = starmap(_score_and_layers_str, kept_scores_and_layers)
 
     if oods_title is None:
         oods_title = repeat("", times=n_ood_sets)
@@ -333,7 +413,7 @@ def summary_table(
     elts = bold(elts, bold_mask)
 
     # Fill table
-    for score_str, elts_score in zip(scores_str, elts, strict=False):
+    for score_str, elts_score in zip(kept_scores_str, elts[idxs], strict=False):
         table.add_row(score_str.strip(), *map(" / ".join, elts_score))
 
     # Show
@@ -496,11 +576,12 @@ def roc_scores(  # noqa: PLR0913 (too many arguments)
     return ax
 
 
-def summary_plot(  # noqa: PLR0913 (too many arguments)
+def summary_plot(  # noqa: C901, PLR0913 (too complex, too many arguments)
     confs_ind: NDArray,
     confs_oods: tuple[NDArray, ...],
     *,
     scores_and_layers: tuple[ScoreClassifAndLayers, ...] | None = None,
+    keep: ArrayLike | None = None,
     oods_title: tuple[str, ...] | None = None,
     legend: tuple[bool, bool] | bool = True,
     convex_hull: bool = False,
@@ -508,7 +589,7 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
     block: bool | None = None,
     **hist_kw: object,
 ) -> None:
-    """Plot and show histograms for each score, ROCs for each OoD set.
+    r"""Plot and show histograms for each score, ROCs for each OoD set.
 
     Arguments
     ---------
@@ -518,6 +599,11 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
         Second output of :func:`compute_confidence`.
     scores_and_layers: ``tuple[ScoreClassifAndLayers, ...]``, optional
         See :func:`roc_scores`.
+    keep: ``ArrayLike``, optional
+        If provided, the plots are restricted to the corresponding
+        scores. In this case, it must be a :math:`1`\ D array
+        of integer indexes, or a boolean mask. Using integer indexes
+        allows arbitrary reordering of the scores.
     oods_title: ``tuple[str, ...]``, optional
         See :func:`histogram_oods`.
     legend: ``tuple[bool, bool] | bool``
@@ -545,6 +631,15 @@ def summary_plot(  # noqa: PLR0913 (too many arguments)
 
     """
     legend_hist, legend_roc = (legend, legend) if isinstance(legend, bool) else legend
+
+    # Apply ``keep``
+    if keep:
+        keep = np.asarray(keep)
+        idxs = keep if np.issubdtype(keep.dtype, np.integer) else keep.nonzero()[0]
+        confs_ind = confs_ind[idxs]
+        confs_oods = tuple(confs_ood[idxs] for confs_ood in confs_oods)
+        if scores_and_layers is not None:
+            scores_and_layers = tuple(scores_and_layers[i] for i in idxs)
 
     # Create axes
     fig = plt.figure()
@@ -624,8 +719,8 @@ def summary(  # noqa: PLR0913 (too many arguments)
     scores_and_layers: tuple[ScoreClassifAndLayers, ...] | None = None,
     oods_title: tuple[str, ...] | None = None,
     metrics: tuple[BaseDiscriminativePower, ...] | None = None,
+    topk: int = 0,
     baseline: int | None = None,
-    optimal_only: bool = False,
     legend: tuple[bool, bool] | bool = True,
     convex_hull: bool = False,
     show: bool = True,
@@ -636,12 +731,12 @@ def summary(  # noqa: PLR0913 (too many arguments)
 
     Arguments
     ---------
-    optimal_only: ``bool``
-        If ``metrics`` is provided, whether to restrict the summary to
-        scores achieving the best result in at least one metric. If
-        ``baseline`` is also provided, the corresponding score is
-        considered separately and is always included in the summary.
-        Defaults to ``False``.
+    topk: ``int``
+        Use to prune the summary. If ``metrics`` is provided, only the
+        scores achieving top ``topk`` performance for at least one OoD
+        scenario and one metric are shown. See :func:`topk_evals` for
+        more details, especially regarding the interaction with
+        ``baseline``. Defaults to ``0``.
     [...]:
         For other arguments specification, refer
         to :func:`compute_metrics`, :func:`summary_table` and
@@ -655,16 +750,16 @@ def summary(  # noqa: PLR0913 (too many arguments)
 
     Tip
     ---
-    When evaluating many scores at once, we recommend using the
-    ``optimal_only=True`` option with multiple *complementary* metrics,
-    that will capture every behaviour of interest, such as::
+    When evaluating many scores at once, we recommend using the ``topk``
+    argument with multiple *complementary* metrics, that will capture
+    every behaviour of interest, such as::
 
         metrics = (AUC(kind="convex_hull"), TPR(max_fpr=0.05), TNR(min_tpr=0.95), MCC())
 
     The "*complementarity*" of metrics aims at avoiding to hide a
-    suboptimal score which would be second-best everywhere and in fact
-    provide a good compromise. The resulting summary should be easier to
-    read.
+    suboptimal score which would only be "above average" in many OoD
+    scenarios but in fact provide a good compromise. The resulting
+    summary should be easier to read and analyze.
 
     Example
     -------
@@ -682,42 +777,23 @@ def summary(  # noqa: PLR0913 (too many arguments)
     """
     if metrics is not None:
         evals = compute_metrics(confs_ind, confs_oods, metrics=metrics)
-
-        # Keep only optimal scores, plus baseline
-        if optimal_only:
-            # Compute mask
-            if baseline is None:
-                mask = (evals == evals.max(0)).any((1, 2))
-            else:
-                evals_baseline = evals[baseline].copy()
-                evals[baseline] = -np.inf
-                mask = (evals == evals.max(0)).any((1, 2))
-                evals[baseline] = evals_baseline
-                mask[baseline] = True
-
-            idxs = mask.nonzero()[0]
-
-            # Apply mask
-            confs_ind = confs_ind[mask]
-            confs_oods = tuple(confs_ood[mask] for confs_ood in confs_oods)
-            if scores_and_layers is not None:
-                scores_and_layers = tuple(scores_and_layers[i] for i in idxs)
-            if baseline is not None:
-                baseline = int(np.searchsorted(idxs, baseline))
-            evals = evals[mask]
-
+        idxs = topk_evals(evals, k=topk, baseline=baseline)
         summary_table(
             evals,
             scores_and_layers=scores_and_layers,
+            keep=idxs,
             oods_title=oods_title,
             metrics=metrics,
             baseline=baseline,
         )
+    else:
+        idxs = None
 
     summary_plot(
         confs_ind,
         confs_oods,
         scores_and_layers=scores_and_layers,
+        keep=idxs,
         oods_title=oods_title,
         legend=legend,
         convex_hull=convex_hull,

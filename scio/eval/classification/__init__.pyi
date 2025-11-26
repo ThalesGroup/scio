@@ -13,6 +13,7 @@ __all__ = [
     "summary",
     "summary_plot",
     "summary_table",
+    "topk_evals",
 ]
 
 from .benchmark import (
@@ -24,6 +25,7 @@ from .benchmark import (
     summary,
     summary_plot,
     summary_table,
+    topk_evals,
 )
 from .discriminative_power import (
     AUC,

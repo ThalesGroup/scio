@@ -13,6 +13,7 @@ __all__ = [
     "summary",
     "summary_plot",
     "summary_table",
+    "topk_evals",
 ]
 
 from .classification import (
@@ -30,4 +31,5 @@ from .classification import (
     summary,
     summary_plot,
     summary_table,
+    topk_evals,
 )
