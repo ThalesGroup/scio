@@ -286,8 +286,8 @@ def topk_evals(
 
     Tip
     ---
-    Using ``k=len(evals)`` can be useful to filter out only scores full
-    of ``nan`` evaluation results.
+    Using ``k=len(evals)`` can be useful to filter out only rows full of
+    ``nan``.
 
     """
     n = len(evals)
@@ -732,11 +732,12 @@ def summary(  # noqa: PLR0913 (too many arguments)
     Arguments
     ---------
     topk: ``int``
-        Use to prune the summary. If ``metrics`` is provided, only the
-        scores achieving top ``topk`` performance for at least one OoD
-        scenario and one metric are shown. See :func:`topk_evals` for
-        more details, especially regarding the interaction with
-        ``baseline``. Defaults to ``0``.
+        Use to prune the summary. If ``metrics`` is provided and ``0 <
+        topk <= n_scores``, only the scores achieving top ``topk``
+        performance for at least one OoD scenario and one metric are
+        shown. See :func:`topk_evals` for more details and the
+        interaction with ``baseline`` ─ which is passed. Defaults to
+        ``0``, showing all the results.
     [...]:
         For other arguments specification, refer
         to :func:`compute_metrics`, :func:`summary_table` and
