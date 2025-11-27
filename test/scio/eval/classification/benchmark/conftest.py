@@ -26,8 +26,11 @@ N_CLASSES = 3
 N_CALIB = 10
 N_TEST_IND = 10
 N_TEST_OODS = (8, 12)
+KEEPS = ((True, False, True), (1,))
 OODS_TITLE = ("Test OoD 1", "Test OoD 2")
+TOPKS = (1, 2)
 BASELINE = 0
+LEGENDS = (True, False, (True, False), (False, True))
 HIST_KW = MappingProxyType({"common_bins": False})
 
 
@@ -76,6 +79,21 @@ def scores_and_layers(scores) -> tuple[ScoreClassifAndLayers, ...]:
     """Test scores + layers."""
     return tuple(
         (score, layers) for score, layers in zip(scores, ALL_LAYERS, strict=True)
+    )
+
+
+@pytest.fixture(params=[True, False], ids=["snl_raw", "snl_as_str"])
+def scores_and_layers_for_str(
+    scores_and_layers,
+    request,
+) -> tuple[ScoreClassifAndLayers | str, ...]:
+    """Test scores + layers."""
+    if request.param:
+        return scores_and_layers
+
+    return tuple(
+        f"SnL {i + 1}/{len(scores_and_layers)} as str"
+        for i in range(len(scores_and_layers))
     )
 
 
