@@ -355,11 +355,11 @@ def summary_table(  # noqa: PLR0913 (too many arguments)
     # Preprocess optional arguments
     recorded = scores_and_layers is not None
     idxs: Iterable
-    if keep:
+    if keep is None:
+        idxs = range(n_scores)
+    else:
         keep = np.asarray(keep)
         idxs = keep if np.issubdtype(keep.dtype, np.integer) else keep.nonzero()[0]
-    else:
-        idxs = range(n_scores)
 
     kept_scores_str: Iterable[str]
     if scores_and_layers is None:
@@ -633,7 +633,7 @@ def summary_plot(  # noqa: C901, PLR0913 (too complex, too many arguments)
     legend_hist, legend_roc = (legend, legend) if isinstance(legend, bool) else legend
 
     # Apply ``keep``
-    if keep:
+    if keep is not None:
         keep = np.asarray(keep)
         idxs = keep if np.issubdtype(keep.dtype, np.integer) else keep.nonzero()[0]
         confs_ind = confs_ind[idxs]
