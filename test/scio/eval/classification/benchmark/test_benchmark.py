@@ -13,10 +13,21 @@ from scio.eval import (
     summary,
     summary_plot,
     summary_table,
+    topk_evals,
 )
 from test.conftest import parametrize_bool
 
-from .conftest import BASELINE, HIST_KW, KEEPS, LEGENDS, OODS_TITLE, OPS
+from .conftest import (
+    BASELINE,
+    HIST_KW,
+    KEEPS,
+    LEGENDS,
+    OODS_TITLE,
+    OPS,
+    TOPK_EVALS_EXPLICIT_EVALS,
+    TOPK_EVALS_EXPLICIT_OUT,
+    TOPK_EVALS_EXPLICIT_SHAPE,
+)
 
 
 def test_fit_scores(scores_and_layers, net, calib_data, calib_labels, show_progress):
@@ -70,69 +81,6 @@ def test_compute_confidence(scores_fit, ind, oods, show_progress, with_titles, n
         ):
             expected = op(out_ood, dim=1).numpy(force=True)
             np.testing.assert_equal(confs_ood[i], expected, err_msg=f"[{ood_title}]")
-
-
-def test_compute_metrics(confs_ind, confs_oods, metrics):
-    """Test :func:`compute_metrics` works and uses args."""
-    evals = compute_metrics(confs_ind, confs_oods, metrics)
-
-    # Check shapes
-    assert evals.shape == (len(confs_ind), len(confs_oods), len(metrics))
-
-    # Check expectation (see :class:`TestMetric`)
-    for i, confs_ood in enumerate(confs_oods):
-        evals_ood = evals[:, i].squeeze()
-        expected = np.c_[confs_ood.max(1), confs_ind.min(1)]
-        np.testing.assert_equal(evals_ood, expected, err_msg=f"[OoD {i}]")
-
-
-@parametrize_bool("with_scores, with_titles, with_metrics, with_baseline", lite=1)
-def test_summary_table(
-    evals,
-    scores_and_layers_for_str,
-    metrics,
-    with_scores,
-    with_titles,
-    with_metrics,
-    with_baseline,
-    match_outerr_torch,  # noqa: ARG001 (unused argument)
-):
-    """Test :func:`summary_table` output.
-
-    Warning
-    -------
-    The test is insensitive to markup formatting.
-
-    """
-    # Useless test config
-    if not with_scores and isinstance(scores_and_layers_for_str[0], str):
-        return
-
-    none = summary_table(
-        evals,
-        scores_and_layers=scores_and_layers_for_str if with_scores else None,
-        oods_title=OODS_TITLE if with_titles else None,
-        metrics=metrics if with_metrics else None,
-        baseline=BASELINE if with_baseline else None,
-    )
-    assert none is None
-
-
-@pytest.mark.parametrize("keep", KEEPS)
-def test_summary_table_keep(
-    evals,
-    keep,
-    match_outerr_torch,  # noqa: ARG001 (unused argument)
-):
-    """Test :func:`summary_table` output.
-
-    Warning
-    -------
-    The test is insensitive to markup formatting.
-
-    """
-    none = summary_table(evals, keep=keep)
-    assert none is None
 
 
 @parametrize_bool(
@@ -266,6 +214,82 @@ def test_summary_plot_legend(
 ):
     """Test :func:`summary_plot` plots."""
     none = summary_plot(confs_ind, confs_oods, legend=legend, block=False)
+    assert none is None
+
+
+def test_compute_metrics(confs_ind, confs_oods, metrics):
+    """Test :func:`compute_metrics` works and uses args."""
+    evals = compute_metrics(confs_ind, confs_oods, metrics)
+
+    # Check shapes
+    assert evals.shape == (len(confs_ind), len(confs_oods), len(metrics))
+
+    # Check expectation (see :class:`TestMetric`)
+    for i, confs_ood in enumerate(confs_oods):
+        evals_ood = evals[:, i].squeeze()
+        expected = np.c_[confs_ood.max(1), confs_ind.min(1)]
+        np.testing.assert_equal(evals_ood, expected, err_msg=f"[OoD {i}]")
+
+
+@pytest.mark.parametrize("shape", TOPK_EVALS_EXPLICIT_SHAPE)
+@pytest.mark.parametrize(
+    ("k_baseline", "expected"),
+    TOPK_EVALS_EXPLICIT_OUT.items(),
+)
+def test_topk_evals_explicit(shape, k_baseline, expected):
+    """Test :func:`topk_evals function."""
+    evals = np.reshape(TOPK_EVALS_EXPLICIT_EVALS, shape)
+    k, baseline = k_baseline
+    out = topk_evals(evals, k=k, baseline=baseline)
+    np.testing.assert_allclose(out, expected, strict=True)
+
+
+@parametrize_bool("with_scores, with_titles, with_metrics, with_baseline", lite=1)
+def test_summary_table(
+    evals,
+    scores_and_layers_for_str,
+    metrics,
+    with_scores,
+    with_titles,
+    with_metrics,
+    with_baseline,
+    match_outerr_torch,  # noqa: ARG001 (unused argument)
+):
+    """Test :func:`summary_table` output.
+
+    Warning
+    -------
+    The test is insensitive to markup formatting.
+
+    """
+    # Useless test config
+    if not with_scores and isinstance(scores_and_layers_for_str[0], str):
+        return
+
+    none = summary_table(
+        evals,
+        scores_and_layers=scores_and_layers_for_str if with_scores else None,
+        oods_title=OODS_TITLE if with_titles else None,
+        metrics=metrics if with_metrics else None,
+        baseline=BASELINE if with_baseline else None,
+    )
+    assert none is None
+
+
+@pytest.mark.parametrize("keep", KEEPS)
+def test_summary_table_keep(
+    evals,
+    keep,
+    match_outerr_torch,  # noqa: ARG001 (unused argument)
+):
+    """Test :func:`summary_table` output.
+
+    Warning
+    -------
+    The test is insensitive to markup formatting.
+
+    """
+    none = summary_table(evals, keep=keep)
     assert none is None
 
 

@@ -19,6 +19,9 @@ from scio.eval.classification.benchmark import ScoreClassifAndLayers
 from scio.scores import BaseScoreClassif
 from test.scio.conftest import Net3DFactory
 
+N = np.nan
+I = np.inf  # noqa: E741 (ambiguous name)
+
 # All of these constants are essentially arbitrary
 OPS = (torch.var, torch.amax, torch.mean)
 ALL_LAYERS = (((1, 1),), (), ((1, 2), (1, 3), (1, 5)))
@@ -233,3 +236,46 @@ def evals(confs_ind, confs_oods, metrics) -> NDArray[np.floating]:
 
     """
     return compute_metrics(confs_ind, confs_oods, metrics)
+
+
+TOPK_EVALS_EXPLICIT_EVALS = np.array([
+    [0, N, N],
+    [I, 2, -I],
+    [N, N, N],
+    [1, -I, N],
+])
+TOPK_EVALS_EXPLICIT_SHAPE = ((4, 3), (4, 1, 3), (4, 1, 3, 1))
+# Keys are ``(k, baseline)``. Compute values MANUALLY!
+TOPK_EVALS_EXPLICIT_OUT = MappingProxyType({
+    (-1, None): [0, 1, 2, 3],
+    (0, None): [0, 1, 2, 3],
+    (1, None): [1],
+    (2, None): [1, 3],
+    (3, None): [0, 1, 3],
+    (4, None): [0, 1, 3],
+    (5, None): [0, 1, 2, 3],
+    (0, 0): [0, 1, 2, 3],
+    (1, 0): [0, 1],
+    (2, 0): [0, 1, 3],
+    (3, 0): [0, 1, 3],
+    (4, 0): [0, 1, 3],
+    (5, 0): [0, 1, 2, 3],
+    (0, 1): [0, 1, 2, 3],
+    (1, 1): [1, 3],
+    (2, 1): [0, 1, 3],
+    (3, 1): [0, 1, 3],
+    (4, 1): [0, 1, 3],
+    (5, 1): [0, 1, 2, 3],
+    (0, 2): [0, 1, 2, 3],
+    (1, 2): [1, 2],
+    (2, 2): [1, 2, 3],
+    (3, 2): [0, 1, 2, 3],
+    (4, 2): [0, 1, 2, 3],
+    (5, 2): [0, 1, 2, 3],
+    (0, 3): [0, 1, 2, 3],
+    (1, 3): [1, 3],
+    (2, 3): [0, 1, 3],
+    (3, 3): [0, 1, 3],
+    (4, 3): [0, 1, 3],
+    (5, 3): [0, 1, 2, 3],
+})
