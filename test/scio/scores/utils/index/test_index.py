@@ -100,7 +100,7 @@ def test_remove_ids(index_population, query):
 def test_metric_and_D_is_similarity(metric):
     """Test trivial properties."""
     index = Index(dim=0, metric=metric)
-    expected_D_is_similarity = metric in {IndexMetric.IP}
+    expected_D_is_similarity = metric == IndexMetric.IP
     assert index.metric == metric
     assert index.D_is_similarity is expected_D_is_similarity
 

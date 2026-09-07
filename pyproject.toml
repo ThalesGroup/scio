@@ -113,7 +113,11 @@ extend-exclude = ["docs/src/auto_*"]
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["D416"]  # Numpy docstyle, see https://github.com/PyCQA/pydocstyle/blob/master/docs/error_codes.rst
+ignore = [
+    "D416",                          # Numpy docstyle,
+    # see https://github.com/PyCQA/pydocstyle/blob/master/docs/error_codes.rst
+    "CPY001",                        # Missing copyright notice at top of file
+    ]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
@@ -130,6 +134,7 @@ convention = "numpy"
     "B018",                          # Useless expressions (actually useful)
     "PLR0913",                       # Many fixtures needed sometimes
     "T201",                          # Print statements
+    "PLR0917",                       # Too many positional arguments (fixtures)
 ]
 "docs/src/conf.py" = [
     "INP001",                        # Implicit namespace package
