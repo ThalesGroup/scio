@@ -6,9 +6,9 @@ Installation & Compatibility
 Installation
 ------------
 
-We recommend installing ``scio`` from `PyPI <https://pypi.org/project/scio-pypi>`_::
+We recommend installing ``scio`` from `PyPI <https://pypi.org/project/scio>`_::
 
-	pip install scio-pypi
+	pip install scio
 
 If you wish to install from source or wheels manually, you can download `release assets <https://github.com/ThalesGroup/scio/releases>`_ directly on the GitHub repository, or clone its current state with:
 

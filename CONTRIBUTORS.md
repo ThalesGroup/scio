@@ -1,6 +1,6 @@
 # Contributors ✨
 
-Thanks to [**these wonderful people**](https://sciortd.readthedocs.io/stable/contributors.html) who make this project better! 💙
+Thanks to [**these wonderful people**](https://scio.readthedocs.io/stable/contributors.html) who make this project better! 💙
 
 ----
 
@@ -11,6 +11,7 @@ Possible contribution values are: `answering questions`, `bug reports`, `code`, 
 <!-- TABLE START -->
 | GitHub username | Contributions | Name (optional) |
 |-----------------|---------------|-----------------|
+| sfo-thales | bug reports, code, dissemination, documentation, fixes, ideas, maintenance, pr reviews, testing, tutorials | The Thales scio team |
 | Sebastienlejeune | infrastructure | Lejeune, Sébastien |
 | ego-thales | bug reports, code, dissemination, documentation, fixes, ideas, maintenance, pr reviews, testing, tutorials | Goudout, Élie |
 | eliegoudout | bug reports, code, dissemination, documentation, fixes, maintenance, pr reviews, testing | Goudout, Élie |

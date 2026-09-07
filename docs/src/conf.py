@@ -40,7 +40,7 @@ import scio
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 project = "scio"
-author = "Élie Goudout"
+author = "The Thales scio team and Élie Goudout"
 project_copyright = "2024–%Y, THALES"  # noqa: RUF001 ("EN" dash)
 release = scio.__version__
 version = release if release == "unknown" else ".".join(scio.__version__.split(".")[:2])
@@ -82,7 +82,7 @@ html_theme_options = {
         },
         {
             "name": "PyPI",
-            "url": "https://pypi.org/project/scio-pypi",
+            "url": "https://pypi.org/project/scio",
             "icon": "_static/pypi_logo.png",
             "type": "local",
         },
