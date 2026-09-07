@@ -161,7 +161,7 @@ class AUC(BaseDiscriminativePower):
             raise NotImplementedError(msg)
 
         # Return rescaled
-        return pAUC / np.ptp(interval)
+        return float(pAUC) / np.ptp(interval)
 
 
 class MCC(BaseDiscriminativePower):

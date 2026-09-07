@@ -16,10 +16,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install uv and set python version
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
           version: "0.8.17"
           python-version: ${{ matrix.python-version }}
@@ -60,7 +60,7 @@ jobs:
 
       - name: Upload observed plots on failure
         if: ${{ steps.run-pytest.outcome == 'failure' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pytest-observed-${{ matrix.os }}-py${{ matrix.python-version }}
           path: test/expected/*/*.observed.*
@@ -72,7 +72,7 @@ jobs:
 
       - name: Upload coverage report to Codecov
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.14'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
@@ -86,7 +86,7 @@ jobs:
 
       # - name: Upload observed plots on lowest failure
       #   if: ${{ steps.run-pytest-lowest.outcome == 'failure' }}
-      #   uses: actions/upload-artifact@v4
+      #   uses: actions/upload-artifact@v7
       #   with:
       #     name: pytest-lowest-observed-${{ matrix.os }}-py${{ matrix.python-version }}
       #     path: test/expected/*/*.observed.*
