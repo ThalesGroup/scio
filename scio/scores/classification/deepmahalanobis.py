@@ -145,7 +145,8 @@ class DeepMahalanobis(BaseScoreClassif):
                 acts_flat = activations.flatten(1)
                 with torch.no_grad():
                     candidates = (
-                        self.compute_mahalanobis(acts_flat, mu, precision)
+                        self
+                        .compute_mahalanobis(acts_flat, mu, precision)
                         .nan_to_num(nan=torch.inf)
                         .argmin(1)
                     )
