@@ -194,7 +194,7 @@ class JTLA(BaseScoreClassif):
 
         if method == "lpe":
             self.layer_aggregation_method = "lpe"
-            self.lpe_k = int(specs if specs else cast("SupportsInt", self.test["k"]))
+            self.lpe_k = int(specs or cast("SupportsInt", self.test["k"]))
             return
 
         self.layer_aggregation_method = AggrName(method)
