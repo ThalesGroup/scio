@@ -182,7 +182,7 @@ class ScoreTimer:
             )
             raise AttributeError(msg)
 
-        params = copy(MappingProxyType(target.params))  # type: ignore[attr-defined]
+        params = copy(MappingProxyType(target.params))
 
         # Time execution
         start = perf_counter()

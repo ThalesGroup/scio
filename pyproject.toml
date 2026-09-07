@@ -52,7 +52,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "mypy>=1.17",
+    "mypy>=2.0",
     "mypy-extensions>=1.1",
     "pandas-stubs>=2.2.3.241126",
     "pytest>=9",
