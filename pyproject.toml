@@ -36,7 +36,7 @@ classifiers = [
 ]
 dependencies = [
     "dill>=0.3.8",
-    "faiss-cpu>=1.12",
+    "faiss-cpu>=1.14",
     "lazy-loader>=0.4",
     "matplotlib>=3.10",
     "numpy>=2.2.2",
@@ -61,6 +61,7 @@ dev = [
 ]
 doc = [
     "datasets>=4.4.0",
+    "httpx>=0.23",
     "myst-parser>=4.0.1",
     "pydata-sphinx-theme>=0.16.1",
     "sphinx>=8.2.3",

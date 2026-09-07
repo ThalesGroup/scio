@@ -1,6 +1,6 @@
 from typing import Literal, overload
 
-import faiss  # type: ignore[import-untyped]
+import faiss
 from paramclasses import ParamClass
 from torch import Tensor
 
