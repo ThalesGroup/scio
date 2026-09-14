@@ -553,10 +553,10 @@ def test_multinomial_test_expectations(
     k,
     n,
     mode,
-    device,
-    device_gen,
     dtype_device_gen,
     dtype,
+    device,
+    device_gen,
     match_array,
 ):
     """Test ``multinomial_test`` expectations, shape, dtype, device."""
