@@ -441,7 +441,7 @@ def assert_same_arrays(  # pragma: no cover
     """
     excs: list[Exception] = []
     null = object()
-    new_torch_with_half = False
+
     for path, array_opts in zip_longest(paths, arrays_opts, fillvalue=null):
         if path is null:
             array = cast("Any", array_opts)[0]
@@ -455,18 +455,20 @@ def assert_same_arrays(  # pragma: no cover
         ext = cast("Path", path).suffix[1:]
         array_binds = ARRAY_TYPES_BINDINGS[EXT_TO_TYPE[ext]]
 
+        assert isinstance(path, Path)
         try:
             array, match_opts = cast("Any", array_opts)
             final_path = path
             # Torch 2.12+ changes rng for float16 so other tensors are generated
             # 2.12+ paths are updated with new_ prefix in the expected/ folder
-            if new_torch_with_half or (
-                Version(torch.__version__) >= Version("2.12")
-                and array.dtype == torch.float16
-            ):
-                new_torch_with_half = True
-                if isinstance(path, Path):
-                    final_path = path.with_name("new_" + path.name)
+            half_in_path = (
+                "_half-" in final_path.name
+                or "_half." in final_path.name
+                or "-half-" in final_path.name
+                or "-half." in final_path.name
+            )
+            if Version(torch.__version__) >= Version("2.12") and half_in_path:
+                final_path = path.with_name("new_" + path.name)
 
             expected = array_binds.load(final_path)
             array_binds.assert_close(array, expected, **match_opts)
