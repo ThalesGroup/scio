@@ -11,9 +11,9 @@ Possible contribution values are: `answering questions`, `bug reports`, `code`, 
 <!-- TABLE START -->
 | GitHub username | Contributions | Name (optional) |
 |-----------------|---------------|-----------------|
-| sfo-thales | bug reports, code, dissemination, documentation, fixes, ideas, maintenance, pr reviews, testing, tutorials | The Thales scio team |
 | Sebastienlejeune | infrastructure | Lejeune, Sébastien |
 | ego-thales | bug reports, code, dissemination, documentation, fixes, ideas, maintenance, pr reviews, testing, tutorials | Goudout, Élie |
 | eliegoudout | bug reports, code, dissemination, documentation, fixes, maintenance, pr reviews, testing | Goudout, Élie |
 | Lap0u | fixes | Beaurain, Clément |
+| sfo-thales | bug reports, code, dissemination, documentation, fixes, ideas, maintenance, pr reviews, testing, tutorials | The Thales scio team |
 <!-- TABLE END -->
