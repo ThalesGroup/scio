@@ -10,7 +10,7 @@
 [![uv][uv_img]][uv_target]
 
 [os_img]: https://img.shields.io/badge/cross--platform-%E2%9C%93-blue "Tested on Ubuntu & Windows"
-[os_target]: https://scio.readthedocs.io/stable/user_guide/installation_compatibility.html#os-compatibility
+[os_target]: https://scio-docs.readthedocs.io/stable/user_guide/installation_compatibility.html#os-compatibility
 
 [python_img]: https://img.shields.io/badge/python-3.12%20|%203.13%20|%203.14-blue "Compatible Python versions"
 [python_target]: https://devguide.python.org/versions
@@ -49,7 +49,7 @@
   <p><i>“<strong>scio</strong> me nihil scire”</i></p>
 
   <p align="center">
-    <a href="https://scio.readthedocs.io"><strong>Explore the Docs »</strong></a>
+    <a href="https://scio-docs.readthedocs.io"><strong>Explore the Docs »</strong></a>
     <br />
     <a href="https://github.com/ThalesGroup/scio/issues/new?labels=question">Ask Help</a>
     &middot;
@@ -68,7 +68,7 @@ pip install scio
 
 ### Demo 🎮
 <p align="center">
-  <a href="https://scio.readthedocs.io/stable/auto_tutorials/visualizing_and_evaluating_ood_detection_algorithms.html"
+  <a href="https://scio-docs.readthedocs.io/stable/auto_tutorials/visualizing_and_evaluating_ood_detection_algorithms.html"
      title="Click to follow along the tutorial!">
     <img src="https://github.com/ego-thales/scio-assets/blob/main/assets/demo.gif" alt="demo gif">
   </a>
@@ -96,8 +96,6 @@ To reference a particular release, get the DOI <a href="https://zenodo.org/searc
 ### Contributing 💫
 Questions, [issues], [discussions] and [pull requests][pulls] are welcome! Read our [contributing guide](CONTRIBUTING.md) and join our team of [contributors] ✨
 
-For development, we recommend using `uv` since we ship `uv.lock` for better development reproducibility.
-
 ### Star history ⭐
 <picture>
   <source media="(prefers-color-scheme: dark)"
@@ -111,14 +109,14 @@ For development, we recommend using `uv` since we ship `uv.lock` for better deve
 This package is distributed under the [MIT license](LICENSE). The use of NVIDIA proprietary modules (for GPU acceleration) is optional.
 
 <!-- References -->
-[docs]: https://scio.readthedocs.io
-[about]: https://scio.readthedocs.io/stable/user_guide/what_is_scio.html#what-is-scio
-[get_started]: https://scio.readthedocs.io/stable/user_guide/installation_compatibility.html#installation-compatibility
-[tutorials]: https://scio.readthedocs.io/stable/auto_tutorials/index.html
-[api]: https://scio.readthedocs.io/stable/api_references.html
-[references]: https://scio.readthedocs.io/stable/bib_references.html
-[citing]:  https://scio.readthedocs.io/stable/citing_scio.html
+[docs]: https://scio-docs.readthedocs.io
+[about]: https://scio-docs.readthedocs.io/stable/user_guide/what_is_scio.html#what-is-scio
+[get_started]: https://scio-docs.readthedocs.io/stable/user_guide/installation_compatibility.html#installation-compatibility
+[tutorials]: https://scio-docs.readthedocs.io/stable/auto_tutorials/index.html
+[api]: https://scio-docs.readthedocs.io/stable/api_references.html
+[references]: https://scio-docs.readthedocs.io/stable/bib_references.html
+[citing]:  https://scio-docs.readthedocs.io/stable/citing_scio.html
 [issues]: https://github.com/ThalesGroup/scio/issues
 [discussions]: https://github.com/ThalesGroup/scio/discussions
 [pulls]: https://github.com/ThalesGroup/scio/pulls
-[contributors]: https://scio.readthedocs.io/stable/contributors.html
+[contributors]: https://scio-docs.readthedocs.io/stable/contributors.html
