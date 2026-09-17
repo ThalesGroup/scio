@@ -1,6 +1,6 @@
 [project]
 name = "scio"
-version = "1.1.1.2"
+version = "1.1.2.dev0"
 description = "Statistical Confidence from Internal Observations"
 authors = [
     {name = "The Thales scio team", email = "scio@thalesgroup.com"},
